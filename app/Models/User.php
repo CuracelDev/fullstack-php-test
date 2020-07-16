@@ -27,8 +27,6 @@ class User extends Authenticatable
         'password', 
         'email_verified_at', 
         'age', 
-        'age_status', 
-        'tax_status', 
         'tax', 
         'remember_token'
     ];
