@@ -19,6 +19,10 @@ class ProductRepository
         $this->product = $product;
     }
 
+    public function getProduct($productId) {
+        return new ProductResource($this->product->with('orders')->find($productId));
+    }
+
     public function products() {
         $products = ProductResource::collection($this->product->orderBy('id', 'DESC')->get());
         return $products;

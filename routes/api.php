@@ -9,6 +9,7 @@ Route::prefix('v1')->group(function() {
 	Route::post('/register', 'UserController@register');
 	
 	Route::get('/products', 'ProductController@products');
+	Route::get('/products/{productId}', 'ProductController@getProduct');
 	Route::post('/products/add', 'ProductController@add');
 	
 	Route::get('/coupons', 'CouponController@coupons');

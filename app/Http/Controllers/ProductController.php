@@ -20,6 +20,11 @@ class ProductController extends Controller
         return $this->success($products);
     }
 
+    public function getProduct($productId) {
+        $product = $this->product->getProduct($productId);
+        return $this->success($product);
+    }
+
     public function add(Request $request) {
  
     }
