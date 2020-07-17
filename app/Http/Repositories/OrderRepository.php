@@ -181,7 +181,21 @@ class OrderRepository
         }
     }
 
-    public function delete($orderId) {
-        
+    public function deleteOrder($orderId, $userId) {
+        $order = $this->order->find($orderId);
+        $response;
+
+        if($order) {
+            if($order->user_id == $userId) {
+                $this->order->whereId($orderId)->delete();
+                $response = ['type' => 'success', 'message' => 'Order deleted'];
+            } else {
+                $response = ['type' => 'error', 'message' => 'Unauthorized access'];
+            }
+        } else {
+            $response = ['type' => 'error', 'message' => 'Order does not exist.'];
+        }
+
+        return $response;
     }
 }

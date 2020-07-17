@@ -17,5 +17,5 @@ Route::prefix('v1')->group(function() {
 	
 	Route::get('/orders', 'OrderController@myOrders');
 	Route::post('/orders/add-to-cart', 'OrderController@addToCart');
-	Route::delete('/orders/delete/{orderId}', 'OrderController@delete');
+	Route::delete('/orders/delete/{orderId}', 'OrderController@deleteOrder');
 });

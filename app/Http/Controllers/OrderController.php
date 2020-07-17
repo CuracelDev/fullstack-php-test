@@ -27,7 +27,9 @@ class OrderController extends Controller
         return $cart;
     }
 
-    public function delete($orderId) {
- 
+    public function deleteOrder(Request $request, $orderId) {
+        $userId = $this->getUserIdFromToken($request);
+        $order = $this->order->deleteOrder($orderId, $userId);
+        return $order;
     }
 }
