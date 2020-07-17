@@ -16,7 +16,8 @@ class CouponController extends Controller
     }
 
     public function coupons() {
-        
+        $coupons = $this->coupon->coupons();
+        return $this->success($coupons);
     }
 
     public function add(Request $request) {

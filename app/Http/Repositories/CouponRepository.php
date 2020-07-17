@@ -19,7 +19,8 @@ class CouponRepository
     }
 
     public function coupons() {
-    
+        $coupons = $this->coupon->orderBy('id', 'DESC')->get();
+        return $coupons;
     }
 
     public function add($data) {
