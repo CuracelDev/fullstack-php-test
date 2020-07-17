@@ -26,6 +26,7 @@ class ProductController extends Controller
     }
 
     public function add(Request $request) {
- 
+        $product = $this->product->add($request);
+        return $product;
     }
 }
