@@ -2,6 +2,7 @@
 
 namespace App\Http\Repositories;
 use App\Http\CommonHelper;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use DB;
 use Validator;
@@ -19,7 +20,8 @@ class ProductRepository
     }
 
     public function products() {
-    
+        $products = ProductResource::collection($this->product->orderBy('id', 'DESC')->get());
+        return $products;
     }
 
     public function add($data) {

@@ -16,7 +16,8 @@ class ProductController extends Controller
     }
 
     public function products() {
-        
+        $products = $this->product->products();
+        return $this->success($products);
     }
 
     public function add(Request $request) {
