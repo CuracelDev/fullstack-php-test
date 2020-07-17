@@ -24,6 +24,39 @@ class CouponRepository
     }
 
     public function add($data) {
+        $rules = [
+            'code' => 'required',
+            'tax' => 'required',
+        ];
+
+        $validator = Validator::make($data->all(), $rules);
+        $errors = $validator->errors();
         
+        if($validator->fails()) {
+            foreach($errors->all() as $error) {
+                $error_details = ['type' => 'error', 'message' => $error];
+                return $error_details;
+            }
+        } else {
+            $coupon_exists = $this->coupon->whereCode($data->code)->first();
+            
+            if($coupon_exists) {
+                $details = ['type' => 'error','message' => 'Coupon code exists. Try again.'];
+                return $details;
+            } else {
+
+                $coupon = $this->coupon->create([
+                    'code' => strtoupper($data->code),
+                    'tax' => $data->tax,
+                ]);
+
+                $details = [
+                    'type' => 'success',
+                    'coupon' => $coupon,
+                ];
+
+                return $details;
+            }
+        }
     }
 }
