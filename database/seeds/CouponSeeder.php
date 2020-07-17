@@ -18,7 +18,7 @@ class CouponSeeder extends Seeder
         for($i = 0; $i < 50; $i++) {
 
             App\Models\Coupon::create([
-                'code' => $this->generateRandomChars(15),
+                'code' => strtoupper($this->generateRandomChars(15)),
                 'tax' => rand(10, 80),
             ]);
         }
