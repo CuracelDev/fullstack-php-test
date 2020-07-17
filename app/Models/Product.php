@@ -28,5 +28,9 @@ class Product extends Model
 
     public function orders() {
         return $this->hasMany(Order::class);
+	}
+	
+	public function coupon() {
+        return $this->belongsTo(Coupon::class, 'coupon_id', 'id');
     }
 }
