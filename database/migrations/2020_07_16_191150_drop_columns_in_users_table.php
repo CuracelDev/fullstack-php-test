@@ -13,9 +13,11 @@ class DropColumnsInUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('tax_status');
-        });
+        if (Schema::hasColumn('users', 'tax_status')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('tax_status');
+            });
+        }
     }
 
     /**
@@ -25,8 +27,10 @@ class DropColumnsInUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('tax_status');
-        });
+        if (Schema::hasColumn('users', 'tax_status')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('tax_status');
+            });
+        }
     }
 }

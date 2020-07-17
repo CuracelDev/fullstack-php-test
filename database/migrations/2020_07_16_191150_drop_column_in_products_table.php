@@ -13,9 +13,11 @@ class DropColumnInProductsTable extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('pix');
-        });
+        if (Schema::hasColumn('products', 'pix')) {
+            Schema::table('products', function (Blueprint $table) {
+                $table->dropColumn('pix');
+            });
+        }
     }
 
     /**
@@ -25,8 +27,10 @@ class DropColumnInProductsTable extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('pix');
-        });
+        if (Schema::hasColumn('products', 'pix')) {
+            Schema::table('products', function (Blueprint $table) {
+                $table->dropColumn('pix');
+            });
+        }
     }
 }

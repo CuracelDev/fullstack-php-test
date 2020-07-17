@@ -13,9 +13,11 @@ class DropFrequencyLimitColumnInProductsTable extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('frequency_limit');
-        });
+        if (Schema::hasColumn('products', 'frequency_limit')) {
+            Schema::table('products', function (Blueprint $table) {
+                $table->dropColumn('frequency_limit');
+            });
+        }
     }
 
     /**
@@ -25,8 +27,10 @@ class DropFrequencyLimitColumnInProductsTable extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('frequency_limit');
-        });
+        if (Schema::hasColumn('products', 'frequency_limit')) {
+            Schema::table('products', function (Blueprint $table) {
+                $table->dropColumn('frequency_limit');
+            });
+        }
     }
 }
