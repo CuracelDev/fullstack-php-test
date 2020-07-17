@@ -57,7 +57,23 @@ trait CommonHelper
             'memory-used' => round($memory_usage/1024)." bytes"
         ];
     }
-    
+        
+    public static function getTheFrequency($frequency) {
+        $frequencies =  array(
+            "annually" => "once in a year",
+            "biannually" => "twice in a year",
+            "triannually" => "three times in a year",
+            "quarterly" => "once in 3 months",
+            "monthly" => "once in a month",
+            "bimonthly" => "twice in a month",
+            "weekly" => "once in a week",
+            "daily" => "once in a day"
+        );
+
+        $the_frequency = $frequencies[$frequency];
+        return $the_frequency;
+    }
+
     public static function createdOn($date) {
         $encoded_date = json_encode($date);
         $created_on = json_decode($encoded_date)->date;

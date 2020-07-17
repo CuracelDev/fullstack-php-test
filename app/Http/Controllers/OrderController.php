@@ -16,11 +16,13 @@ class OrderController extends Controller
     }
 
     public function orders() {
-        
+
     }
 
-    public function add(Request $request) {
- 
+    public function addToCart(Request $request) {
+        $userId = $this->getUserIdFromToken($request);
+        $cart = $this->order->addToCart($request, $userId);
+        return $cart;
     }
 
     public function delete($orderId) {
