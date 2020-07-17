@@ -15,8 +15,10 @@ class OrderController extends Controller
         $this->order = $order;
     }
 
-    public function orders() {
-
+    public function myOrders(Request $request) {
+        $userId = $this->getUserIdFromToken($request);
+        $orders = $this->order->getUserOrders($userId);
+        return $this->success($orders);
     }
 
     public function addToCart(Request $request) {

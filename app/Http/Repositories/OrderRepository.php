@@ -27,6 +27,27 @@ class OrderRepository
         $this->product_repo = $product_repo;
     }
 
+    public function getUserOrders($userId) {
+        $orders = OrderResource::collection($this->order->whereUserId($userId)->get());
+        $all_orders = [];
+        $total_price = 0;
+
+        foreach($orders as $order) {
+            $total_price+= $order->price;
+        }
+
+        $user = $this->user_repo->getUser($userId);
+        $vat = ceil(($user->tax / 100) * $total_price);
+        
+        array_push($all_orders, (object) [
+            'orders' => $orders,
+            'total_price' => $total_price,
+            'vat' => $vat
+        ]);
+
+        return $all_orders;
+    }
+
     public function getUserProductOrders($userId, $productId) {
         return $this->order->whereUserId($userId)->whereProductId($productId)->get();
     }
