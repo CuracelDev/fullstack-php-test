@@ -25,6 +25,7 @@ class UserController extends Controller
     }
 
     public function login(Request $request) {
- 
+        $user = $this->user->login($request);
+        return $user;
     }
 }

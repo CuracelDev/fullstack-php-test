@@ -21,8 +21,39 @@ class UserRepository
         $this->user = $user;
     }
 
+    public function getUser($userId) {
+        return $this->user->find($userId);
+    }
+
     public function login($data) {
-    
+        $token = null;
+        $credentials = $data->only('email', 'password');
+        
+        if(!$token = auth('api')->attempt($credentials)) {
+            $response = ['type' => 'error', 'message' => 'Incorrect login details']; 
+            return $response;
+        }
+
+        $user = $this->user->whereEmail($data->email)->first();
+        
+        if($user) {
+            
+            $auth_user = $this->getUser($user->id);
+            $check_password = Hash::check($data->password, $auth_user->password);
+
+            if($check_password ) {
+                $profile = $this->getUser($user->id);
+                $details = ['type' => 'success', 'user' => $profile, 'token' => $token];
+                return $details;
+            } else {
+                $details = ['type' => 'error', 'message' => 'Incorrect login details']; 
+                return $details;
+            }
+
+        } else {
+            $details = ['type' => 'error', 'message' => 'Incorrect login details'];    
+            return $details;
+        }
     }
 
     public function register($data) {
