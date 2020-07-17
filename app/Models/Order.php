@@ -16,10 +16,10 @@ class Order extends Model
     protected $dates = ['deleted_at'];
 
     public function product() {
-    	return $this->belongsTo(Product::class, 'products', 'id');
+    	return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
     public function user() {
-    	return $this->belongsTo(User::class, 'users', 'id');
+    	return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
