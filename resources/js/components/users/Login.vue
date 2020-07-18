@@ -39,7 +39,7 @@
             }
         },
         methods: {
-            loginUser() {
+            async loginUser() {
                 let login_btn = document.querySelector('#login-btn');
                 let login_status = document.querySelector('#login-status');
                 login_btn.disabled = true;
@@ -48,7 +48,7 @@
                 event.preventDefault();
                 var app = this;
                 var newUser = app.user;
-                axios.post('/api/v1/login', newUser)
+                await axios.post('/api/v1/login', newUser)
                     .then(function (response) {
                         if(response.data.type == 'success') {
                             app.$router.push({path: '/products'});
