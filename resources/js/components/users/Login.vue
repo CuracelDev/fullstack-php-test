@@ -46,8 +46,8 @@
                 login_btn.innerHTML = "Please wait...";
                 
                 event.preventDefault();
-                var app = this;
-                var newUser = app.user;
+                const app = this;
+                const newUser = app.user;
                 await axios.post('/api/v1/login', newUser)
                     .then(function (response) {
                         if(response.data.type == 'success') {
