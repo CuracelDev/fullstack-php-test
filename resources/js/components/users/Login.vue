@@ -52,7 +52,7 @@
                     .then(function (response) {
                         if(response.data.type == 'success') {
                             Functions.setCookie('user', response.data.token, 100);
-                            app.$router.push({path: '/products'});
+                            window.location='/products';
                         } else {
                             login_status.innerHTML = "<p style='color:red'>Incorrect login details. Try again</p>";
                         }
