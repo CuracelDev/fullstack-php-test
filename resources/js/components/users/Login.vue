@@ -28,6 +28,7 @@
 </template>
 
 <script>
+    import Functions from '@/components/functions';
 
     export default {
         data: function () {
@@ -42,8 +43,7 @@
             async loginUser() {
                 let login_btn = document.querySelector('#login-btn');
                 let login_status = document.querySelector('#login-status');
-                login_btn.disabled = true;
-                login_btn.innerHTML = "Please wait...";
+                Functions.disableBtn('Please wait...', login_btn);
                 
                 event.preventDefault();
                 const app = this;
@@ -51,6 +51,7 @@
                 await axios.post('/api/v1/login', newUser)
                     .then(function (response) {
                         if(response.data.type == 'success') {
+                            Functions.setCookie('user', response.data.token, 100);
                             app.$router.push({path: '/products'});
                         } else {
                             login_status.innerHTML = "<p style='color:red'>Incorrect login details. Try again</p>";
@@ -59,8 +60,7 @@
                     .catch(function (response) {
                         login_status.innerHTML = "<p style='color:red'>Incorrect login details. Try again</p>";
                     });
-                login_btn.disabled = false;
-                login_btn.innerHTML = "Login";
+                Functions.enableBtn('Login', login_btn);
             }
         }
     }
