@@ -68,7 +68,7 @@
             }
         },
         methods: {
-            registerUser() {
+            async registerUser() {
                 let register_btn = document.querySelector('#register-btn');
                 let register_status = document.querySelector('#register-status');
                 register_btn.disabled = true;
@@ -77,7 +77,7 @@
                 event.preventDefault();
                 var app = this;
                 var newUser = app.user;
-                axios.post('/api/v1/register', newUser)
+                await axios.post('/api/v1/register', newUser)
                     .then(function (response) {
                         if(response.data.type == 'success') {
                             register_status.innerHTML = `<p style='color:green'>Registration successful. Please wait ...</p>`;
