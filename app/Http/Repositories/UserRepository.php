@@ -60,6 +60,7 @@ class UserRepository
         $rules = [
             'name' => 'required',
             'email' => 'required|email',
+            'age' => 'required',
             'password' => 'required|min:6',
             'password_confirmation' => 'required|same:password',
         ];
