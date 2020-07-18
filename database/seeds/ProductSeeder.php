@@ -15,11 +15,11 @@ class ProductSeeder extends Seeder
 
         for($i = 0; $i < 50; $i++) {
 
-            $frequency_limits = ['annually', 'biannually', 'quarterly', 'monthly', 'bimonthly', 'forthnight', 'weekly', 'daily'];
+            $frequency_limits = ['annually', 'biannually', 'triannually', 'quarterly', 'monthly', 'bimonthly', 'daily'];
             $limit = array_rand($frequency_limits);
 
             App\Models\Product::create([
-                'name' => $faker->name,
+                'name' => "Product ".$faker->name,
                 'price' => rand(1000, 100000),
                 'age_limit_status' => 'no',
                 'start_age_range' => null,
