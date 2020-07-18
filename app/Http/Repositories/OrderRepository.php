@@ -30,19 +30,20 @@ class OrderRepository
     public function getUserOrders($userId) {
         $orders = OrderResource::collection($this->order->whereUserId($userId)->get());
         $all_orders = [];
-        $total_price = 0;
+        $sub_total_price = 0;
 
         foreach($orders as $order) {
-            $total_price+= $order->price;
+            $sub_total_price+= $order->price;
         }
 
         $user = $this->user_repo->getUser($userId);
-        $vat = ceil(($user->tax / 100) * $total_price);
+        $vat = ceil(($user->tax / 100) * $sub_total_price);
         
         array_push($all_orders, (object) [
             'orders' => $orders,
-            'total_price' => $total_price,
-            'vat' => $vat
+            'vat' => $vat,
+            'sub_total_price' => $sub_total_price,
+            'total_price' => $vat + $sub_total_price,
         ]);
 
         return $all_orders;
