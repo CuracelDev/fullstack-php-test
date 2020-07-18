@@ -16,7 +16,7 @@ const mix = require('laravel-mix');
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': __dirname + '/resources/assets/js'
+      '@': __dirname + '/resources/js'
     },
   },
 })
