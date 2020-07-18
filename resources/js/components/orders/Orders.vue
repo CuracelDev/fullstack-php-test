@@ -4,13 +4,15 @@
             <router-link :to="{name: 'products'}" class="btn btn-success">Place new order</router-link>
         </div>
         <div class="panel panel-default">
-            <h2>All Orders</h2>
+            <h2 align="center">All Orders</h2>
             
-            <p v-if="ordersError" align="center" style="color:red"> Orders not loaded. Ensure you are logged in </p>
+            <p v-if="count_orders == 0" align="center" style="color:red"> You have not placed any orders <br/><br/>
+            <router-link :to="{name: 'products'}" class="text-primary">Place new order</router-link>
+            </p>
             
             <p v-if="!ordersLoaded" align="center"> Please wait ... </p>
 
-            <div v-else class="panel-body">
+            <div v-if="count_orders > 0" class="panel-body">
                 <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -59,6 +61,7 @@
         data: function () {
             return {
                 orders: [],
+                count_orders: 0,
                 sub_total_price: '',
                 vat: '',
                 total_price: '',
@@ -78,6 +81,7 @@
             .then( async (response) => {
                 const details = await response.data.data[0];
                 this.orders = details.orders;
+                this.count_orders = details.orders.length;
                 this.sub_total_price = Functions.formatPrice(details.sub_total_price);
                 this.vat = Functions.formatPrice(details.vat);
                 this.total_price = Functions.formatPrice(details.total_price);
