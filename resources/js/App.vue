@@ -15,7 +15,7 @@
           <router-link to="/products" class="nav-link">Products</router-link>
         </li>
         <li v-if="loggedIn" class="nav-item">
-          <router-link to="/orders" class="nav-link">Orders</router-link>
+          <router-link to="/orders" class="nav-link">My Orders</router-link>
         </li>
         <li v-if="loggedIn" class="nav-item">
           <a href="#" @click="logout()" class="nav-link">Logout</a>

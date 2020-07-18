@@ -4,7 +4,7 @@
             <router-link :to="{name: 'products'}" class="btn btn-success">Place new order</router-link>
         </div>
         <div class="panel panel-default">
-            <h2 align="center">All Orders</h2>
+            <h2 align="center">My Orders</h2>
             
             <p v-if="count_orders == 0" align="center" style="color:red"> You have not placed any orders <br/><br/>
             <router-link :to="{name: 'products'}" class="text-primary">Place new order</router-link>
