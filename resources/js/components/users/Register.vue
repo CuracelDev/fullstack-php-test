@@ -53,6 +53,7 @@
 </template>
 
 <script>
+    import Functions from '@/components/functions';
 
     export default {
         data: function () {
@@ -71,8 +72,7 @@
             async registerUser() {
                 let register_btn = document.querySelector('#register-btn');
                 let register_status = document.querySelector('#register-status');
-                register_btn.disabled = true;
-                register_btn.innerHTML = "Please wait...";
+                Functions.disableBtn('Please wait...', register_btn);
                 
                 event.preventDefault();
                 const app = this;
@@ -91,8 +91,8 @@
                     .catch(function (response) {
                         register_status.innerHTML = "<p style='color:red'>Registration not successful. Try again</p>";
                     });
-                register_btn.disabled = false;
-                register_btn.innerHTML = "Sign up!";
+                
+                Functions.enableBtn('Sign up!', register_btn);
             }
         }
     }
