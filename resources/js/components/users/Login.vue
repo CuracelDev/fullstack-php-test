@@ -23,6 +23,7 @@
                 </div>
             </form>
         </div>
+        <p>New to minishop? <router-link :to="{name: 'register'}">Create a new account</router-link></p>
     </div>
 </template>
 
