@@ -31,6 +31,7 @@
 </template>
 
 <script>
+    import Functions from '@/components/functions';
 
     export default {
         data: function () {
@@ -48,9 +49,7 @@
                 let add_coupon_status = document.querySelector('#add-coupon-status');
                 const app = this;
                 const newCoupon = app.coupon;
-                
-                add_coupon_btn.disabled = true;
-                add_coupon_btn.innerHTML = "Please wait...";
+                Functions.disableBtn('Please wait...', add_coupon_btn);
                 
                 await axios.post('/api/v1/coupons/add', newCoupon)
                     .then(function (response) {
@@ -66,8 +65,8 @@
                     .catch(function (response) {
                         add_coupon_status.innerHTML = "<p style='color:red'>Coupon not added. Try again</p>";
                     });
-                add_coupon_btn.disabled = false;
-                add_coupon_btn.innerHTML = "Add";
+
+                Functions.enableBtn('Add', add_coupon_btn);
             }
         }
     }
