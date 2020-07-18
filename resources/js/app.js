@@ -1,16 +1,16 @@
 require('./bootstrap');
 
-window.Vue = require('vue');
+import Vue from "vue";
 import VueRouter from 'vue-router';
-window.Vue.use(VueRouter);
+Vue.use(VueRouter);
 
-import App from "./App.vue";
-import Login from './components/users/Login.vue';
-import Register from './components/users/Register.vue';
-import AddCoupon from './components/coupons/AddCoupon.vue';
-import Coupons from './components/coupons/Coupons.vue';
-import Products from './components/products/Products.vue';
-import Orders from './components/orders/Orders.vue';
+import App from "@/App.vue";
+import Login from '@/components/users/Login.vue';
+import Register from '@/components/users/Register.vue';
+import AddCoupon from '@/components/coupons/AddCoupon.vue';
+import Coupons from '@/components/coupons/Coupons.vue';
+import Products from '@/components/products/Products.vue';
+import Orders from '@/components/orders/Orders.vue';
 
 const routes = [
     {
@@ -36,7 +36,10 @@ const routes = [
     {
         path: '/orders', 
         component: Orders, 
-        name: 'orders'
+        name: 'orders',
+        meta: {
+            auth: true
+        },
     },
     {
         path: '/products', 
@@ -45,5 +48,17 @@ const routes = [
     },
 ]
 
-const router = new VueRouter({ mode: 'history', routes });
+const router = new VueRouter({ mode: 'history', routes })
+
+//if user is not logged in, redirect to login 
+router.beforeEach((to, from, next) => {
+    const loggedIn = localStorage.getItem('user')
+
+    if (to.matched.some(record => record.meta.auth) && !loggedIn) {
+        next('/');
+        return
+    }
+    next();
+});
+
 new Vue(Vue.util.extend({ router }, App)).$mount('#app');
