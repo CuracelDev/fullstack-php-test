@@ -11,6 +11,7 @@ import AddCoupon from '@/components/coupons/AddCoupon.vue';
 import Coupons from '@/components/coupons/Coupons.vue';
 import Products from '@/components/products/Products.vue';
 import Orders from '@/components/orders/Orders.vue';
+import Functions from '@/components/functions';
 
 const routes = [
     {
@@ -52,8 +53,8 @@ const router = new VueRouter({ mode: 'history', routes })
 
 //if user is not logged in, redirect to login 
 router.beforeEach((to, from, next) => {
-    const loggedIn = localStorage.getItem('user')
-
+    const loggedIn = Functions.getCookie('user');
+    
     if (to.matched.some(record => record.meta.auth) && !loggedIn) {
         next('/');
         return
