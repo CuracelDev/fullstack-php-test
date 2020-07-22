@@ -1919,8 +1919,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    title: String,
-    content: String,
+    name: String,
+    details: String,
     price: Number
   }
 });
@@ -1937,6 +1937,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ProductItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProductItem */ "./resources/js/products/ProductItem.vue");
+//
+//
 //
 //
 //
@@ -1994,14 +1996,10 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.loading = true;
-    setTimeout(function () {
-      _this.products = [{
-        id: 1,
-        title: "Item 1",
-        content: "This is item 1"
-      }];
+    axios.get("/api/products").then(function (res) {
+      _this.products = res.data;
       _this.loading = false;
-    }, 1500);
+    });
   }
 });
 
@@ -37677,11 +37675,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
+  return _c("div", { staticClass: "card w-100" }, [
     _c("div", { staticClass: "card-body" }, [
-      _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.title))]),
+      _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.name))]),
       _vm._v(" "),
-      _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(_vm.content))])
+      _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(_vm.details))])
     ])
   ])
 }
@@ -37720,17 +37718,19 @@ var render = function() {
                 _vm._l(_vm.productsInRow(row), function(product, column) {
                   return _c(
                     "div",
-                    { key: "row" + row + column, staticClass: "col" },
-                    _vm._l(_vm.products, function(product, index) {
-                      return _c("product-item", {
-                        key: index,
+                    {
+                      key: "row" + row + column,
+                      staticClass: "col d-flex align-items-stretch"
+                    },
+                    [
+                      _c("product-item", {
                         attrs: {
-                          title: product.title,
-                          content: product.content,
-                          price: 1000
+                          name: product.name,
+                          details: product.details,
+                          price: product.price
                         }
                       })
-                    }),
+                    ],
                     1
                   )
                 }),
