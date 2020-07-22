@@ -33,7 +33,7 @@ export default {
     this.loading = true;
     axios.get(`/api/products/${this.$route.params.id}`).then(res => {
       console.log(res);
-      this.product = res.data;
+      this.product = res.data.data;
       this.loading = false;
     });
   }

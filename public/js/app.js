@@ -1944,7 +1944,7 @@ __webpack_require__.r(__webpack_exports__);
     this.loading = true;
     axios.get("/api/products/".concat(this.$route.params.id)).then(function (res) {
       console.log(res);
-      _this.product = res.data;
+      _this.product = res.data.data;
       _this.loading = false;
     });
   }
@@ -2054,7 +2054,7 @@ __webpack_require__.r(__webpack_exports__);
 
     this.loading = true;
     axios.get("/api/products").then(function (res) {
-      _this.products = res.data;
+      _this.products = res.data.data;
       _this.loading = false;
     });
   }

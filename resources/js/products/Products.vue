@@ -56,7 +56,7 @@ export default {
     this.loading = true;
 
     axios.get("/api/products").then(res => {
-      this.products = res.data;
+      this.products = res.data.data;
       this.loading = false;
     });
   }
