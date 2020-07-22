@@ -12,11 +12,7 @@
           v-for="(product, column) in productsInRow(row)"
           :key="'row' + row + column"
         >
-          <product-item
-            :name="product.name"
-            :details="product.details"
-            :price="product.price"
-          ></product-item>
+          <product-item v-bind="product"></product-item>
         </div>
         <div
           class="col"

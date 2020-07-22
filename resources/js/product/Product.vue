@@ -1,0 +1,41 @@
+<template>
+  <div>
+    <div v-if="loading">Loading...</div>
+    <div
+      class="row"
+      v-else
+    >
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h1>{{ product.name }}</h1>
+            <hr>
+            <article>{{ product.details }}</article>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        &#8358;{{ product.price }}
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      product: null,
+      loading: false
+    };
+  },
+  created() {
+    this.loading = true;
+    axios.get(`/api/products/${this.$route.params.id}`).then(res => {
+      console.log(res);
+      this.product = res.data;
+      this.loading = false;
+    });
+  }
+};
+</script>
