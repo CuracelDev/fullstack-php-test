@@ -24,11 +24,6 @@ const routes = [
         path: "/coupon/add",
         component: AddCoupon,
         name: "addCoupon"
-    },
-    {
-        path: "/coupons",
-        component: Coupons,
-        name: "coupons"
     }
 ];
 

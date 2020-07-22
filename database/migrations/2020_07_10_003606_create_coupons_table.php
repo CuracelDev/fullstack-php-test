@@ -18,7 +18,7 @@ class CreateCouponsTable extends Migration
             $table->string('code')->unique();
             $table->integer('discount');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('product_id')->constrained('users');
+            $table->foreignId('product_id')->constrained('products');
             $table->timestamps();
         });
     }

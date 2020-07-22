@@ -43,7 +43,7 @@
         <div class="form-group">
           <label for="exampleFormControlSelect2">Select Product(s)</label>
           <select
-            name="product_id[]"
+            name="product_id"
             multiple
             class="form-control"
             id="exampleFormControlSelect2"
@@ -80,17 +80,20 @@ export default {
     };
   },
   methods: {
-    async addCoupon() {
+    addCoupon() {
       try {
         if (this.code && this.discount && this.user_id && this.product_id) {
-          console.log(this.product_id);
-          //   let data = {
-          //     code: this.code,
-          //     discount: this.discount,
-          //     user: this.user
-          //   };
+          let data = {
+            code: this.code,
+            discount: this.discount,
+            user_id: this.user_id,
+            product_id: this.product_id
+          };
 
-          //   await axios.post("", data);
+          axios.post("/api/coupons", data);
+
+          alert("Coupon created successfully!");
+          this.$router.push("/coupons");
         } else {
           alert("All fields are required!");
         }
