@@ -13,5 +13,10 @@ class Product extends Model
      */
     protected $fillable = [
         'name', 'price', 'details', 'coupon_needed', 'age_limit', 'purchase_limit'
-    ];
+    ];x
+
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
+    }
 }

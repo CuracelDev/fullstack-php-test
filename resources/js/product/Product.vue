@@ -8,21 +8,27 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-body">
-            <h1>{{ product.name }}</h1>
+            <h1>{{ product.name }}
+            </h1>
+            <pre>&#8358;{{ product.price }}</pre>
             <hr>
             <article>{{ product.details }}</article>
           </div>
         </div>
       </div>
       <div class="col-md-4">
-        &#8358;{{ product.price }}
+        <product-price v-bind="product"></product-price>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import ProductPrice from "./ProductPrice";
 export default {
+  components: {
+    ProductPrice
+  },
   data() {
     return {
       product: null,
