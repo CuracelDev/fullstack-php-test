@@ -19,6 +19,9 @@ class ProductShowResource extends JsonResource
             'name' => $this->name,
             'details' => $this->details,
             'price' => $this->price,
+            'coupon_needed' => $this->coupon_needed,
+            'age_limit' => $this->age_limit,
+            'purchase_limit' => $this->purchase_limit,
         ];
     }
 }
