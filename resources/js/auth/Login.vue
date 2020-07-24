@@ -13,7 +13,7 @@
                         :class="[{ 'is-invalid': errorFor('email') }]"
                     />
                     <div class="invalid-feedback" v-if="errors">
-                        {{ errors }}
+                        {{ errors.email }}
                     </div>
                 </div>
                 <div class="form-group">
@@ -27,7 +27,7 @@
                         :class="[{ 'is-invalid': errorFor('password') }]"
                     />
                     <div class="invalid-feedback" v-if="errors">
-                        {{ errors }}
+                        {{ errors.password }}
                     </div>
                 </div>
                 <button

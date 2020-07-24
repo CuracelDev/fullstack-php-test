@@ -39301,7 +39301,7 @@ var render = function() {
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
                   "\n                    " +
-                    _vm._s(_vm.errors) +
+                    _vm._s(_vm.errors.email) +
                     "\n                "
                 )
               ])
@@ -39342,7 +39342,7 @@ var render = function() {
             ? _c("div", { staticClass: "invalid-feedback" }, [
                 _vm._v(
                   "\n                    " +
-                    _vm._s(_vm.errors) +
+                    _vm._s(_vm.errors.password) +
                     "\n                "
                 )
               ])
