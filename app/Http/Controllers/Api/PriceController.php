@@ -46,9 +46,12 @@ class PriceController extends Controller
         if ($coupon->user->tax) {
             $tax = ($discounted_price * $coupon->user->tax) / 100;
             $tax = $tax - ($tax * $coupon->discount) / 100;
-        }
 
-        $total_price = $discounted_price + $tax;
+            $total_price = $discounted_price + $tax;
+        } else {
+            $tax = 0;
+            $total_price = $discounted_price;
+        }
 
         return response()->json([
             "initial_price" => $initial_price,
