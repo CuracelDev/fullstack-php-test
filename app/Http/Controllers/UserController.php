@@ -21,11 +21,11 @@ class UserController extends Controller
 
     public function register(Request $request) {
         $user = $this->user->register($request);
-        return $user;
+        return $this->created($user);
     }
 
     public function login(Request $request) {
         $user = $this->user->login($request);
-        return $user;
+        return $this->success($user);
     }
 }
