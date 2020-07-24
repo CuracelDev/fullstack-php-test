@@ -24,6 +24,20 @@ class PriceController extends Controller
         $coupon = Coupon::with('user')->where('product_id', $id)->first();
         $product = Product::findOrFail($id);
 
+        // check coupon is valid
+        if ($request->coupon !== $coupon->code) {
+            return response()->json([
+                "message" => "Coupon Code is Invalid!",
+            ], 400);
+        }
+
+        // check age limit
+        if ($coupon->user->age < $product->age_limit) {
+            return response()->json([
+                "message" => "User is below age limit for this product!",
+            ], 400);
+        }
+
         // calculate discounted price
         $initial_price = $product->price;
         $discounted_price = $initial_price - ($initial_price * $coupon->discount) / 100;
@@ -36,22 +50,12 @@ class PriceController extends Controller
 
         $total_price = $discounted_price + $tax;
 
-        // age limit
-        if ($coupon->user->age < $product->age_limit) {
-            return response()->json([
-                "message" => "User is below age limit for this product!"
-            ], 400);
-        }
-
-        return $request->coupon === $coupon->code
-        ? response()->json([
+        return response()->json([
             "initial_price" => $initial_price,
             "discounted_price" => $discounted_price,
             "tax" => $tax,
             "total_price" => $total_price,
-        ], 200)
-        : response()->json([
-            "message" => "Coupon Code is Invalid!",
-        ], 400);
+        ], 200);
+
     }
 }
