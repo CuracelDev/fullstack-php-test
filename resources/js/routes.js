@@ -3,6 +3,7 @@ import Products from "./products/Products";
 import Product from "./product/Product";
 import Coupons from "./coupons/Coupons";
 import AddCoupon from "./coupons/AddCoupon";
+import Login from "./auth/Login.vue";
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
         path: "/coupon/add",
         component: AddCoupon,
         name: "addCoupon"
+    },
+    {
+        path: "/auth/login",
+        component: Login,
+        name: "Login"
     }
 ];
 
