@@ -8,23 +8,30 @@
             >
 
             <ul class="navbar-nav">
-                <li class="nav-item">
+                <li class="nav-item" v-if="isLoggedIn">
                     <router-link class="nav-link" to="/coupons"
                         >Coupons</router-link
                     >
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="isLoggedIn">
                     <router-link class="nav-link" to="/coupon/add"
                         >Add Coupon</router-link
                     >
                 </li>
-                <li class="nav-item">
-                    <router-link class="nav-link" to="/auth/login"
+                <li class="nav-item" v-if="!isLoggedIn">
+                    <router-link class="nav-link" :to="{ name: 'login' }"
                         >Login</router-link
                     >
                 </li>
-                <li class="nav-item">
-                    <router-link class="nav-link" to="/">Register</router-link>
+                <li class="nav-item" v-if="!isLoggedIn">
+                    <router-link class="nav-link" :to="{ name: 'register' }"
+                        >Register</router-link
+                    >
+                </li>
+                <li class="nav-item" v-if="isLoggedIn">
+                    <a href="#" class="nav-link" @click.prevent="logout"
+                        >Logout</a
+                    >
                 </li>
             </ul>
         </nav>
@@ -34,3 +41,24 @@
         </div>
     </div>
 </template>
+
+<script>
+import { mapState } from "vuex";
+export default {
+    computed: {
+        ...mapState({
+            isLoggedIn: "isLoggedIn"
+        })
+    },
+    methods: {
+        async logout() {
+            try {
+                axios.post("/logout");
+                this.$store.dispatch("logout");
+            } catch (error) {
+                this.$store.dispatch("logout");
+            }
+        }
+    }
+};
+</script>
