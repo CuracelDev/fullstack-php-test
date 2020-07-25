@@ -24,7 +24,7 @@ class OrderController extends Controller
     public function addToCart(Request $request) {
         $userId = $this->getUserIdFromToken($request);
         $cart = $this->order->addToCart($request, $userId);
-        return $cart;
+        return $this->created($cart);
     }
 
     public function deleteOrder(Request $request, $orderId) {
