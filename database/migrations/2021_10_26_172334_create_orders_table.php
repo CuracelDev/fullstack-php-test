@@ -15,12 +15,15 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('hmo_id')->constrained();
+            $table->boolean('processed')->default(false);
             $table->json('items');
+            $table->timestamp('encounter_date');
             $table->timestamps();
         });
     }
 
-    /**
+    /**s
      * Reverse the migrations.
      *
      * @return void

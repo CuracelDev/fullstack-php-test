@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Hmo;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +18,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('submit-order');
 });
-

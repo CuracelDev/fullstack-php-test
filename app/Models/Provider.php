@@ -2,27 +2,27 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Hmo extends Model
-{   
+class Provider extends Model
+{
     use HasFactory;
-    
+
     protected $guarded = ['id'];
 
     public function orders()
     {
         return $this->hasMany(Order::class);
-    }   
-
+    }
+    
     /**
-     * The providers that belong to the Hmo
+     * The hmos that belong to the Provider
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function providers()
+    public function hmos()
     {
-        return $this->belongsToMany(Provider::class, 'orders')->distinct();
+        return $this->belongsToMany(Hmo::class, 'orders')->using(Order::class);
     }
 }

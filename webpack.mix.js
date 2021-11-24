@@ -12,4 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    // .vue({
+    //     extractStyles: 'public/css/sfc.css'
+    // })
     .sass('resources/sass/app.scss', 'public/css');
