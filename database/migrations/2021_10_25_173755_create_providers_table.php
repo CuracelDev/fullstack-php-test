@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHmosTable extends Migration
+class CreateProvidersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,9 @@ class CreateHmosTable extends Migration
     public function up()
     {
         Schema::create(
-            'hmos', function (Blueprint $table) {
+            'providers', function (Blueprint $table) {
                 $table->id();
                 $table->string('name');
-                $table->string('code')->unique();
-                $table->string('email');
-                $table->enum('batch_pref', ['encounter_date', 'date_created']);
                 $table->timestamps();
             }
         );
@@ -32,6 +29,6 @@ class CreateHmosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hmos');
+        Schema::dropIfExists('providers');
     }
 }

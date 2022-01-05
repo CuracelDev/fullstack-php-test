@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')
+    ->get(
+        '/user', function (Request $request) {
+            return $request->user();
+        }
+    );
+
+Route::post('/orders', [OrderController::class, 'store'])->name('order.store');
+Route::get('/get-orders', [OrderController::class, 'index'])->name('order.index');

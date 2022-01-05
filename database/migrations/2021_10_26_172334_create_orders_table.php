@@ -13,11 +13,16 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->json('items');
-            $table->timestamps();
-        });
+        Schema::create(
+            'orders', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('hmo_id')->constrained();
+                $table->foreignId('provider_id')->constrained();
+                $table->timestamp('encounter_date');
+                $table->json('items');
+                $table->timestamps();
+            }
+        );
     }
 
     /**
@@ -27,6 +32,8 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
+        Schema::dropConstrainedForeignId('provider_id');
+        Schema::dropConstrainedForeignId('hmo_id');
         Schema::dropIfExists('orders');
     }
 }

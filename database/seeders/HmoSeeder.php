@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Hmo;
+use App\Models\Provider;
+use App\Models\Order;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class HmoSeeder extends Seeder
 {
@@ -21,6 +23,12 @@ class HmoSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('hmos')->insert($this->hmos);
+        Hmo::factory()->count(5)->ordersByEncounterDate()->create();
+        Hmo::factory()->count(5)->ordersByDateCreated()->create();
+
+        Provider::factory()->count(3)->create();
+
+        Order::factory()->count(3)->create();
+
     }
 }
