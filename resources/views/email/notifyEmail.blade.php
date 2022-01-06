@@ -5,7 +5,7 @@
 </head>
 <body>
 	<p>Hi {{$hmo->name}},</p>
-	<p>This is test mail to notify you that your orders have been processed</p>  
+	<p>This is a mail to notify you that your orders have been processed</p>  
 	<p>Thanks & Regards.</p>
 	<strong>{{config('app.name')}}</strong>
 </body>

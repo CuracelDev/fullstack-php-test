@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\BatchResource;
+use App\Models\Hmo;
 use App\Models\Batch;
+use App\Mail\OrderMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Resources\BatchResource;
 
 class BatchController extends Controller
 {
@@ -41,35 +44,36 @@ class BatchController extends Controller
     /**
      * This will batch using month of encounter
      *
-     * @param $string 
+     * @param Hmo $hmo 
      * 
      * @return \Illuminate\Http\Response
      */
-    public function batchByEncounterDate()
+    public function batchByEncounterDate(Hmo $hmo)
     {
-        return $this->_batchOrders('encounter_date');
+        return $this->_batchOrders('encounter_date', $hmo);
     }
 
     /**
      * This will batch using the date encounter was sent
      *
-     * @param $string 
+     * @param Hmo $hmo 
      * 
      * @return \Illuminate\Http\Response
      */
-    public function batchBySentDate()
+    public function batchBySentDate(Hmo $hmo)
     {
-        return $this->_batchOrders('created_at');
+        return $this->_batchOrders('created_at', $hmo);
     }
 
     /**
      * Batch orders based on the specified date format
      *
      * @param $dateFormat 
+     * @param Hmo $hmo 
      * 
      * @return \Illuminate\Http\Response
      */
-    private function _batchOrders($dateFormat)
+    private function _batchOrders($dateFormat, Hmo $hmo)
     {
         $results = [];
 
@@ -80,6 +84,7 @@ class BatchController extends Controller
             $provider .= " " . $date;
             $results[] = $provider;
         }
+        Mail::to($hmo)->send(new OrderMail($hmo));
         return BatchResource::collection([$results]);
     }
 
