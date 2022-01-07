@@ -17,3 +17,6 @@ Route::get('/', function () {
     return view('submit-order');
 });
 
+Route::get('/login', function () {
+    return view('auth.login');
+});

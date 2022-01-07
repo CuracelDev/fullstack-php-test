@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHmosTable extends Migration
+class CreateUserBuyCountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateHmosTable extends Migration
      */
     public function up()
     {
-        Schema::create('hmos', function (Blueprint $table) {
+        Schema::create('user_buy_counts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('code')->unique();
+            $table->foreignId('product_id')->references('id')->on('products');
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateHmosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hmos');
+        Schema::dropIfExists('user_buy_counts');
     }
 }

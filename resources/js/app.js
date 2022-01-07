@@ -26,7 +26,17 @@ Vue.component('submit-order', require('./components/SubmitOrder.vue').default);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+const routes = [
+    {path:'/submit-order'}
+]
+
+const router = new VueRouter({
+
+})
+
+Vue.use(VueRouter)
 
 const app = new Vue({
+    router,
     el: '#app',
 });

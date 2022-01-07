@@ -37541,7 +37541,7 @@ var staticRenderFns = [
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _vm._v(
-                "\n                    Order details here\n                "
+                "\n                    Order details here just to check if this true\n                "
               )
             ])
           ])
@@ -49750,7 +49750,13 @@ Vue.component('submit-order', __webpack_require__(/*! ./components/SubmitOrder.v
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+var routes = [{
+  path: '/submit-order'
+}];
+var router = new VueRouter({});
+Vue.use(VueRouter);
 var app = new Vue({
+  router: router,
   el: '#app'
 });
 
@@ -49888,8 +49894,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/drflash/www/curacel/fullstack-php-test/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/drflash/www/curacel/fullstack-php-test/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\USER\Documents\public\fullstack-php-test\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\USER\Documents\public\fullstack-php-test\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
