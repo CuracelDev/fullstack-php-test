@@ -37,33 +37,6 @@ class CreateOrderRequest extends FormRequest
     }
 
     /**
-     * The error massage that will be displayed 
-     * 
-     * @return array
-     */
-    // public function messages()
-    // {
-    //     [
-    //         'hmoCode.exists' => 'This Code is not Valid',
-    //         'hmoCode.required' => 'The code for HMO is needed',
-    //         'orderItems.required' => 'Please submit some orders',
-    //         'totalPrice.required' => "How come you don't have a total",
-    //         'encounterDate.required' => 'Please choose a Date',
-    //         'encounterDate.date' => 'Please choose a true Date',
-    //         'orderItems.*.item.required' => 'Please give an item name',
-    //         'orderItems.*.item.required' => 'Please give an item name',
-    //         'orderItems.*.qty.required' => 'Please give a quantity',
-    //         'orderItems.*.qty.integer' => 'Please give a quantity that is number',
-    //         'orderItems.*.qty.min' => 'Please give a quantity that is aleast 1',
-    //         'orderItems.*.uPrice.required' => 'Please give a quantity that is number',
-    //         'orderItems.*.uPrice.numeric' => 'Please give a unit price that is number',
-    //         'orderItems.*.uPrice.min' => 'Please give a unit price that is aleast 1',
-    //         'orderItems.*.subTotal.numeric' => 'Please give a unit price that is number',
-    //         'orderItems.*.subTotal.min' => 'Please give a unit price that is aleast 1',
-    //     ];
-    // }
-
-    /**
      * Check if the total price is not tempered with
      *
      * @param \Illuminate\Validation\Validator $validator 
@@ -76,7 +49,8 @@ class CreateOrderRequest extends FormRequest
             function ($validator) {
                 if (!$this->isTotalPriceValid()) {
                     $validator->errors()->add(
-                        'totalPrice', 'The total price is invalid'
+                        'totalPrice',
+                        'The total price is invalid'
                     );
                 }
             }

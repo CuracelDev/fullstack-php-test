@@ -93,7 +93,6 @@
                 item: '',
                 uPrice: 0.00,
                 qty: 0,
-                totalPrice: 0.00,
                 subTotal: 0.00
             }],
             hmoCode: '',

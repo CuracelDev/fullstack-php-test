@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateOrderRequest;
 use App\Models\Hmo;
 use App\Models\Order;
 use App\Models\Provider;
+use Illuminate\Support\Facades\Log;
 use App\Http\Resources\OrderResource;
+use App\Http\Requests\CreateOrderRequest;
 
 class OrderController extends Controller
 {
@@ -31,7 +32,7 @@ class OrderController extends Controller
      */
     public function store(CreateOrderRequest $request)
     {
-        
+        Log::info($request);
         $order = Order::firstOrCreate($this->dataToStore($request->validated()));
 
         return $order;
