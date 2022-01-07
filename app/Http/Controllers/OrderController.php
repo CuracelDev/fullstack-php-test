@@ -31,17 +31,7 @@ class OrderController extends Controller
      */
     public function store(CreateOrderRequest $request)
     {
-        $hmo = Hmo::where('code', $request->validate(['hmoCode']))->first();
-
-        $batchData = [
-            'hmoId' => $hmo->id,
-            'encounterDate' => $request->input('encounterDate')
-        ];
-
-
-        $batchController = new BatchController;
-        $batchController->store($batchData);
-
+        
         $order = Order::firstOrCreate($this->dataToStore($request->validated()));
 
         return $order;

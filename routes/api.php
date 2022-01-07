@@ -26,10 +26,14 @@ Route::middleware('auth:api')
 Route::post('/orders', [OrderController::class, 'store'])->name('order.store');
 Route::get('/get-orders', [OrderController::class, 'index'])->name('order.index');
 Route::get(
-    'batch/{hmo}/encounter/date', 
+    'batch/{hmo}/encounter/date/{date}', 
     [BatchController::class, 'batchByEncounterDate']
 )->name('batch.encounter-date');
 Route::get(
-    'batch/{hmo}/sent/date', 
+    'batch/{hmo}/sent/date/{date}', 
     [BatchController::class, 'batchBySentDate']
 )->name('batch.send-date');
+Route::get(
+    'batch/{hmo}/get-all', 
+    [BatchController::class, 'index']
+)->name('batch.index');

@@ -11,6 +11,7 @@ class Batch extends Model
 
     protected $fillable = [
         'hmo_id',
+        'order_ids',
         'encounter_date'
     ];
 

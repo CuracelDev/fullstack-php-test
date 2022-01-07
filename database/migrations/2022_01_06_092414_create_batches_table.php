@@ -18,6 +18,7 @@ class CreateBatchesTable extends Migration
                 $table->id();
                 $table->foreignId('hmo_id')->constrained();
                 $table->timestamp('encounter_date');
+                $table->json('order_ids');
                 $table->timestamps();
             }
         );
