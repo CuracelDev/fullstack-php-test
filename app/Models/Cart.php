@@ -21,15 +21,18 @@ class Cart extends Model
         return $this->hasMany(CartItems::class);
     }
 
-    public function sumIt()
-    {
-        return $this->items()->sum('total_amount');
-    }
-
     public function getTotalAttribute()
     {
-        return $this->items->sum(function (CartItems $item) {
-            return $item->product_price * $item->quantity;
-        });
+        return $this->items->sum('total_amount');
+    }
+
+    public function getPercentAttribute()
+    {
+        return $this->items->sum('total_amount') * $this->user->tax_percent / 100;
+    }
+
+    public function getDiscountAttribute()
+    {
+        return $this->percent + $this->total;
     }
 }

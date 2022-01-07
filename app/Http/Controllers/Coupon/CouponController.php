@@ -18,13 +18,13 @@ class CouponController extends Controller
 
     public function store(Request $request)
     {
-        if (!(Coupon::where('coupon_code', 'COP-0001001')->first())) {
-            $coupon_code = 'COP-0001001';
+        if (!(Coupon::where('code', 'COP-01001')->first())) {
+            $coupon_code = 'COP-01001';
         } else {
             $number = Coupon::get()->last()->coupon_code;
-            $number = str_replace('EVT-', "", $number);
+            $number = str_replace('COP-', "", $number);
             $number = str_pad($number + 1, 7, '0', STR_PAD_LEFT);
-            $coupon_code = 'EVT-' . $number;
+            $coupon_code = 'COP-' . $number;
         }
 
         $coupon = Coupon::create([
