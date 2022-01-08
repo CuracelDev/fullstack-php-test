@@ -18,7 +18,7 @@ class CartResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'grand_total' => $this->total,
-            'Plus_Tax' => $this->discount,
+            'Plus_Tax' => $this->tax,
             'items' => $this->items,
         ];
     }

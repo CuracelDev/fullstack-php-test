@@ -11,7 +11,7 @@ class CouponController extends Controller
 {
     public function index()
     {
-        $coupon = Coupon::get();
+        $coupon = Coupon::with('product','user')->get();
 
         return response($coupon, Response::HTTP_OK);
     }
@@ -33,7 +33,8 @@ class CouponController extends Controller
             'code' => $coupon_code,
             'discount_percent' => $request->discount_percent,
             'start_at' => $request->start_at,
-            'end_at' => $request->end_at
+            'end_at' => $request->end_at,
+            'active' => 1
         ]);
 
         return response($coupon, Response::HTTP_CREATED);

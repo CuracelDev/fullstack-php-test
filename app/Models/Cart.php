@@ -31,7 +31,7 @@ class Cart extends Model
         return $this->items->sum('total_amount') * $this->user->tax_percent / 100;
     }
 
-    public function getDiscountAttribute()
+    public function getTaxAttribute()
     {
         return $this->percent + $this->total;
     }

@@ -19,7 +19,6 @@ class CartController extends Controller
     {
         $cart = Cart::get();
 
-        // return response($cart, Response::HTTP_OK);
         return CartResource::collection($cart);
     }
 
@@ -45,7 +44,6 @@ class CartController extends Controller
             $getPercent = $getDiscount->discount_percent/100 * $request->product_price;
             
             $getDiscountedPrice = $request->product_price - $getPercent;
-            // dd($getDiscountedPrice);
 
             $item = CartItems::create([
                 'cart_id' => $cart->id,
@@ -70,7 +68,6 @@ class CartController extends Controller
             'total_amount' => (int) $request->quantity * $request->product_price,
         ]);
 
-        return response('it is null');
-        
+        return response($item, Response::HTTP_CREATED);
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Coupon\CouponController;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,9 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/products', [ProductController::class, 'index']);
 
 Route::group(["middleware" => "auth:api"], function(){
+
+    Route::get('/users', [UserController::class, 'index']);
+
     Route::post('/cart', [CartController::class, 'addCartItems']);
     Route::get('/getcart', [CartController::class, 'index']);
     
