@@ -6,6 +6,7 @@ use App\Models\Hmo;
 use Tests\TestCase;
 use App\Models\Batch;
 use App\Models\Order;
+use Illuminate\Support\Str;
 use Illuminate\Http\Response;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -42,29 +43,29 @@ class OrderTest extends TestCase
         $batch = Batch::factory()
             ->count(5)->sequence(
                 [
-                    'hmo_id' => '1', 
-                    'encounter_date' => '2022-01-05', 
-                    'order_ids' => json_encode(['4','3','2'])
+                    'hmo_id' => '1',
+                    'encounter_date' => '2022-01-05',
+                    'order_ids' => json_encode(['4', '3', '2'])
                 ],
                 [
-                    'hmo_id' => '2', 
-                    'encounter_date' => '2022-01-06', 
-                    'order_ids' => json_encode(['4','3','2'])
+                    'hmo_id' => '2',
+                    'encounter_date' => '2022-01-06',
+                    'order_ids' => json_encode(['4', '3', '2'])
                 ],
                 [
-                    'hmo_id' => '3', 
-                    'encounter_date' => '2022-01-07', 
-                    'order_ids' => json_encode(['4','3','2'])
+                    'hmo_id' => '3',
+                    'encounter_date' => '2022-01-07',
+                    'order_ids' => json_encode(['4', '3', '2'])
                 ],
                 [
-                    'hmo_id' => '4', 
-                    'encounter_date' => '2022-01-08', 
-                    'order_ids' => json_encode(['4','3','2'])
+                    'hmo_id' => '4',
+                    'encounter_date' => '2022-01-08',
+                    'order_ids' => json_encode(['4', '3', '2'])
                 ],
             )->create();
 
-            $this->get(route('batch.index', $batch[0]['hmo_id']))
-                ->assertStatus(200);
+        $this->get(route('batch.index', $batch[0]['hmo_id']))
+            ->assertStatus(200);
     }
 
     /**
@@ -89,7 +90,7 @@ class OrderTest extends TestCase
                 ),
             ),
             'totalPrice' => 600,
-            'encounterDate' => '2022-01-07', 
+            'encounterDate' => '2022-01-07',
         ];
         $this->post(route('order.store'), $orderPayload)
             ->assertStatus(201);
@@ -119,7 +120,7 @@ class OrderTest extends TestCase
             [
 
                 'name' => 'James',
-                'code' => 'JAM-AD',
+                'code' => 'ABC-' . rand(10, 99),
                 'email' => 'James@test.com',
                 'batch_pref' => 'encounter_date'
             ]
@@ -138,7 +139,7 @@ class OrderTest extends TestCase
         $hmo = Hmo::factory()->sequence(
             [
                 'name' => 'James',
-                'code' => 'JAM-DA',
+                'code' => 'CBA-' . rand(10, 99),
                 'email' => 'James@test.com',
                 'batch_pref' => 'date_created'
             ]
@@ -174,7 +175,7 @@ class OrderTest extends TestCase
     {
         $this->withHeaders(
             [
-            'Accept' => 'application/json',
+                'Accept' => 'application/json',
             ]
         )->json('POST', route('order.store'), $orderPayload)
             ->assertStatus(422)
@@ -237,6 +238,4 @@ class OrderTest extends TestCase
             ],
         ];
     }
-
-    
 }
