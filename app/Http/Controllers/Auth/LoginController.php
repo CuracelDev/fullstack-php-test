@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 class LoginController extends Controller
 {
+    // Login user with jwt token and cookie
     public function login(Request $request)
     {
         $request->validate(['email' => 'required|email', 'password' => 'required']);

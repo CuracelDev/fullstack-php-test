@@ -26,6 +26,7 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::group(["middleware" => "auth:api"], function(){
 
     Route::get('/users', [UserController::class, 'index']);
+    Route::get('/current-user', [UserController::class, 'getCurrentLoggedInUser']);
 
     Route::post('/cart', [CartController::class, 'addCartItems']);
     Route::get('/getcart', [CartController::class, 'index']);

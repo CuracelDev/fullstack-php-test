@@ -1,20 +1,27 @@
 <template>
   <div>
-    this is secured
+    <Nav :user="user"></Nav>
   </div>
 </template>
 
 <script>
+import Nav from './securedComponents/navbar.vue';
 export default {
- data(){
-  return {
+ setup(){
+    const router = useRouter();
+    const user = ref('');
 
-    mounted(){
-     console.log('hello');
-    }
-
+  onMounted(async () => {
+      try{
+        const response = await axios.get('user');
+        user.value = response.data.data
+      } catch(e) {
+        router.push('/login')
+      }
+    })
+    return {user}
   }
- }
+
 }
 </script>
 

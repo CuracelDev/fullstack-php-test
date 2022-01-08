@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Coupon;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CouponRequest;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class CouponController extends Controller
 {
+    // get all coupons with all thier relationships
     public function index()
     {
         $coupon = Coupon::with('product','user')->get();
@@ -16,12 +18,14 @@ class CouponController extends Controller
         return response($coupon, Response::HTTP_OK);
     }
 
-    public function store(Request $request)
+    // store a new coupon
+    public function store(CouponRequest $request)
     {
-        if (!(Coupon::where('code', 'COP-01001')->first())) {
-            $coupon_code = 'COP-01001';
+        // generate a unique incrementing coupon code for each user
+        if (!(Coupon::where('code', 'COP-001001')->first())) {
+            $coupon_code = 'COP-001001';
         } else {
-            $number = Coupon::get()->last()->coupon_code;
+            $number = Coupon::get()->last()->code;
             $number = str_replace('COP-', "", $number);
             $number = str_pad($number + 1, 7, '0', STR_PAD_LEFT);
             $coupon_code = 'COP-' . $number;

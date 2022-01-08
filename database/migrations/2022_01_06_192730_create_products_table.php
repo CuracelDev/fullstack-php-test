@@ -19,7 +19,8 @@ class CreateProductsTable extends Migration
             $table->string('description');
             $table->string('price');
             $table->boolean('coupon_enabled')->default(0);
-            $table->boolean('coupon_code')->nullable();
+            $table->boolean('high_danger_limit')->default(0);
+            // $table->boolean('coupon_code')->nullable();
             $table->timestamps();
         });
     }

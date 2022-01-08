@@ -29,7 +29,6 @@ class CartRequest extends FormRequest
             'quantity' => 'required|integer',
             'product_price' => 'required',
             'product_name' => 'required',
-            // 'total_amount' => 'required'
         ];
     }
 }

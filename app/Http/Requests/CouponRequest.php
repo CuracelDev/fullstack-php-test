@@ -26,8 +26,10 @@ class CouponRequest extends FormRequest
         return [
             'product_id' => 'required',
             'user_id' => 'required',
-            'code' => 'required',
-            'discount_percent' => 'required|decimal',
+            'discount_percent' => 'required',
+            'code' => 'unique:coupons',
+            'start_at' => 'required',
+            'end_at' => 'required'
         ];
     }
 }
