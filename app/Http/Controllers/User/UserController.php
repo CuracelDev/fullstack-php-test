@@ -18,7 +18,7 @@ class UserController extends Controller
         return response($user, Response::HTTP_OK);
     }
 
-    // get currently logged in user
+    // get currently logged in user data
     public function getCurrentLoggedInUser()
     {
         $user = Auth::user();
