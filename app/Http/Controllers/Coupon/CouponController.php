@@ -10,10 +10,11 @@ use Illuminate\Http\Response;
 
 class CouponController extends Controller
 {
-    // get all coupons with all thier relationships
+    // get all coupons with all thier relationships with the use of eager loading
     public function index()
     {
-        $coupon = Coupon::with('product','user')->get();
+        $coupon = Coupon::with('product:id,product_title,description,price','user:id,email,tax_percent')
+            ->get();
 
         return response($coupon, Response::HTTP_OK);
     }

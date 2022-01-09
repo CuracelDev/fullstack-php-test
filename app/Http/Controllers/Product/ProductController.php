@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
+    // get all products
     public function index()
     {
         $product = Products::get();

@@ -25,6 +25,6 @@ class LoginController extends Controller
             return response(['token' => $token], Response::HTTP_OK)->withCookie($cookie);
         }
 
-        return response(["error" => "Email or password do not match"], Response::HTTP_BAD_REQUEST);
+        return response(["error" => "Email or Password do not match"], Response::HTTP_BAD_REQUEST);
     }
 }

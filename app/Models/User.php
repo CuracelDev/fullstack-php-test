@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Cart::class);
     }
+
+    public function tax()
+    {
+        return $this->hasOne(Tax::class);
+    }
 }

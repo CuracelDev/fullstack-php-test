@@ -41,13 +41,14 @@ class CartController extends Controller
         $coupon = Coupon::where('user_id', $user_id)->where('product_id', $request->product_id)
             ->where('active', 1)->exists();
         
-        if ($coupon) {
+        // so it is true the user has a coupon, now, lets check if the coupon inputted is correct
+        $check = Coupon::where('code', $request->coupon_code)->first();
+        
+        // if coupon exists(true) and the coupon code field is not null, then, this will run
+        if ($coupon && $request->coupon_code != null) {
             
-            // so it is true the user has a coupon, now, lets check if the entered coupon is correct
-            $check = Coupon::where('code', '=', $request->coupon_code)->exists();
-
             // if it is not correct, then we return a bad request error
-            if(!$check){
+            if(!$check && $request->coupon_code != null){
                 return response(['message' => 'Coupon not correct'], Response::HTTP_BAD_REQUEST);
             };
 
@@ -76,7 +77,7 @@ class CartController extends Controller
             return response($item, Response::HTTP_OK);
         };
 
-        // if user doesn't have a coupon, then there will be not be discounted price
+        // if user doesn't have a coupon and the coupon field is null, then, run this instead
         $item = CartItems::create([
             'cart_id' => $cart->id,
             'product_id' => $request->product_id,
@@ -87,6 +88,6 @@ class CartController extends Controller
             'total_amount' => (int) $request->quantity * $request->product_price,
         ]);
 
-        return response($item, Response::HTTP_CREATED);
+        return response($item, Response::HTTP_OK);
     }
 }
