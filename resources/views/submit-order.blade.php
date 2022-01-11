@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <submit-order></submit-order>
+<div class="container-fluid">
+    <div class="row">
+        <home-page></home-page>
     </div>
 </div>
 @endsection

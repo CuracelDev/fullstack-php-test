@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('{any}', function () {
     return view('submit-order');
-});
+})->where('any','.*');
 

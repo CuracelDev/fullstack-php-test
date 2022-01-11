@@ -1,4 +1,6 @@
 window._ = require('lodash');
+import store from './store';
+
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -22,6 +24,21 @@ try {
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+window.axios.interceptors.request.use(
+    function(config) {
+        const token = store.state.auth.token;
+        config.headers.Authorization = `Bearer ${token}`;
+        config.timeout = 60 * 1000;
+        return config;
+    },
+    function(error) {
+        //Do something
+        return Promise.reject(error);
+    }
+);
+
+window.axios.defaults.headers['Authorization'] = 'Bearer ' + store.state.auth.token;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
