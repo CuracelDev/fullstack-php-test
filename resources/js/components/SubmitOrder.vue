@@ -28,13 +28,13 @@
                                 class="row align-items-end mb-3"
                             >
                                 <div class="col">
-                                    <input class="form-control" v-model="item.item" />
+                                    <input type="text" class="form-control" v-model="item.item" />
                                 </div>
                                 <div class="col">
-                                    <input class="form-control" v-model="item.unit" />
+                                    <input type="number" class="form-control" v-model="item.unit" />
                                 </div>
                                 <div class="col">
-                                    <input class="form-control" v-model="item.qty" />
+                                    <input type="number" @input="($event) => handleQuantityChange(idx, $event.target.value)" class="form-control" :value="item.qty" />
                                 </div>
                                 <div class="col">
                                     <input disabled v-model="item.subtotal" class="form-control" />
@@ -56,7 +56,7 @@
 
                                 <div class="col-4 d-flex align-items-center">
                                     <label for="total" class="form-label mr-2">Total</label>
-                                    <input :value="totalOrders" id="total" class="form-control" />
+                                    <input disabled :value="totalOrders" id="total" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                 <label for="hmo" class="form-label">HMO</label>
                                 <select type="text" class="form-control form-select" id="hmo" v-model="hmo" >
                                     <option selected disabled value="">Choose...</option>
-                                    <option v-for="hmo in hmos" :value="hmo.code">{{hmo.name}}</option>
+                                    <option v-for="hmo in hmos" :key="hmo.code" :value="hmo.code">{{hmo.name}}</option>
                                 </select>
                             </div>
 
@@ -79,7 +79,7 @@
                             </div>
 
                             <div class="col-md-12" style="margin-top: 15px">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button @click="handleSubmit" type="submit" class="btn btn-primary">Submit</button>
                              </div>
                         </div>
 
@@ -104,14 +104,13 @@
                         item: "",
                         unit: 0,
                         qty: 0,
-                        subtotal: 20
+                        subtotal: 0
                     },
                 ],
                 provider: '',
                 encounter_date: '',
                 hmo: '',
                 hmos: [],
-                total: 0
             }
         },
         methods: {
@@ -131,8 +130,34 @@
                 this.items.splice(idx, 1);
             },
 
-            calculateSubtotal({qty, unit}) {
-                return unit * qty;
+            handleQuantityChange(idx, quanity) {
+                let item = Object.assign({}, this.items[idx]);
+                item.qty = quanity
+                item.subtotal = item.unit * quanity;
+
+                this.items.splice(idx, 1, item)
+            },
+
+            async handleSubmit() {
+                const payload  = {
+                    encounter_date: this.encounter_date,
+                    provider: this.provider,
+                    orders: this.items,
+                    total: this.totalOrders,
+                    hmo_code: this.hmo
+                }
+                const response = await fetch('/api/orders', {
+                    method: 'POST',
+                    body: JSON.stringify(payload),
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                })
+
+                const { data } = await response.json();
+
+                console.log(data)
             }
         },
         async mounted() {

@@ -2047,13 +2047,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         item: "",
         unit: 0,
         qty: 0,
-        subtotal: 20
+        subtotal: 0
       }],
       provider: '',
       encounter_date: '',
       hmo: '',
-      hmos: [],
-      total: 0
+      hmos: []
     };
   },
   methods: {
@@ -2068,41 +2067,87 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     handleRemove: function handleRemove(idx) {
       this.items.splice(idx, 1);
     },
-    calculateSubtotal: function calculateSubtotal(_ref2) {
-      var qty = _ref2.qty,
-          unit = _ref2.unit;
-      return unit * qty;
+    handleQuantityChange: function handleQuantityChange(idx, quanity) {
+      var item = Object.assign({}, this.items[idx]);
+      item.qty = quanity;
+      item.subtotal = item.unit * quanity;
+      this.items.splice(idx, 1, item);
+    },
+    handleSubmit: function handleSubmit() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var payload, response, _yield$response$json, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                payload = {
+                  encounter_date: _this.encounter_date,
+                  provider: _this.provider,
+                  orders: _this.items,
+                  total: _this.totalOrders,
+                  hmo_code: _this.hmo
+                };
+                _context.next = 3;
+                return fetch('/api/orders', {
+                  method: 'POST',
+                  body: JSON.stringify(payload),
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  }
+                });
+
+              case 3:
+                response = _context.sent;
+                _context.next = 6;
+                return response.json();
+
+              case 6:
+                _yield$response$json = _context.sent;
+                data = _yield$response$json.data;
+                console.log(data);
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var response, _yield$response$json, data;
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var response, _yield$response$json2, data;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
-              _context.next = 2;
+              _context2.next = 2;
               return fetch('/api/hmos');
 
             case 2:
-              response = _context.sent;
-              _context.next = 5;
+              response = _context2.sent;
+              _context2.next = 5;
               return response.json();
 
             case 5:
-              _yield$response$json = _context.sent;
-              data = _yield$response$json.data;
-              _this.hmos = data;
+              _yield$response$json2 = _context2.sent;
+              data = _yield$response$json2.data;
+              _this2.hmos = data;
 
             case 8:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee);
+      }, _callee2);
     }))();
   }
 });
@@ -38471,6 +38516,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
+                          attrs: { type: "text" },
                           domProps: { value: item.item },
                           on: {
                             input: function($event) {
@@ -38494,6 +38540,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
+                          attrs: { type: "number" },
                           domProps: { value: item.unit },
                           on: {
                             input: function($event) {
@@ -38508,22 +38555,15 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "col" }, [
                         _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: item.qty,
-                              expression: "item.qty"
-                            }
-                          ],
                           staticClass: "form-control",
+                          attrs: { type: "number" },
                           domProps: { value: item.qty },
                           on: {
                             input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(item, "qty", $event.target.value)
+                              return _vm.handleQuantityChange(
+                                idx,
+                                $event.target.value
+                              )
                             }
                           }
                         })
@@ -38606,7 +38646,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("input", {
                         staticClass: "form-control",
-                        attrs: { id: "total" },
+                        attrs: { disabled: "", id: "total" },
                         domProps: { value: _vm.totalOrders }
                       })
                     ]
@@ -38694,9 +38734,11 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _vm._l(_vm.hmos, function(hmo) {
-                        return _c("option", { domProps: { value: hmo.code } }, [
-                          _vm._v(_vm._s(hmo.name))
-                        ])
+                        return _c(
+                          "option",
+                          { key: hmo.code, domProps: { value: hmo.code } },
+                          [_vm._v(_vm._s(hmo.name))]
+                        )
                       })
                     ],
                     2
@@ -38736,7 +38778,24 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _vm._m(1)
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-md-12",
+                    staticStyle: { "margin-top": "15px" }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" },
+                        on: { click: _vm.handleSubmit }
+                      },
+                      [_vm._v("Submit")]
+                    )
+                  ]
+                )
               ]
             )
           ])
@@ -38769,22 +38828,6 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "col" })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-md-12", staticStyle: { "margin-top": "15px" } },
-      [
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("Submit")]
-        )
-      ]
-    )
   }
 ]
 render._withStripped = true
