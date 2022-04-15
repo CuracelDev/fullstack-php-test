@@ -4,8 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Events\OrderStored;
 use App\Models\Hmo;
-use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -25,7 +23,7 @@ class OrderControllerTest extends TestCase
             'batch_by' => Hmo::BATCH_BY_MONTH,
         ]);
 
-         $this->postJson('/api/orders', [
+        $this->postJson('/api/orders', [
              'provider' => $this->faker->company,
              'hmo_code' => $hmo->code,
              'orders' => [
@@ -57,6 +55,6 @@ class OrderControllerTest extends TestCase
                  ],
              ]);
 
-         Event::assertDispatched(OrderStored::class);
+        Event::assertDispatched(OrderStored::class);
     }
 }

@@ -26,8 +26,8 @@ class NotifyHmoViaMail implements ShouldQueue
      * @param  \App\Events\OrderStored  $event
      * @return void
      */
-    public function handle(OrderStoredMail $event)
+    public function handle(OrderStored $event)
     {
-        Mail::to($event->order->hmo->email)->send(new OrderStored($event->order));
+        Mail::to($event->order->hmo->email)->send(new OrderStoredMail($event->order));
     }
 }
