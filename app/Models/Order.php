@@ -18,4 +18,9 @@ class Order extends Model
     {
         return $this->belongsTo(Hmo::class);
     }
+
+    public function scopeGroupByBatch($query)
+    {
+        return $query->groupBy('batch');
+    }
 }
