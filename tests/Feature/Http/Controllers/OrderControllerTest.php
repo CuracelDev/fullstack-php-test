@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Events\OrderStored;
 use App\Models\Hmo;
+use App\Models\Order;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -24,7 +25,7 @@ class OrderControllerTest extends TestCase
         ]);
 
         $this->postJson('/api/orders', [
-             'provider' => $this->faker->company,
+             'provider' => "Provider One",
              'hmo_code' => $hmo->code,
              'orders' => [
                  [
@@ -38,23 +39,26 @@ class OrderControllerTest extends TestCase
          ])
              ->assertCreated()
              ->assertJsonStructure([
-                 'success',
-                 'data' => [
-                     'id',
-                     'total',
-                     'hmo',
-                     'encounter_date',
-                     'items' => [
-                         '*' => [
-                             'item',
-                             'unit',
-                             'subtotal'
-                         ]
-                     ],
-                     'batch',
-                 ],
-             ]);
+                'success',
+                'data' => [
+                    'id',
+                    'total',
+                    'hmo',
+                    'encounter_date',
+                    'items' => [
+                        '*' => [
+                            'item',
+                            'unit',
+                            'subtotal'
+                        ]
+                    ],
+                    'batch',
+                ],
+            ]);
 
+        $order = Order::first();
+
+        $this->assertEquals("Provider One May 2021", $order->batch);
         Event::assertDispatched(OrderStored::class);
     }
 }
