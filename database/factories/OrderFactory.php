@@ -22,8 +22,10 @@ class OrderFactory extends Factory
     public function definition(){
         return [
             'user_id' => null,
-            'order_id' => null,
+            'hmo_id' => null,
             'items' =>null,
+            'encounter_date'=> now(),
+            'total'=>5
         ];
     }
 

@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Hmo;
+use Illuminate\Support\Facades\DB;
 
 class OrderSeeder extends Seeder
 {
@@ -55,22 +56,22 @@ class OrderSeeder extends Seeder
 
         $this->orders = [
             [
-                'provider_id'=>$this->providers[0]['id'], 
+                'user_id'=>$this->providers[0]['id'], 
                 'hmo_id'=>$this->hmos[0]['id'],
-                'items'=>$items1,
+                'items'=> json_encode($items1),
                 'encounter_date'=> now()->addWeek(),
                 'total'=> array_sum(array_column($items1[0],'sub_total'))
             ],
             [
-                'provider_id'=>$this->providers[1]['id'], 
+                'user_id'=>$this->providers[1]['id'], 
                 'hmo_id'=>$this->hmos[1]['id'],
-                'items'=>$items2,
+                'items'=>json_encode($items2),
                 'encounter_date'=> now()->addWeek(),
                 'total'=> array_sum(array_column($items2[1],'sub_total'))
             ]
         ];
 
-        $order = Order::factory()->count(2)->make($this->orders);
+        DB::table('orders')->insert($this->orders);
 
     }
 }

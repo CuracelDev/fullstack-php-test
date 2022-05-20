@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Services\OrderService;
 
 class OrderController extends Controller
 {
-    
+    public function __construct(OrderService $orderService){
+        $this->orderService = $orderService;
+    }
 
     public function create(Request $request)
     {
@@ -21,8 +24,14 @@ class OrderController extends Controller
             return response()->json(['message'=>$v->messages()],422);
         }
 
-        //creare order
+        $order = $this->orderService->create($request->all());
 
+        return response()->json($order);
+    }
 
+    public  function createOrder(Request $request)
+    {
+        $hmos = \App\Models\Hmo::all();
+        return view('create-order',['hmos'=>$hmos]);
     }
 }

@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Services\HmoService;
 
 class HmoController extends Controller
 {
+
+    public function __construct(HmoService $hmoService){
+        $this->$hmoService = $hmoService;
+    }
     
 
     public function create(Request $request)
@@ -19,5 +24,10 @@ class HmoController extends Controller
         if($v->fails()){
             return response()->json(['message'=>$v->messages()],422);
         }
+
+        $hmo = $this->$hmoService->create($request->all());
+
+        return response()->json($hmo);
+
     }
 }
