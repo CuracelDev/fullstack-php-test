@@ -1,12 +1,13 @@
 <?php
- namespace Database\Factories;
- 
-use App\Models\User;
-use Faker\Generator as Faker;
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
-class UserFactory extends Factory
+namespace Database\Factories;
+
+use App\Models\Order;
+use Faker\Generator as Faker;
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class OrderFactory extends Factory
 {
 /*
 |--------------------------------------------------------------------------
@@ -18,15 +19,11 @@ class UserFactory extends Factory
 | model instances for testing / seeding your application's database.
 |
 */
-
-    public function definition()
-    {
+    public function definition(){
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'user_id' => null,
+            'order_id' => null,
+            'items' =>null,
         ];
     }
 
