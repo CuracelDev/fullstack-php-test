@@ -1,7 +1,8 @@
 <template>
     <div class="container">
+        <br>
         <div class="row ">
-            <div class="col-md-8 offset-2">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">Create Order</div>
                 <form @submit.prevent="submit()">
@@ -68,6 +69,18 @@
                     </div>
                 </form>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                        HMO
+                        <span class="">Batch Type</span>
+                    </li>
+                    <li v-for="hmo,i in hmos" :key="i" class="list-group-item d-flex justify-content-between align-items-center">
+                        {{hmo.name}} {{hmo.code}}
+                        <span class="badge badge-primary badge-pill">{{hmo.batch_type}}</span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -142,8 +155,9 @@
                         toastr.success('Order created successfully')
                     }
                 }).catch(err=>{
+                    console.log(err.response)
                     if(err.response.status == 422){
-                        toastr.error(err.response.message)
+                        toastr.error(err.response.data.message)
                     }else{
                         toastr.error('An error occured')
                     }

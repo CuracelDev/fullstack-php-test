@@ -15,13 +15,18 @@ class OrderController extends Controller
     public function create(Request $request)
     {
         $v = Validator::make($request->all(),[
-            'provider_id'=>'required|exists:users,id',
-            'hmo_id'=> 'required|exists:hmos,id',
-            'items'=>'required'
+            'provider_id'=>'bail|required|exists:users,id',
+            'hmo_id'=> 'bail|required|exists:hmos,id',
+            'items.*.name'=>'bail|required|string',
+            'items.*.unitPrice'=>'bail|required|numeric|min:1',
+            'items.*.qty'=>'bail|required|numeric|min:1',
+            'items.*.subTotal'=>'bail|required|numeric|min:1',
+            'encounter_date'=>'bail|required|date',
+            'total'=>'bail|required|numeric|min:1'
         ]);
 
         if($v->fails()){
-            return response()->json(['message'=>$v->messages()],422);
+            return response()->json(['message'=>$v->messages()->first()],422);
         }
 
         $items = json_encode($request->items);

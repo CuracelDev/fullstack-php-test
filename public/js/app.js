@@ -1983,6 +1983,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2050,8 +2063,10 @@ __webpack_require__.r(__webpack_exports__);
           toastr.success('Order created successfully');
         }
       })["catch"](function (err) {
+        console.log(err.response);
+
         if (err.response.status == 422) {
-          toastr.error(err.response.message);
+          toastr.error(err.response.data.message);
         } else {
           toastr.error('An error occured');
         }
@@ -38170,8 +38185,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _c("br"),
+    _vm._v(" "),
     _c("div", { staticClass: "row " }, [
-      _c("div", { staticClass: "col-md-8 offset-2" }, [
+      _c("div", { staticClass: "col-md-6" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [_vm._v("Create Order")]),
           _vm._v(" "),
@@ -38580,11 +38597,64 @@ var render = function() {
             ]
           )
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c(
+          "ul",
+          { staticClass: "list-group" },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._l(_vm.hmos, function(hmo, i) {
+              return _c(
+                "li",
+                {
+                  key: i,
+                  staticClass:
+                    "list-group-item d-flex justify-content-between align-items-center"
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(hmo.name) +
+                      " " +
+                      _vm._s(hmo.code) +
+                      "\n                    "
+                  ),
+                  _c(
+                    "span",
+                    { staticClass: "badge badge-primary badge-pill" },
+                    [_vm._v(_vm._s(hmo.batch_type))]
+                  )
+                ]
+              )
+            })
+          ],
+          2
+        )
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "li",
+      {
+        staticClass:
+          "list-group-item d-flex justify-content-between align-items-center list-group-item-dark"
+      },
+      [
+        _vm._v("\n                    HMO\n                    "),
+        _c("span", {}, [_vm._v("Batch Type")])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
