@@ -1,56 +1,68 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+        <div class="row ">
+            <div class="col-md-8 offset-2">
                 <div class="card">
                     <div class="card-header">Create Order</div>
-
+                <form @submit.prevent="submit()">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Provider</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1">
+                            <input type="text" v-model="form.provider_id" class="form-control" id="exampleInputEmail1">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">HMO</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1">
+                            <select v-model="form.hmo_id" class="form-control">
+                                <option>Select HMO</option>
+                            </select >
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Encounter Date</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1">
+                            <input v-model="form.encounter_date" type="email" class="form-control" id="exampleInputEmail1">
                         </div>
                         <div class="form-group">
-                            <form>
-                                <label for="exampleInputEmail1">Order Item</label>
-                                <div class="form-row">
-                                    <div class="col-md-3">
+                            
+                            <span>Order Item</span>
+                            <hr>
+                            <template v-for="item,i in form.items" >
+                                <div class="form-row" :key="i">
+                                    <div class="col">
                                         <label for="exampleInputEmail1">name</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1">
+                                        <input v-model="item.name" type="text" class="form-control" id="exampleInputEmail1">
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col">
                                         <label for="exampleInputEmail1">Unit price</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1">
+                                        <input min="1" v-model="item.unitPrice" @change="subTotal(i)" type="number" class="form-control" id="exampleInputEmail1">
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col">
                                         <label for="exampleInputEmail1">Qty</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1">
+                                        <input min="1" v-model="item.qty" @change="subTotal(i)" type="number" class="form-control" id="exampleInputEmail1">
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col">
                                         <label for="exampleInputEmail1">Sub total</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <button class="btn btn-primary">+</button>
+                                        <input readonly v-model="item.subTotal" type="number" class="form-control" id="exampleInputEmail1">
                                     </div>
                                     <div class="col">
-                                        <input type="text" class="form-control" placeholder="Sub total">
+                                        <label for="exampleInputEmail1">&nbsp;</label>
+                                        <button title="remove item" type="button" class="form-control btn-primary" @click="removeItem(i)">-</button>
                                     </div>
                                 </div>
-                                <button type="submit" class="form-control btn btn-primary">Submit</button>
-                            </form>
+                            </template>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <button title="add item" type="button" class="btn btn-primary" @click="addItem()">+</button>
+                                </div>
+                                <div class="col">
+                                    <input type="number" readonly v-model="form.total" class="form-control" placeholder="Total">
+                                </div>
+                            </div>
+                            <br>
+                            <button type="submit" class="form-control btn btn-primary">Submit</button>
+                            
                         </div>
                     </div>
+                </form>
                 </div>
             </div>
         </div>
@@ -59,8 +71,60 @@
 
 <script>
     export default {
+        data(){
+            return {
+                form:{
+                    provider_id:null,
+                    hmo_id:null,
+                    items:[],
+                    encounter_date:null,
+                    total:0
+                }
+            }
+        },
         mounted() {
-            console.log('Component mounted.')
+            this.addItem()
+        },
+
+        methods:{
+            addItem(){
+                this.form.items.push({
+                    name:'',
+                    unitPrice:null,
+                    qty:null,
+                    subTotal:0
+                })
+            },
+
+            removeItem(index){
+                this.form.items.splice(index,1)
+                this.total()
+            },
+
+            subTotal(i){
+              this.form.items[i].subTotal = this.form.items[i].unitPrice * this.form.items[i].qty
+              this.total()
+            },
+
+            total(){
+               let subTotals = this.form.items.map(ele=>ele.subTotal)
+               let total = subTotals.reduce((a,b)=>{return a + b},0)
+               this.form.total = total
+            },
+
+            submit(){
+                axios.post('/api/orders',this.form).then(res=>{
+                    if(res.status == 200){
+                        toastr.success('Order created successfully')
+                    }
+                }).catch(err=>{
+                    if(err.response.status == 422){
+                        toastr.error(err.response.message)
+                    }else{
+                        toastr.error('An error occured')
+                    }
+                })
+            }
         }
     }
 </script>

@@ -9,6 +9,8 @@ use App\Services\HmoService;
 class HmoController extends Controller
 {
 
+    private $hmoService;
+
     public function __construct(HmoService $hmoService){
         $this->$hmoService = $hmoService;
     }
@@ -28,6 +30,17 @@ class HmoController extends Controller
         $hmo = $this->$hmoService->create($request->all());
 
         return response()->json($hmo);
+
+    }
+
+    public function batchOrder($id)
+    {
+        $hmo = $this->hmoService->get($id);
+        if(!$hmo){
+            return response()->json(['message'=>'HMO not found'],404);
+        }
+
+        return $this->hmoService->batchOrder($hmo->batch_type,$id);
 
     }
 }
