@@ -7,11 +7,11 @@
                 <div id="accordion">
                     <div class="card" v-for="batch,i in batches" :key="i">
                         <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Batch of {{getMonth[new Date(i).getMonth()]}} - {{new Date(i).getFullYear()}}
-                            </button>
-                        </h5>
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Batch of {{getMonth[new Date(i).getMonth()]}} - {{new Date(i).getFullYear()}}
+                                </button>
+                            </h5>
                         </div>
 
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">

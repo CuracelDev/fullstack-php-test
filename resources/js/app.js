@@ -23,6 +23,8 @@ window.toastr = require('toastr');
 
 Vue.component('submit-order', require('./components/SubmitOrder.vue').default);
 
+Vue.component('order', require('./components/Order.vue').default);
+
 Vue.component('create-order', require('./components/CreateOrder.vue').default);
 
 Vue.component('batch-order', require('./components/BatchOrder.vue').default);
