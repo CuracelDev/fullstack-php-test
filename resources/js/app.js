@@ -25,6 +25,8 @@ Vue.component('submit-order', require('./components/SubmitOrder.vue').default);
 
 Vue.component('create-order', require('./components/CreateOrder.vue').default);
 
+Vue.component('batch-order', require('./components/BatchOrder.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

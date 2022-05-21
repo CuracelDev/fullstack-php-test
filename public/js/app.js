@@ -1899,6 +1899,88 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BatchOrder.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/BatchOrder.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    id: {
+      type: String,
+      required: true
+    },
+    batchType: {
+      type: String,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      batches: []
+    };
+  },
+  computed: {
+    getMonth: function getMonth() {
+      return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/api/hmos/".concat(this.id, "/batch-order")).then(function (res) {
+      if (res.status == 200) {
+        _this.batches = res.data;
+      }
+    })["catch"](function (err) {
+      console.log(err);
+      toastr.error("An error occured");
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateOrder.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateOrder.vue?vue&type=script&lang=js& ***!
@@ -1908,6 +1990,9 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -38169,6 +38254,136 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BatchOrder.vue?vue&type=template&id=110fa6df&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/BatchOrder.vue?vue&type=template&id=110fa6df& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("br"),
+    _vm._v(" "),
+    _c("h3", [
+      _vm._v(
+        "Batch By " +
+          _vm._s(_vm.batchType == "created_at" ? "Sent Date" : "Encounter Date")
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md -8 offset-2" }, [
+        _c(
+          "div",
+          { attrs: { id: "accordion" } },
+          _vm._l(_vm.batches, function(batch, i) {
+            return _c("div", { key: i, staticClass: "card" }, [
+              _c(
+                "div",
+                { staticClass: "card-header", attrs: { id: "headingOne" } },
+                [
+                  _c("h5", { staticClass: "mb-0" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-link",
+                        attrs: {
+                          "data-toggle": "collapse",
+                          "data-target": "#collapseOne",
+                          "aria-expanded": "true",
+                          "aria-controls": "collapseOne"
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Batch of " +
+                            _vm._s(_vm.getMonth[new Date(i).getMonth()]) +
+                            " - " +
+                            _vm._s(new Date(i).getFullYear()) +
+                            "\n                        "
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "collapse show",
+                  attrs: {
+                    id: "collapseOne",
+                    "aria-labelledby": "headingOne",
+                    "data-parent": "#accordion"
+                  }
+                },
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c(
+                      "ul",
+                      { staticClass: "list-group" },
+                      [
+                        _vm._l(batch, function(item, index) {
+                          return [
+                            _c(
+                              "li",
+                              {
+                                key: index,
+                                staticClass:
+                                  "list-group-item d-flex justify-content-between align-items-center"
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                Encounter date - " +
+                                    _vm._s(item.encounter_date) +
+                                    " "
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                Sent Date - " +
+                                    _vm._s(item.sent_date) +
+                                    " "
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                Items - " +
+                                    _vm._s(item.items) +
+                                    " \n                                    \n                                "
+                                )
+                              ]
+                            )
+                          ]
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ]
+              )
+            ])
+          }),
+          0
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateOrder.vue?vue&type=template&id=7bf00597&":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateOrder.vue?vue&type=template&id=7bf00597& ***!
@@ -38606,30 +38821,42 @@ var render = function() {
           [
             _vm._m(0),
             _vm._v(" "),
-            _vm._l(_vm.hmos, function(hmo, i) {
-              return _c(
-                "li",
-                {
-                  key: i,
-                  staticClass:
-                    "list-group-item d-flex justify-content-between align-items-center"
-                },
-                [
+            _vm.hmos.length == 0
+              ? [
                   _vm._v(
-                    "\n                    " +
-                      _vm._s(hmo.name) +
-                      " " +
-                      _vm._s(hmo.code) +
-                      "\n                    "
-                  ),
-                  _c(
-                    "span",
-                    { staticClass: "badge badge-primary badge-pill" },
-                    [_vm._v(_vm._s(hmo.batch_type))]
+                    "\n                    There no Hmos\n                "
                   )
                 ]
-              )
-            })
+              : _vm._l(_vm.hmos, function(hmo, i) {
+                  return _c(
+                    "li",
+                    {
+                      key: i,
+                      staticClass:
+                        "list-group-item d-flex justify-content-between align-items-center"
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(hmo.name) +
+                          " " +
+                          _vm._s(hmo.code) +
+                          "\n                    "
+                      ),
+                      _c(
+                        "a",
+                        { attrs: { href: "hmos/" + hmo.id + "/batch-orders" } },
+                        [
+                          _c(
+                            "span",
+                            { staticClass: "badge badge-primary badge-pill" },
+                            [_vm._v(_vm._s(hmo.batch_type))]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                })
           ],
           2
         )
@@ -50912,6 +51139,7 @@ window.toastr = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.
 
 Vue.component('submit-order', __webpack_require__(/*! ./components/SubmitOrder.vue */ "./resources/js/components/SubmitOrder.vue")["default"]);
 Vue.component('create-order', __webpack_require__(/*! ./components/CreateOrder.vue */ "./resources/js/components/CreateOrder.vue")["default"]);
+Vue.component('batch-order', __webpack_require__(/*! ./components/BatchOrder.vue */ "./resources/js/components/BatchOrder.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -50966,6 +51194,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/BatchOrder.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/BatchOrder.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BatchOrder_vue_vue_type_template_id_110fa6df___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BatchOrder.vue?vue&type=template&id=110fa6df& */ "./resources/js/components/BatchOrder.vue?vue&type=template&id=110fa6df&");
+/* harmony import */ var _BatchOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BatchOrder.vue?vue&type=script&lang=js& */ "./resources/js/components/BatchOrder.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _BatchOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BatchOrder_vue_vue_type_template_id_110fa6df___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BatchOrder_vue_vue_type_template_id_110fa6df___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/BatchOrder.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/BatchOrder.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/BatchOrder.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BatchOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./BatchOrder.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BatchOrder.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BatchOrder_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/BatchOrder.vue?vue&type=template&id=110fa6df&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/BatchOrder.vue?vue&type=template&id=110fa6df& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BatchOrder_vue_vue_type_template_id_110fa6df___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./BatchOrder.vue?vue&type=template&id=110fa6df& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/BatchOrder.vue?vue&type=template&id=110fa6df&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BatchOrder_vue_vue_type_template_id_110fa6df___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BatchOrder_vue_vue_type_template_id_110fa6df___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

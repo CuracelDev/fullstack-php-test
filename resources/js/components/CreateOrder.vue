@@ -76,9 +76,12 @@
                         HMO
                         <span class="">Batch Type</span>
                     </li>
-                    <li v-for="hmo,i in hmos" :key="i" class="list-group-item d-flex justify-content-between align-items-center">
+                    <template v-if="hmos.length == 0">
+                        There no Hmos
+                    </template>
+                    <li v-else v-for="hmo,i in hmos" :key="i" class="list-group-item d-flex justify-content-between align-items-center">
                         {{hmo.name}} {{hmo.code}}
-                        <span class="badge badge-primary badge-pill">{{hmo.batch_type}}</span>
+                        <a :href="`hmos/${hmo.id}/batch-orders`"><span class="badge badge-primary badge-pill">{{hmo.batch_type}}</span></a>
                     </li>
                 </ul>
             </div>

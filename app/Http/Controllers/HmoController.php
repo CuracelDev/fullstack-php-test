@@ -43,6 +43,15 @@ class HmoController extends Controller
 
     }
 
+    public function batchOrderPage($id)
+    {
+        $hmo = $this->hmoService->get($id);
+        if(!$hmo){
+            return view('404');
+        }
+        return view('batch-order',['id'=>$id,'batch_type'=>$hmo->batch_type]);
+    }
+
     public function batchOrder($id)
     {
         $hmo = $this->hmoService->get($id);
@@ -50,7 +59,7 @@ class HmoController extends Controller
             return response()->json(['message'=>'HMO not found'],404);
         }
 
-        $batches = $this->hmoService->batchOrder($hmo->batch_type,$id);
+        $batches = $this->hmoService->batch($hmo->batch_type,$id);
         return response()->json($batches);
     }
 

@@ -23,21 +23,30 @@ class HmoService{
 
     public function batch($type,$hmo_id)
     {
-       $dates = DB::table('orders')->select('batch_type')->where(['batch_type'=>$type,'hmo_id'=>$hmo_id])->get()->unique();
+       $dates = DB::table('orders')->select($type)->where(['hmo_id'=>$hmo_id])->get()->unique();
 
-       $yearMonth = $dates->map(function($ele){
-           return explode('-',$ele);
+       $yearMonth = $dates->map(function($ele) use ($type){
+           $arr = explode('-',$ele->$type);
+           return [$arr[0],$arr[1]];
        });
+
+       info($yearMonth);
 
        $group = [];
 
        $batch = $yearMonth->map(function($ele) use ($type,$hmo_id,&$group){
-            $group[$ele] = DB::select("SELECT * FROM orders 
-            WHERE YEAR($type) = $ele[0] 
-            AND MONTH($type) = $ele[0] 
-            AND hmo_id = $hmo_id");
+            $group["$ele[0]-$ele[1]"] = 
+                DB::select("SELECT items,encounter_date,created_at as sent_date FROM orders 
+                WHERE YEAR($type) = '$ele[0]'
+                AND MONTH($type) = '$ele[1]'
+                AND hmo_id = $hmo_id")
+             ;
             return $group;
        });
+
+       info($batch);
+
+       
 
        return $group;
 

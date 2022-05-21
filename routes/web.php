@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\HmoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,9 @@ use App\Http\Controllers\OrderController;
 
 */
 
-Route::get('/', function () {
-    return view('submit-order');
-});
+Route::get('/', [OrderController::class, 'createOrder']);
 
 Route::get('create-order', [OrderController::class, 'createOrder']);
+
+Route::get('hmos/{id}/batch-orders', [HmoController::class, 'batchOrderPage']);
 
