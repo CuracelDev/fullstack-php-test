@@ -12,6 +12,12 @@ class OrderController extends Controller
         $this->orderService = $orderService;
     }
 
+    public function index()
+    {
+        $orders = $this->orderService->all();
+        return response()->json($orders);
+    }
+
     public function create(Request $request)
     {
         $v = Validator::make($request->all(),[

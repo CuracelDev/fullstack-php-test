@@ -10,4 +10,9 @@ class OrderService{
        return Order::create($data);
     }
 
+    public function all()
+    {
+        return Order::all();
+    }
+
 }
