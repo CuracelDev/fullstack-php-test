@@ -70,7 +70,7 @@ class HmoController extends Controller
             return response()->json(['message'=>'HMO not found'],404);
         }
 
-        $batches = $this->hmoService->batchOrder($hmo->batch_type,$id);
+        $batches = $this->hmoService->batch($hmo->batch_type,$id);
 
         $hmo->notify(new HmoNotification($batches));
     }

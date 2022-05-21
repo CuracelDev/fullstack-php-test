@@ -34,7 +34,7 @@ class HmoService{
 
        $batch = $yearMonth->map(function($ele) use ($type,$hmo_id,&$group){
             $group["$ele[0]-$ele[1]"] = 
-                DB::select("SELECT items,encounter_date,created_at as sent_date FROM orders 
+                DB::select("SELECT items,total,encounter_date,created_at as sent_date FROM orders 
                 WHERE YEAR($type) = '$ele[0]'
                 AND MONTH($type) = '$ele[1]'
                 AND hmo_id = $hmo_id")
@@ -45,7 +45,7 @@ class HmoService{
        info(['batches'=>$group]);
 
        if(env('testing')){
-            
+
        }
 
        return $group;

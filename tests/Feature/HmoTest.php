@@ -10,7 +10,7 @@ use App\Models\Hmo;
 class HmoTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     /**
      * A basic feature test example.
      *
@@ -21,6 +21,15 @@ class HmoTest extends TestCase
         Hmo::factory()->count(14)->create()->toArray();
 
         $response = $this->getJson('/api/hmos');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_send_notification()
+    {
+        $hmo = Hmo::factory()->count(1)->create()->toArray();
+
+        $response = $this->postJson("/api/hmos/{$hmo[0]['id']}/notify",[]);
 
         $response->assertStatus(200);
     }
