@@ -30,8 +30,6 @@ class HmoService{
            return [$arr[0],$arr[1]];
        });
 
-       info($yearMonth);
-
        $group = [];
 
        $batch = $yearMonth->map(function($ele) use ($type,$hmo_id,&$group){
@@ -44,9 +42,11 @@ class HmoService{
             return $group;
        });
 
-       info($batch);
+       info(['batches'=>$group]);
 
-       
+       if(env('testing')){
+            
+       }
 
        return $group;
 

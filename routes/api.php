@@ -24,7 +24,7 @@ use App\Http\Controllers\ProviderController;
 Route::get('providers', [ProviderController::class, 'index']);
 
 Route::get('hmos', [HmoController::class, 'index']);
-Route::get('hmos/{id}/batch-order', [HmoController::class, 'batchOrder']);
+Route::get('hmos/{id}/batch-orders', [HmoController::class, 'batchOrder']);
 Route::get('hmos/{id}/notify', [HmoController::class, 'sendNotification']);
 
 Route::get('orders', [OrderController::class, 'index']);

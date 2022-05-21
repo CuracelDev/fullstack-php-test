@@ -31,9 +31,11 @@
 </template>
 
 <script>
-    import Order from './Order.vue'
+    import order from './Order.vue'
     export default {
-        components:[Order],
+        components:{
+            order
+        },
 
         data(){
             return {

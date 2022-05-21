@@ -28,14 +28,14 @@ class OrderSeeder extends Seeder
             [
                 'name'=> 'itemA1',
                 'price'=>5,
-                'quantity'=>2,
-                'sub_total'=> 5 * 2
+                'qty'=>2,
+                'subTotal'=> 5 * 2
             ],
             [
                 'name'=> 'itemA2',
                 'price'=>3,
-                'quantity'=>2,
-                'sub_total'=> 3 * 2
+                'qity'=>2,
+                'subTotal'=> 3 * 2
             ]
         ];
 
@@ -43,14 +43,14 @@ class OrderSeeder extends Seeder
             [
                 'name'=> 'itemB1',
                 'price'=>5,
-                'quantity'=>2,
-                'sub_total'=> 5 * 2
+                'qty'=>2,
+                'subTotal'=> 5 * 2
             ],
             [
                 'name'=> 'itemB2',
                 'price'=>3,
-                'quantity'=>2,
-                'sub_total'=> 3 * 2
+                'qty'=>2,
+                'subTotal'=> 3 * 2
             ]
         ];
 
@@ -60,7 +60,7 @@ class OrderSeeder extends Seeder
                 'hmo_id'=>$this->hmos[0]['id'],
                 'items'=> json_encode($items1),
                 'encounter_date'=> now()->addWeek(),
-                'total'=> array_sum(array_column($items1[0],'sub_total')),
+                'total'=> array_sum(array_column($items1,'subTotal')),
                 'created_at'=>now()
             ],
             [
@@ -68,7 +68,7 @@ class OrderSeeder extends Seeder
                 'hmo_id'=>$this->hmos[1]['id'],
                 'items'=>json_encode($items2),
                 'encounter_date'=> now()->addWeek(),
-                'total'=> array_sum(array_column($items2[1],'sub_total')),
+                'total'=> array_sum(array_column($items2,'subTotal')),
                 'created_at'=>now()
             ]
         ];
