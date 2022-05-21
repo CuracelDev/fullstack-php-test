@@ -10,4 +10,14 @@ class ProviderService{
        return User::create($data);
     }
 
+    public function all()
+    {
+        return User::all();
+    }
+
+    public function get($id)
+    {
+        return User::find($id);
+    }
+
 }

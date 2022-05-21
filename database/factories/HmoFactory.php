@@ -23,7 +23,9 @@ class HmoFactory extends Factory
     public function definition() {
         return [
             'name' => $this->faker->name,
-            'code' => Str::random(4)
+            'code' => Str::random(4),
+            'email' => $this->faker->unique()->safeEmail(),
+            'batch_type' => $this->faker->randomElement(['encounter_date','created_at'])
         ];
     }
 

@@ -8,17 +8,21 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Provider</label>
-                            <input type="text" v-model="form.provider_id" class="form-control" id="exampleInputEmail1">
+                            <select v-model="form.provider_id" class="form-control">
+                                <option :value="null">Select Provider</option>
+                                <option v-for="provider,i in providers" :key="i" :value="provider.id">{{provider.name}} - {{provider.email}}</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">HMO</label>
                             <select v-model="form.hmo_id" class="form-control">
-                                <option>Select HMO</option>
-                            </select >
+                                <option :value="null">Select Hmo</option>
+                                <option v-for="hmo,i in hmos" :key="i" :value="hmo.id">{{hmo.name}} - {{hmo.code}}</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Encounter Date</label>
-                            <input v-model="form.encounter_date" type="email" class="form-control" id="exampleInputEmail1">
+                            <input v-model="form.encounter_date" type="date" class="form-control" id="exampleInputEmail1">
                         </div>
                         <div class="form-group">
                             
@@ -79,11 +83,31 @@
                     items:[],
                     encounter_date:null,
                     total:0
-                }
+                },
+                hmos:[],
+                providers:[]
             }
         },
         mounted() {
             this.addItem()
+
+            axios.get('/api/hmos').then(res=>{
+                if(res.status == 200){
+                    this.hmos = res.data
+                }
+            }).catch(err=>{
+                console.log(err)
+                toastr.error("Error, unable to fetch hmos")
+            })
+
+            axios.get('/api/providers').then(res=>{
+                if(res.status == 200){
+                    this.providers = res.data
+                }
+            }).catch(err=>{
+                console.log(err)
+                toastr.error("Error, unable to fetch providers")
+            })
         },
 
         methods:{

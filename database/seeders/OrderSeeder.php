@@ -56,14 +56,14 @@ class OrderSeeder extends Seeder
 
         $this->orders = [
             [
-                'user_id'=>$this->providers[0]['id'], 
+                'provider_id'=>$this->providers[0]['id'], 
                 'hmo_id'=>$this->hmos[0]['id'],
                 'items'=> json_encode($items1),
                 'encounter_date'=> now()->addWeek(),
                 'total'=> array_sum(array_column($items1[0],'sub_total'))
             ],
             [
-                'user_id'=>$this->providers[1]['id'], 
+                'provider_id'=>$this->providers[1]['id'], 
                 'hmo_id'=>$this->hmos[1]['id'],
                 'items'=>json_encode($items2),
                 'encounter_date'=> now()->addWeek(),

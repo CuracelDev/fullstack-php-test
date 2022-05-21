@@ -11,6 +11,12 @@ class ProviderController extends Controller
     {
         $this->provider = $provider;
     }
+
+    public function index()
+    {
+        $providers = $this->provider->all();
+        return response()->json($providers);
+    }
     
     public function create(Request $request)
     {

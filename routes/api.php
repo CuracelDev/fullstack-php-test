@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HmoController;
+use App\Http\Controllers\ProviderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +21,10 @@ use App\Http\Controllers\HmoController;
 //     return $request->user();
 // });
 
+Route::get('providers', [ProviderController::class, 'index']);
+
+Route::get('hmos', [HmoController::class, 'index']);
+
 Route::get('orders', [OrderController::class, 'index']);
 Route::post('orders', [OrderController::class, 'create']);
+Route::post('orders/batch-order', [OrderController::class, 'batchOrder']);

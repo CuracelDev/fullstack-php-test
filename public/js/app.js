@@ -1979,6 +1979,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1988,11 +1992,31 @@ __webpack_require__.r(__webpack_exports__);
         items: [],
         encounter_date: null,
         total: 0
-      }
+      },
+      hmos: [],
+      providers: []
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.addItem();
+    axios.get('/api/hmos').then(function (res) {
+      if (res.status == 200) {
+        _this.hmos = res.data;
+      }
+    })["catch"](function (err) {
+      console.log(err);
+      toastr.error("Error, unable to fetch hmos");
+    });
+    axios.get('/api/providers').then(function (res) {
+      if (res.status == 200) {
+        _this.providers = res.data;
+      }
+    })["catch"](function (err) {
+      console.log(err);
+      toastr.error("Error, unable to fetch providers");
+    });
   },
   methods: {
     addItem: function addItem() {
@@ -38168,27 +38192,59 @@ var render = function() {
                     _vm._v("Provider")
                   ]),
                   _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.provider_id,
-                        expression: "form.provider_id"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", id: "exampleInputEmail1" },
-                    domProps: { value: _vm.form.provider_id },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.provider_id,
+                          expression: "form.provider_id"
                         }
-                        _vm.$set(_vm.form, "provider_id", $event.target.value)
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.form,
+                            "provider_id",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
                       }
-                    }
-                  })
+                    },
+                    [
+                      _c("option", { domProps: { value: null } }, [
+                        _vm._v("Select Provider")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.providers, function(provider, i) {
+                        return _c(
+                          "option",
+                          { key: i, domProps: { value: provider.id } },
+                          [
+                            _vm._v(
+                              _vm._s(provider.name) +
+                                " - " +
+                                _vm._s(provider.email)
+                            )
+                          ]
+                        )
+                      })
+                    ],
+                    2
+                  )
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
@@ -38228,7 +38284,20 @@ var render = function() {
                         }
                       }
                     },
-                    [_c("option", [_vm._v("Select HMO")])]
+                    [
+                      _c("option", { domProps: { value: null } }, [
+                        _vm._v("Select Hmo")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.hmos, function(hmo, i) {
+                        return _c(
+                          "option",
+                          { key: i, domProps: { value: hmo.id } },
+                          [_vm._v(_vm._s(hmo.name) + " - " + _vm._s(hmo.code))]
+                        )
+                      })
+                    ],
+                    2
                   )
                 ]),
                 _vm._v(" "),
@@ -38247,7 +38316,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "email", id: "exampleInputEmail1" },
+                    attrs: { type: "date", id: "exampleInputEmail1" },
                     domProps: { value: _vm.form.encounter_date },
                     on: {
                       input: function($event) {

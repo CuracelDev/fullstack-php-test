@@ -24,7 +24,11 @@ class OrderController extends Controller
             return response()->json(['message'=>$v->messages()],422);
         }
 
-        $order = $this->orderService->create($request->all());
+        $items = json_encode($request->items);
+
+        $data = array_merge($request->except('items'),['items'=>$items]);
+        
+        $order = $this->orderService->create($data);
 
         return response()->json($order);
     }
