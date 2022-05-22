@@ -16,6 +16,10 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->json('items');
+            $table->timestamp('encounter_date');
+            $table->foreignId('hmo_id')->cascadeOnDelete();
+            $table->foreignId('provider_id')->cascadeOnDelete();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +31,8 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
+        Schema::dropConstrainedForeignId('provider_id');
+        Schema::dropConstrainedForeignId('hmo_id');
         Schema::dropIfExists('orders');
     }
 }

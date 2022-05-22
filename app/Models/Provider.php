@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Hmo extends Model
+class Provider extends Model
 {
     protected $guarged = ['id'];
     
@@ -13,8 +13,8 @@ class Hmo extends Model
         return $this->hasMany(Order::class);
     }
 
-    public function providers()
+    public function hmos()
     {
-        return $this->belongsToMany(Provider::class, 'orders')->distinct();
+        return $this->belongsToMany(Hmo::class, 'orders')->using(Order::class);
     }
 }

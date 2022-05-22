@@ -17,3 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+ //Hmo
+ Route::group(['namespace' => 'Hmo', 'prefix' => 'hmo'], function() {
+    Route::get('list', 'LoadController@index');
+});
+
+ //Orders
+ Route::group(['namespace' => 'Orders', 'prefix' => 'orders'], function() {
+    Route::get('get/id', 'LoadController@get');
+    Route::get('list', 'LoadController@index');
+    Route::post('save', 'LoadController@store');
+});
+
