@@ -39,27 +39,32 @@ export default {
     watch: {
         price: function(val) {
             this.subTotal = this.quantity * val;
-             this.updateTotal()
-            // this.$emit('update-total', { value: this.subTotal})
+            this.updateTotal()
         },
 
         quantity: function(val) {
             this.subTotal = val * this.price;
-            // this.$emit('update-total', { value: this.subTotal})
             this.updateTotal()
         },
+
+        item: function(val) {
+            this.updateTotal()
+        },
+
     },
 
     methods: {
        
        remove() {
            this.show = false
-           this.$emit('remove-total', { value: this.subTotal, reference: this.reference})
+           this.$emit('remove-total', 
+           { subTotal: this.subTotal, reference: this.reference, price: this.price, quantity: this.quantity, item: this.item})
        },
 
        updateTotal() {
-          this.total = this.total   
-          this.$emit('update-total', { value: this.subTotal, reference: this.reference})
+        //   this.total = this.total   
+          this.$emit('update-total', 
+          { subTotal: this.subTotal, reference: this.reference, price: this.price, quantity: this.quantity, item: this.item})
        }
         
     },

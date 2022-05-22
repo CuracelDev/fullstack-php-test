@@ -1971,11 +1971,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {
     price: function price(val) {
       this.subTotal = this.quantity * val;
-      this.updateTotal(); // this.$emit('update-total', { value: this.subTotal})
+      this.updateTotal();
     },
     quantity: function quantity(val) {
-      this.subTotal = val * this.price; // this.$emit('update-total', { value: this.subTotal})
-
+      this.subTotal = val * this.price;
+      this.updateTotal();
+    },
+    item: function item(val) {
       this.updateTotal();
     }
   },
@@ -1983,15 +1985,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     remove: function remove() {
       this.show = false;
       this.$emit('remove-total', {
-        value: this.subTotal,
-        reference: this.reference
+        subTotal: this.subTotal,
+        reference: this.reference,
+        price: this.price,
+        quantity: this.quantity,
+        item: this.item
       });
     },
     updateTotal: function updateTotal() {
-      this.total = this.total;
+      //   this.total = this.total   
       this.$emit('update-total', {
-        value: this.subTotal,
-        reference: this.reference
+        subTotal: this.subTotal,
+        reference: this.reference,
+        price: this.price,
+        quantity: this.quantity,
+        item: this.item
       });
     }
   }
@@ -2163,7 +2171,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else {
         this.payload.map(function (el) {
           if (el.reference == payload.reference) {
-            el.value = payload.value;
+            Object.assign(el, payload);
           }
         });
       }
@@ -2177,8 +2185,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.submitButton = 'Saving...';
       axios.post('/api/orders/save', {
         hmoCode: this.hmoCode,
-        provider: this.provider,
-        orderItems: this.orderItems,
+        provider_name: this.provider,
+        items: this.payload,
         subTotal: this.subTotal,
         totalPrice: this.totalPrice,
         encounterDate: this.encounterDate
@@ -2200,9 +2208,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     totalValue: function totalValue() {
-      //return this.payload.forEach( el => el.reduce(el.value))
       return this.payload.reduce(function (acc, obj) {
-        return acc + obj.value;
+        return acc + obj.subTotal;
       }, 0);
     }
   }
@@ -39453,6 +39460,7 @@ var render = function() {
                             expression: "totalValue"
                           }
                         ],
+                        staticStyle: { "font-weight": "bolder" },
                         attrs: { type: "text", disabled: "", name: "" },
                         domProps: { value: _vm.totalValue },
                         on: {

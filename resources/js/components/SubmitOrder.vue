@@ -29,7 +29,7 @@
                                 <td><label for="total" > Total </label></td>
                                 <td> 
                                     <div class=" form-group form-horizontal">
-                                        <input type="text" disabled name="" v-model="totalValue" />
+                                        <input type="text" disabled name="" style="font-weight:bolder" v-model="totalValue" />
                                     </div>
                                 </td>
                             </tr>
@@ -126,7 +126,7 @@
                 } else{
                     this.payload.map((el) => {
                         if (el.reference == payload.reference) {
-                            el.value = payload.value
+                            Object.assign(el, payload);
                         }
                     })
                 }
@@ -140,8 +140,8 @@
                 this.submitButton = 'Saving...'
                 axios.post('/api/orders/save', {
                     hmoCode: this.hmoCode,
-                    provider: this.provider,
-                    orderItems: this.orderItems,
+                    provider_name: this.provider,
+                    items: this.payload,
                     subTotal: this.subTotal,
                     totalPrice: this.totalPrice,
                     encounterDate: this.encounterDate
@@ -165,8 +165,7 @@
 
         computed: {
             totalValue() {
-                //return this.payload.forEach( el => el.reduce(el.value))
-                return this.payload.reduce(function (acc, obj) { return acc + obj.value; }, 0);
+                return this.payload.reduce(function (acc, obj) { return acc + obj.subTotal; }, 0);
             }
         }
     };
