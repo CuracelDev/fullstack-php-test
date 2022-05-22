@@ -1,10 +1,10 @@
 <template>
     <!-- <div class="order-item"> -->
         <tr v-if="show">
-            <td> <input type="text" class="form-control" placeholder="Item" v-model="itemDetails.item"> </td>
-            <td> <input type="text" class="form-control" placeholder="Unit Price" v-model="itemDetails.price"> </td>
-            <td> <input type="text" class="form-control" placeholder="Quantity" v-model="itemDetails.quantity"> </td>
-            <td> <input type="text" class="form-control" disabled placeholder="Sub-Total" v-model="itemDetails.subtotal" @click.prevent="calculateSubTotal"> </td>
+            <td> <input type="text" class="form-control" placeholder="Item" v-model="item"> </td>
+            <td> <input type="text" class="form-control" placeholder="Unit Price" v-model="price"> </td>
+            <td> <input type="text" class="form-control" placeholder="Quantity" v-model="quantity"> </td>
+            <td> <input type="text" class="form-control" disabled placeholder="Sub-Total" v-model="subTotal" ></td>
             <td> <button @click.prevent="remove" class=" form-control btn btn-default"> - </button> </td>
         </tr>
     <!-- </div> -->
@@ -14,55 +14,57 @@
 
 
 export default {
-    components: {
-    },
 
     async created() {
 
     },
 
+    props: {
+        total: 0
+    },
+
     data() {
         return {
-            itemDetails: {
-                item: '',
-                price: 0,
-                subtotal: 0,
-                quantity: 0,
-            },
-            show: true
+            item: '',
+            price: 0,
+            subtotal: 0,
+            quantity: 0,
+            subTotal: 0,
+            show: true,
+            reference: Math.random().toString(36).slice(2, 10)
+
         };
     },
 
     watch: {
-        itemDetails: {
-            handler() {
-                this.itemDetails.forEach(item => {
-                    item.subtotal = item.price * item.quantity;
-                });
-            }, 
-            deep: true
-        }
+        price: function(val) {
+            this.subTotal = this.quantity * val;
+             this.updateTotal()
+            // this.$emit('update-total', { value: this.subTotal})
+        },
+
+        quantity: function(val) {
+            this.subTotal = val * this.price;
+            // this.$emit('update-total', { value: this.subTotal})
+            this.updateTotal()
+        },
     },
 
     methods: {
        
-       calculateSubTotal() {
-           console.log(this.itemDetails)
-           let itemDetails = this.itemDetails
-           itemDetails.subtotal = itemDetails.price * itemDetails.quantity
-           this.itemDetails = itemDetails
-           return
+       remove() {
+           this.show = false
+           this.$emit('remove-total', { value: this.subTotal, reference: this.reference})
        },
 
-       remove() {
-          return this.show = false
+       updateTotal() {
+          this.total = this.total   
+          this.$emit('update-total', { value: this.subTotal, reference: this.reference})
        }
         
     },
 
-    watch: {
-        // calculateSubTotal: itemDetails
-    },
+   
 };
 </script>
 

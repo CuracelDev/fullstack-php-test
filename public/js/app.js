@@ -1924,8 +1924,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -1942,8 +1940,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
-  components: {},
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -1957,41 +1954,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, _callee);
     }))();
   },
+  props: {
+    total: 0
+  },
   data: function data() {
     return {
-      itemDetails: {
-        item: '',
-        price: 0,
-        subtotal: 0,
-        quantity: 0
-      },
-      show: true
+      item: '',
+      price: 0,
+      subtotal: 0,
+      quantity: 0,
+      subTotal: 0,
+      show: true,
+      reference: Math.random().toString(36).slice(2, 10)
     };
   },
   watch: {
-    itemDetails: {
-      handler: function handler() {
-        this.itemDetails.forEach(function (item) {
-          item.subtotal = item.price * item.quantity;
-        });
-      },
-      deep: true
+    price: function price(val) {
+      this.subTotal = this.quantity * val;
+      this.updateTotal(); // this.$emit('update-total', { value: this.subTotal})
+    },
+    quantity: function quantity(val) {
+      this.subTotal = val * this.price; // this.$emit('update-total', { value: this.subTotal})
+
+      this.updateTotal();
     }
   },
   methods: {
-    calculateSubTotal: function calculateSubTotal() {
-      console.log(this.itemDetails);
-      var itemDetails = this.itemDetails;
-      itemDetails.subtotal = itemDetails.price * itemDetails.quantity;
-      this.itemDetails = itemDetails;
-      return;
-    },
     remove: function remove() {
-      return this.show = false;
+      this.show = false;
+      this.$emit('remove-total', {
+        value: this.subTotal,
+        reference: this.reference
+      });
+    },
+    updateTotal: function updateTotal() {
+      this.total = this.total;
+      this.$emit('update-total', {
+        value: this.subTotal,
+        reference: this.reference
+      });
     }
   }
-}, "watch", {// calculateSubTotal: itemDetails
-}));
+});
 
 /***/ }),
 
@@ -2009,10 +2013,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _OrderItem_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OrderItem.vue */ "./resources/js/components/OrderItem.vue");
 
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -2095,17 +2108,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     OrderItem: _OrderItem_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   created: function created() {
+    var _this = this;
+
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              _this.$on('update-total', function (data) {
+                console.log(data);
+              });
+
+            case 1:
             case "end":
               return _context.stop();
           }
         }
       }, _callee);
     }))();
+  },
+  mounted: function mounted() {
+    this.$on('update-total', function (data) {
+      console.log(data);
+    });
   },
   data: function data() {
     return {
@@ -2117,15 +2142,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       encounterDate: '',
       provider: '',
       hmoCode: '',
-      submitButton: 'Submit Order'
+      totalValue2: 0,
+      submitButton: 'Submit Order',
+      payload: []
     };
   },
   methods: {
     addItem: function addItem() {
       this.totalItems = this.totalItems + 1;
     },
+    updateTotal: function updateTotal(payload) {
+      var itExists = function itExists(obj) {
+        return obj.reference == payload.reference;
+      };
+
+      var hasIt = this.payload.some(itExists);
+
+      if (!hasIt) {
+        this.payload.push(_objectSpread({}, payload));
+      } else {
+        this.payload.map(function (el) {
+          if (el.reference == payload.reference) {
+            el.value = payload.value;
+          }
+        });
+      }
+    },
+    removeTotal: function removeTotal(payload) {
+      this.payload.pop(_objectSpread({}, payload));
+    },
     submitOrder: function submitOrder() {
-      var _this = this;
+      var _this2 = this;
 
       this.submitButton = 'Saving...';
       axios.post('/api/orders/save', {
@@ -2136,19 +2183,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         totalPrice: this.totalPrice,
         encounterDate: this.encounterDate
       }).then(function (response) {
-        _this.statusText = "Saved!";
+        _this2.statusText = "Saved!";
         setTimeout(function () {
-          _this.statusText = '';
+          _this2.statusText = '';
         }, 3000);
       })["catch"](function (error) {
         if (error.response.status == 422) {
-          _this.error = Object.values(error.response.data.errors)[0][0];
+          _this2.error = Object.values(error.response.data.errors)[0][0];
         } else {
-          _this.error = error.response.data.message;
+          _this2.error = error.response.data.message;
         }
       })["finally"](function () {
-        _this.submitButton = 'Submit Order';
+        _this2.submitButton = 'Submit Order';
       });
+    }
+  },
+  computed: {
+    totalValue: function totalValue() {
+      //return this.payload.forEach( el => el.reduce(el.value))
+      return this.payload.reduce(function (acc, obj) {
+        return acc + obj.value;
+      }, 0);
     }
   }
 });
@@ -39189,19 +39244,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.itemDetails.item,
-                expression: "itemDetails.item"
+                value: _vm.item,
+                expression: "item"
               }
             ],
             staticClass: "form-control",
             attrs: { type: "text", placeholder: "Item" },
-            domProps: { value: _vm.itemDetails.item },
+            domProps: { value: _vm.item },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.itemDetails, "item", $event.target.value)
+                _vm.item = $event.target.value
               }
             }
           })
@@ -39213,19 +39268,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.itemDetails.price,
-                expression: "itemDetails.price"
+                value: _vm.price,
+                expression: "price"
               }
             ],
             staticClass: "form-control",
             attrs: { type: "text", placeholder: "Unit Price" },
-            domProps: { value: _vm.itemDetails.price },
+            domProps: { value: _vm.price },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.itemDetails, "price", $event.target.value)
+                _vm.price = $event.target.value
               }
             }
           })
@@ -39237,19 +39292,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.itemDetails.quantity,
-                expression: "itemDetails.quantity"
+                value: _vm.quantity,
+                expression: "quantity"
               }
             ],
             staticClass: "form-control",
             attrs: { type: "text", placeholder: "Quantity" },
-            domProps: { value: _vm.itemDetails.quantity },
+            domProps: { value: _vm.quantity },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.itemDetails, "quantity", $event.target.value)
+                _vm.quantity = $event.target.value
               }
             }
           })
@@ -39261,23 +39316,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.itemDetails.subtotal,
-                expression: "itemDetails.subtotal"
+                value: _vm.subTotal,
+                expression: "subTotal"
               }
             ],
             staticClass: "form-control",
             attrs: { type: "text", disabled: "", placeholder: "Sub-Total" },
-            domProps: { value: _vm.itemDetails.subtotal },
+            domProps: { value: _vm.subTotal },
             on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.calculateSubTotal($event)
-              },
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.itemDetails, "subtotal", $event.target.value)
+                _vm.subTotal = $event.target.value
               }
             }
           })
@@ -39360,7 +39411,14 @@ var render = function() {
               "tbody",
               [
                 _vm._l(_vm.totalItems, function(i, index) {
-                  return _c("order-item", { key: index })
+                  return _c("order-item", {
+                    key: index,
+                    attrs: { total: _vm.totalValue },
+                    on: {
+                      "update-total": _vm.updateTotal,
+                      "remove-total": _vm.removeTotal
+                    }
+                  })
                 }),
                 _vm._v(" "),
                 _c("tr", [
@@ -39380,7 +39438,34 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _c("td"),
+                  _vm._v(" "),
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("div", { staticClass: " form-group form-horizontal" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.totalValue,
+                            expression: "totalValue"
+                          }
+                        ],
+                        attrs: { type: "text", disabled: "", name: "" },
+                        domProps: { value: _vm.totalValue },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.totalValue = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ])
                 ])
               ],
               2
@@ -39521,9 +39606,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("td", [
-      _c("label", { attrs: { for: "total" } }, [_vm._v(" Total")]),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "text", name: "" } })
+      _c("label", { attrs: { for: "total" } }, [_vm._v(" Total ")])
     ])
   }
 ]

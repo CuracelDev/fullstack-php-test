@@ -19,15 +19,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <order-item v-for="(i, index) in totalItems" :key="index"> </order-item>
+                            <order-item v-for="(i, index) in totalItems" :key="index" @update-total="updateTotal" @remove-total="removeTotal" :total="totalValue"> </order-item>
 
                             <tr>
                                 <td> 
                                     <button @click.prevent="addItem" class=" form-control btn btn-default"> + </button>
                                 </td>
+                                <td></td>
+                                <td><label for="total" > Total </label></td>
                                 <td> 
-                                    <label for="total" > Total</label>
-                                    <input type="text" name="" />
+                                    <div class=" form-group form-horizontal">
+                                        <input type="text" disabled name="" v-model="totalValue" />
+                                    </div>
                                 </td>
                             </tr>
 
@@ -82,7 +85,15 @@
         },
 
         async created() {
+            this.$on('update-total', (data) => {
+                console.log(data);
+            })
+        },
 
+        mounted() {
+            this.$on('update-total', (data) => {
+                console.log(data);
+            })
         },
 
         data() {
@@ -95,7 +106,9 @@
                 encounterDate: '',
                 provider: '',
                 hmoCode: '',
-                submitButton: 'Submit Order'
+                totalValue2: 0,
+                submitButton: 'Submit Order',
+                payload: []
             };
         },
 
@@ -103,6 +116,24 @@
 
             addItem() {
                 this.totalItems = this.totalItems + 1
+            },
+
+            updateTotal(payload) {
+                const itExists = obj => obj.reference == payload.reference;
+                const hasIt =  this.payload.some(itExists)
+                if (!hasIt) {
+                    this.payload.push({...payload})
+                } else{
+                    this.payload.map((el) => {
+                        if (el.reference == payload.reference) {
+                            el.value = payload.value
+                        }
+                    })
+                }
+            },
+
+            removeTotal(payload) {
+                this.payload.pop({...payload})
             },
 
             submitOrder() {
@@ -131,6 +162,13 @@
             }
 
         },
+
+        computed: {
+            totalValue() {
+                //return this.payload.forEach( el => el.reduce(el.value))
+                return this.payload.reduce(function (acc, obj) { return acc + obj.value; }, 0);
+            }
+        }
     };
 </script>
 
