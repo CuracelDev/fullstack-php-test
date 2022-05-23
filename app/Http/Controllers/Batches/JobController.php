@@ -46,6 +46,7 @@ class JobController extends ApiController
     {
         $all = [];
         $orders = $this->order->where('provider_id', $provider->id)
+            ->where('processed', false)
             ->whereMonth($hmoChoice, Carbon::now())
             ->select('id')
             ->get()
@@ -64,6 +65,10 @@ class JobController extends ApiController
             'provider_id' => $provider->id,
         ]);
 
+        //Update Order
+        $this->order->where('provider_id', $provider->id)
+            ->whereMonth($hmoChoice, Carbon::now())
+            ->update('processed', true);
 
         return true;
 

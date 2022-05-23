@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('hmo_id')->cascadeOnDelete();
             $table->foreignId('provider_id')->cascadeOnDelete();
             $table->timestamp('deleted_at')->nullable();
+            $table->boolean('procesed')->default(false);
             $table->timestamps();
         });
     }
