@@ -17,7 +17,6 @@ class CreateBatchesTable extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('provider_id')->constrained();
-            $table->foreignId('hmo_id')->constrained();
             $table->enum('batch_rule', ['encounter_date', 'request_date']);
             $table->string('month');
             $table->json('orders');

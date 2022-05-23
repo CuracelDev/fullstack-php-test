@@ -3,25 +3,24 @@
 
 namespace App\Traits;
 
-
-use App\Models\ActionLog;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\VehicleType;
-
+use Carbon\Carbon;
 
 trait ApiOperations
 {
 
-    public function getBatchNameByEncounterDate()
+    public function getBatchNameByEncounterDate($provider)
     {
-
+        return $provider->name .' ' .  Carbon::parse(now())
+            ->format('M Y');   
     }
 
-    public function getBatchNameByRequestDate()
+    public function getBatchNameByRequestDate($provider)
     {
-        
+        return $provider->name .' ' . Carbon::parse(now())
+            ->format('M Y');
     }
 
 }

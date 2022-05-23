@@ -41,7 +41,7 @@ class BatchOrder extends Command
      */
     public function handle()
     {
-        $this->batch->processOrder();
+        $this->batch->batchOrders();
         $this->info('Batch generation worker in process.');
         return;
     }
