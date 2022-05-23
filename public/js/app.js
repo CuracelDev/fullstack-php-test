@@ -2110,24 +2110,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     OrderItem: _OrderItem_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   created: function created() {
-    var _this = this;
-
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _this.$on('update-total', function (data) {
-                console.log(data);
-              });
-
-            case 1:
             case "end":
               return _context.stop();
           }
@@ -2135,16 +2134,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, _callee);
     }))();
   },
-  mounted: function mounted() {
-    this.$on('update-total', function (data) {
-      console.log(data);
-    });
-  },
+  mounted: function mounted() {},
   data: function data() {
     return {
       totalItems: 4,
       orderItems: [],
       error: '',
+      message: '',
       errors: [],
       saving: false,
       encounterDate: '',
@@ -2152,7 +2148,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       hmoCode: '',
       totalValue2: 0,
       submitButton: 'Submit Order',
-      payload: []
+      payload: [],
+      hmos: []
     };
   },
   methods: {
@@ -2180,29 +2177,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.payload.pop(_objectSpread({}, payload));
     },
     submitOrder: function submitOrder() {
-      var _this2 = this;
+      var _this = this;
 
       this.submitButton = 'Saving...';
       axios.post('/api/orders/save', {
-        hmoCode: this.hmoCode,
+        hmo_code: this.hmoCode,
         provider_name: this.provider,
         items: this.payload,
-        subTotal: this.subTotal,
-        totalPrice: this.totalPrice,
-        encounterDate: this.encounterDate
+        sub_total: this.subTotal,
+        total_price: this.totalPrice,
+        encounter_date: this.encounterDate
       }).then(function (response) {
-        _this2.statusText = "Saved!";
-        setTimeout(function () {
-          _this2.statusText = '';
-        }, 3000);
+        _this.message = response.data.message;
+        setTimeout(function () {}, 3000);
       })["catch"](function (error) {
         if (error.response.status == 422) {
-          _this2.error = Object.values(error.response.data.errors)[0][0];
+          _this.error = Object.values(error.response.data.errors)[0][0];
         } else {
-          _this2.error = error.response.data.message;
+          _this.error = error.response.data.message;
         }
       })["finally"](function () {
-        _this2.submitButton = 'Submit Order';
+        _this.submitButton = 'Submit Order';
       });
     }
   },
@@ -39402,7 +39397,37 @@ var render = function() {
                     },
                     [_vm._v("×")]
                   ),
-                  _vm._v("\n                " + _vm._s(_vm.error) + "  ")
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.error) +
+                      " \n                "
+                  )
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.message
+            ? _c(
+                "div",
+                { staticClass: "alert alert-success alert-dismissible" },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        href: "#",
+                        "data-dismiss": "alert",
+                        "aria-label": "close"
+                      }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.message) +
+                      " \n                "
+                  )
                 ]
               )
             : _vm._e(),

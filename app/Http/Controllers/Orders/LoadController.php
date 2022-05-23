@@ -23,13 +23,16 @@ class LoadController extends ApiController
     {
         $rules = [
             'provider_name' => 'required|exists:providers,name',
+            'hmo_code' => 'required|exists:hmos,code',
             'encounter_date' => 'required|date',
-            'items' => 'required|array',
+            'items' => 'required|array'
         ];
 
         $this->validate($request, $rules);
         $data = $request->all();
-        $data['provider_id'] = $this->getSingleQueryByColumn('name', $data['provider_name'], "id", new Provider());
+        $data['provider_id'] = $this->getSingleQueryByColumn('name', trim($data['provider_name']), "id", new Provider())['id'];
+        $data['hmo_id'] = $this->getSingleQueryByColumn('code', trim($data['hmo_code']), "id", new Hmo())['id'];
+        $data['items'] = json_encode($data['items']);
         $this->basicInsert(new Order(), $data);
 
         return $this->successResponse($data, 200, 'Order successfully added');

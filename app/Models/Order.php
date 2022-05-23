@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $guarged = ['id'];
+    protected $fillable = ['hmo_id', 'provider_id', 'items', 'encounter_date', 'deleted_at'];
 
     public function provider()
     {

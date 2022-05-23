@@ -4,9 +4,15 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="alert alert-danger alert-dismissible" v-if="error" >
-                    <a href="#" class="close" data-dismiss="alert"
-                        aria-label="close">&times;</a>
-                    {{error}}  </div>
+                        <a href="#" class="close" data-dismiss="alert"
+                            aria-label="close">&times;</a>
+                        {{error}} 
+                    </div>
+                    <div class="alert alert-success alert-dismissible" v-if="message" >
+                        <a href="#" class="close" data-dismiss="alert"
+                            aria-label="close">&times;</a>
+                        {{message}} 
+                    </div>
                     <div class="card-header">Submit An Order</div>
                     <table>
                         <thead>
@@ -85,22 +91,19 @@
         },
 
         async created() {
-            this.$on('update-total', (data) => {
-                console.log(data);
-            })
+
         },
 
         mounted() {
-            this.$on('update-total', (data) => {
-                console.log(data);
-            })
+
         },
 
         data() {
             return {
                 totalItems: 4,
-                orderItems:[],
+                orderItems: [],
                 error: '',
+                message: '',
                 errors: [],
                 saving: false,
                 encounterDate: '',
@@ -108,7 +111,8 @@
                 hmoCode: '',
                 totalValue2: 0,
                 submitButton: 'Submit Order',
-                payload: []
+                payload: [],
+                hmos: []
             };
         },
 
@@ -139,16 +143,15 @@
             submitOrder() {
                 this.submitButton = 'Saving...'
                 axios.post('/api/orders/save', {
-                    hmoCode: this.hmoCode,
+                    hmo_code: this.hmoCode,
                     provider_name: this.provider,
                     items: this.payload,
-                    subTotal: this.subTotal,
-                    totalPrice: this.totalPrice,
-                    encounterDate: this.encounterDate
+                    sub_total: this.subTotal,
+                    total_price: this.totalPrice,
+                    encounter_date: this.encounterDate
                 }).then(response => {
-                    this.statusText = "Saved!";
+                    this.message = response.data.message;
                     setTimeout(() => {
-                        this.statusText = '';
                     }, 3000);
                 }).catch(error => {
                     if(error.response.status == 422) {
