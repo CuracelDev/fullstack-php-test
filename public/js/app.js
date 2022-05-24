@@ -1993,7 +1993,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     updateTotal: function updateTotal() {
-      //   this.total = this.total   
       this.$emit('update-total', {
         subTotal: this.subTotal,
         reference: this.reference,
@@ -2154,7 +2153,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     addItem: function addItem() {
-      this.totalItems = this.totalItems + 1;
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this.totalItems = _this.totalItems + 1;
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     },
     updateTotal: function updateTotal(payload) {
       var itExists = function itExists(obj) {
@@ -2177,7 +2191,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.payload.pop(_objectSpread({}, payload));
     },
     submitOrder: function submitOrder() {
-      var _this = this;
+      var _this2 = this;
 
       this.submitButton = 'Saving...';
       axios.post('/api/orders/save', {
@@ -2188,16 +2202,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         total_price: this.totalPrice,
         encounter_date: this.encounterDate
       }).then(function (response) {
-        _this.message = response.data.message;
+        _this2.message = response.data.message;
         setTimeout(function () {}, 3000);
       })["catch"](function (error) {
         if (error.response.status == 422) {
-          _this.error = Object.values(error.response.data.errors)[0][0];
+          _this2.error = Object.values(error.response.data.errors)[0][0];
         } else {
-          _this.error = error.response.data.message;
+          _this2.error = error.response.data.message;
         }
       })["finally"](function () {
-        _this.submitButton = 'Submit Order';
+        _this2.submitButton = 'Submit Order';
       });
     }
   },
@@ -39341,6 +39355,7 @@ var render = function() {
             "button",
             {
               staticClass: " form-control btn btn-default",
+              attrs: { id: "removeItem" },
               on: {
                 click: function($event) {
                   $event.preventDefault()
@@ -39445,7 +39460,7 @@ var render = function() {
                 _vm._l(_vm.totalItems, function(i, index) {
                   return _c("order-item", {
                     key: index,
-                    attrs: { total: _vm.totalValue },
+                    attrs: { total: _vm.totalValue, "data-test": "order-item" },
                     on: {
                       "update-total": _vm.updateTotal,
                       "remove-total": _vm.removeTotal
@@ -39459,6 +39474,7 @@ var render = function() {
                       "button",
                       {
                         staticClass: " form-control btn btn-default",
+                        attrs: { id: "addItem", "data-test": "addItem" },
                         on: {
                           click: function($event) {
                             $event.preventDefault()

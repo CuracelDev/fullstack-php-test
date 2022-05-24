@@ -25,11 +25,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <order-item v-for="(i, index) in totalItems" :key="index" @update-total="updateTotal" @remove-total="removeTotal" :total="totalValue"> </order-item>
+                            <order-item v-for="(i, index) in totalItems" :key="index" @update-total="updateTotal" @remove-total="removeTotal" :total="totalValue" data-test="order-item"> </order-item>
 
                             <tr>
                                 <td> 
-                                    <button @click.prevent="addItem" class=" form-control btn btn-default"> + </button>
+                                    <button @click.prevent="addItem" class=" form-control btn btn-default" id="addItem" data-test="addItem"> + </button>
                                 </td>
                                 <td></td>
                                 <td><label for="total" > Total </label></td>
@@ -118,8 +118,8 @@
 
         methods: {
 
-            addItem() {
-                this.totalItems = this.totalItems + 1
+            async addItem() {
+                 this.totalItems = this.totalItems + 1
             },
 
             updateTotal(payload) {

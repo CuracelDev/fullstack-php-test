@@ -5,7 +5,7 @@
             <td> <input type="text" class="form-control" placeholder="Unit Price" v-model="price"> </td>
             <td> <input type="text" class="form-control" placeholder="Quantity" v-model="quantity"> </td>
             <td> <input type="text" class="form-control" disabled placeholder="Sub-Total" v-model="subTotal" ></td>
-            <td> <button @click.prevent="remove" class=" form-control btn btn-default"> - </button> </td>
+            <td> <button @click.prevent="remove" id="removeItem" class=" form-control btn btn-default"> - </button> </td>
         </tr>
     <!-- </div> -->
 </template>
@@ -62,7 +62,6 @@ export default {
        },
 
        updateTotal() {
-        //   this.total = this.total   
           this.$emit('update-total', 
           { subTotal: this.subTotal, reference: this.reference, price: this.price, quantity: this.quantity, item: this.item})
        }

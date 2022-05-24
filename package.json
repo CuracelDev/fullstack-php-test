@@ -7,6 +7,7 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
+        "test": "jest",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
@@ -22,5 +23,15 @@
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "@vue/cli-plugin-unit-jest": "^5.0.4",
+        "@vue/compiler-dom": "^3.2.36",
+        "@vue/test-utils": "^1.0.0",
+        "babel-core": "^7.0.0-bridge.0",
+        "jest": "^28.1.0",
+        "jest-environment-jsdom": "^28.1.0",
+        "jsdom": "^19.0.0",
+        "vue-jest": "^3.0.7"
     }
 }
