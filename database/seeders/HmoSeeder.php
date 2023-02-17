@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\DB;
 class HmoSeeder extends Seeder
 {
     private $hmos = [
-        ['name'=>'HMO A', 'code'=> 'HMO-A'],
-        ['name'=>'HMO B', 'code'=> 'HMO-B'],
-        ['name'=>'HMO C', 'code'=> 'HMO-C'],
-        ['name'=>'HMO D', 'code'=> 'HMO-D'],
+        ['name'=>'HMO A', 'code'=> 'HMO-A', 'email' => 'bulaba@agbado.com', 'batch_by' => 'submit_date'],
+        ['name'=>'HMO B', 'code'=> 'HMO-B', 'email' => 'chaliman.co@gmai.com', 'batch_by' => 'encounter_date'],
+        ['name'=>'HMO C', 'code'=> 'HMO-C', 'email' => 'pdapc@balablue.org', 'batch_by' => 'encounter_date'],
+        ['name'=>'HMO D', 'code'=> 'HMO-D', 'email' => 'votewisely@betternaija.com', 'batch_by' => 'encounter_date'],
     ];
 
     /**
