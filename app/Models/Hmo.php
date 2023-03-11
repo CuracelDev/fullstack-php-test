@@ -2,9 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Hmo extends Model
 {
-    //
+    use HasFactory;
+
+    protected $fillable = ['name', 'code', 'email', 'batch_by'];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function batches()
+    {
+        return $this->hasMany(Batch::class);
+    }
 }

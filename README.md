@@ -1,21 +1,20 @@
-
-
-
-## Setup
-
+Setup
 Same way you would install a typical laravel application.
 
-    composer install
+composer install
 
-    npm install
+cp .env.example .env
 
-    php artisan serve
+php artisan key:generate
 
-The UI is displayed on the root page
+php artisan migrate
 
-Don't forget to run `npm run dev` after modifying the vue component.
+php artisan db:seed
 
-## Extra Notes
+npm install
 
+npm run dev
 
+php artisan serve
 
+Create an account and login

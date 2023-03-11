@@ -1,10 +1,11 @@
 <?php
 
+use App\Enums\HmoBatchCriteria;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHmosTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -17,6 +18,8 @@ class CreateHmosTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->unique();
+            $table->string('email');
+            $table->enum('batch_by', [HmoBatchCriteria::SUBMIT_DATE->value, HmoBatchCriteria::ENCOUNTER_DATE->value])->default(HmoBatchCriteria::ENCOUNTER_DATE->value);
             $table->timestamps();
         });
     }
@@ -30,4 +33,4 @@ class CreateHmosTable extends Migration
     {
         Schema::dropIfExists('hmos');
     }
-}
+};
