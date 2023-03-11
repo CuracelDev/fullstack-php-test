@@ -1,20 +1,31 @@
-Setup
-Same way you would install a typical laravel application.
+<p align="center">
+<img src="project-sample.png" alt="Build Status"/>
+</p>
 
-composer install
+<h1>Setup Steps</h3>
 
-cp .env.example .env
+>composer install
 
-php artisan key:generate
+>cp .env.example .env
 
-php artisan migrate
+>php artisan key:generate
 
-php artisan db:seed
+>php artisan migrate
 
-npm install
+>php artisan db:seed
 
-npm run dev
+>npm install
 
-php artisan serve
+>npm run dev
+
+>php artisan serve
 
 Create an account and login
+
+<h3>Sets to get HMO Code and Provider Code</h3>
+
+<h4>Provider</h4>
+Go to the database ```providers``` table and copy the code
+
+<h4>HMO Code </h4>
+Go to the database ```hmos``` table and copy the code

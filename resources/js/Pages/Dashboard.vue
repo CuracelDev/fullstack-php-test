@@ -83,6 +83,11 @@ const submitForm = () => {
             errorBag.value = error.response.data.message;
         });
 };
+
+const moreInfo = (type) => {
+    alert(`To get a valid ${type} code, run your seeder if you haven't, then go to the providers table and copy the code`)
+
+}
 </script>
 
 <template>
@@ -100,14 +105,20 @@ const submitForm = () => {
                     <section aria-labelledby="cart-heading" class="lg:col-span-7">
                         <div class="flex gap-4 w-full grid-cols-12 mb-4">
                             <div class="flex-1">
-                                <label for="city" class="block text-sm font-medium leading-6 text-gray-900">Provider Code</label>
+                                <label for="city" class="flex text-sm font-medium leading-6 text-gray-900">
+                                    Provider Code
+                                    <QuestionMarkCircleIcon @click="moreInfo('providers')" class="h-5 w-5 ml-2 text-gray-500 cursor-pointer " aria-hidden="true" />
+                                </label>
                                 <div class="mt-2">
                                     <input type="text" v-model="formData.provider_code" placeholder="Provider Code" required autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 w-full" />
                                 </div>
                             </div>
 
                             <div class="flex-1">
-                                <label for="city" class="block text-sm font-medium leading-6 text-gray-900">HMO Code</label>
+                                <label for="city" class="flex text-sm font-medium leading-6 text-gray-900">
+                                    HMO Code
+                                    <QuestionMarkCircleIcon @click="moreInfo('hmos')" class="h-5 w-5 ml-2 text-gray-500 cursor-pointer " aria-hidden="true" />
+                                </label>
                                 <div class="mt-2">
                                     <input type="text" v-model="formData.hmo_code" placeholder="HMO Code" required autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 w-full" />
                                 </div>
