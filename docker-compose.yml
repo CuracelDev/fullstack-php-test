@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    tty: true
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/app
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: demo
+    ports:
+      - 5432:5432
