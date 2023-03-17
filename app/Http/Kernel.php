@@ -41,6 +41,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             'throttle:60,1',
+            \App\Http\Middleware\ForceJsonResponse::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
