@@ -3,13 +3,14 @@
 namespace Tests\Feature;
 
 use Illuminate\Http\Response;
-use App\Models\Order;
 use DateTime;
-use Mockery;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class OrderControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
@@ -17,6 +18,7 @@ class OrderControllerTest extends TestCase
      */
     public function test_create_order()
     {
+        
         $response = $this->post('/api/order', []);
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertJsonFragment([
@@ -27,6 +29,7 @@ class OrderControllerTest extends TestCase
         ]);
 
         $this->refreshApplication();
+        $this->refreshDatabase();
         $response = $this->post('/api/order', [
             "hmo_code" => 100,
             "name" => 200,
@@ -40,8 +43,9 @@ class OrderControllerTest extends TestCase
             "date" => ["The date is not a valid date."],
             "items" => ["The items field is required."],
         ]);
-        
+
         $this->refreshApplication();
+        $this->refreshDatabase();
         $response = $this->post('/api/order', [
             "hmo_code" => "HMO-1",
             "name" => "Provider A",
@@ -50,12 +54,14 @@ class OrderControllerTest extends TestCase
         ]);
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertJsonFragment([
+            "hmo_code" => ["The selected hmo code is invalid."],
             "items.0.name" => ["The items.0.name field is required."],
             "items.0.unit_price" => ["The items.0.unit_price field is required."],
             "items.0.quantity" => ["The items.0.quantity field is required."],
         ]);
 
         $this->refreshApplication();
+        $this->refreshDatabase();
         $response = $this->post('/api/order', [
             "hmo_code" => "HMO-1",
             "name" => "Provider A",
@@ -80,6 +86,7 @@ class OrderControllerTest extends TestCase
         ]);
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertJsonFragment([
+            "hmo_code" => ["The selected hmo code is invalid."],
             "items.0.name" => ["The items.0.name must be a string."],
             "items.0.unit_price" => ["The items.0.unit_price must be a number."],
             "items.0.quantity" => ["The items.0.quantity must be a number."],
@@ -89,9 +96,10 @@ class OrderControllerTest extends TestCase
 
         
         $this->refreshApplication();
+        $this->refreshDatabase();
         $dateFormat = "M d Y";
         $input = [
-            "hmo_code" => "HMO-1",
+            "hmo_code" => "HMO-A",
             "provider_name" => "Provider A",
             "date" => new DateTime("Jan 10 2000"),
             "items" => [
@@ -102,13 +110,6 @@ class OrderControllerTest extends TestCase
                 ],
             ],
         ];
-
-        $orderMock = Mockery::mock("alias:" . Order::class);
-        $orderMock->shouldReceive("create")
-            ->with(Mockery::on(function($args) use ($input) {
-                return ($args == $input);
-            }))->andReturn([]);
-        $this->app->instance(Order::class, $orderMock);
 
         $response = $this->post('/api/order', [
             "hmo_code" =>  $input["hmo_code"],

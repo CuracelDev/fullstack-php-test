@@ -16,9 +16,10 @@ class CreateOrdersTable extends Migration
         Schema::create("orders", function (Blueprint $table) {
             $table->id();
             $table->string("provider_name");
-            $table->string("hmo_code");
             $table->dateTime("date");
             $table->json("items");
+            $table->unsignedBigInteger("hmo_id");
+            $table->foreign("hmo_id")->references("id")->on("hmos")->onDelete("SET NULL");
             $table->timestamps();
         });
     }
