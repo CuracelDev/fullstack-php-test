@@ -2,9 +2,10 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
+use App\Models\Order;
+use DateTime;
+use Mockery;
 use Tests\TestCase;
 
 class OrderControllerTest extends TestCase
@@ -86,11 +87,13 @@ class OrderControllerTest extends TestCase
             "items.2.name" => ["The items.2.name field has a duplicate value."],
         ]);
 
+        
         $this->refreshApplication();
-        $response = $this->post('/api/order', [
+        $dateFormat = "M d Y";
+        $input = [
             "hmo_code" => "HMO-1",
-            "name" => "Provider A",
-            "date" => "Jan 10 2000",
+            "provider_name" => "Provider A",
+            "date" => new DateTime("Jan 10 2000"),
             "items" => [
                 [
                     "name" => "Item 1",
@@ -98,6 +101,20 @@ class OrderControllerTest extends TestCase
                     "quantity" => 2,
                 ],
             ],
+        ];
+
+        $orderMock = Mockery::mock("alias:" . Order::class);
+        $orderMock->shouldReceive("create")
+            ->with(Mockery::on(function($args) use ($input) {
+                return ($args == $input);
+            }))->andReturn([]);
+        $this->app->instance(Order::class, $orderMock);
+
+        $response = $this->post('/api/order', [
+            "hmo_code" =>  $input["hmo_code"],
+            "name" => $input["provider_name"],
+            "date" => $input["date"]->format($dateFormat),
+            "items" => $input["items"],
         ]);
 
         $response->assertStatus(Response::HTTP_OK);

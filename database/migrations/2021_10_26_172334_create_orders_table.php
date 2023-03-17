@@ -13,9 +13,12 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create("orders", function (Blueprint $table) {
             $table->id();
-            $table->json('items');
+            $table->string("provider_name");
+            $table->string("hmo_code");
+            $table->dateTime("date");
+            $table->json("items");
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists("orders");
     }
 }
