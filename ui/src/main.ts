@@ -1,10 +1,8 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import { createApp } from 'vue/dist/vue.esm-bundler';
+import router from './router';
+import './styles/main.scss';
 
-import './assets/main.css'
-
-const app = createApp(App)
+const app = createApp({})
 
 app.use(router)
 
