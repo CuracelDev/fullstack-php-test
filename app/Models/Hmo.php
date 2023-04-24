@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Hmo extends Model
 {
@@ -37,7 +38,7 @@ class Hmo extends Model
             return $order->batch_id;
         }
 
-        $provider = strtoupper($order->provider);
+        $provider = strtoupper(Str::snake($order->provider));
 
         $batchDate = $this->batch_by_encounter_date ? $order->encounter_date : $order->created_at;
         $batchDate = Carbon::parse($batchDate);
