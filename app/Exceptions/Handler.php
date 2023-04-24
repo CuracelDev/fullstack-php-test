@@ -3,6 +3,10 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -29,7 +33,8 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable  $exception
+     * @param \Throwable $exception
+     *
      * @return void
      *
      * @throws \Exception
@@ -42,14 +47,36 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Throwable $exception
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Throwable
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof ValidationException) {
+            return response()->json([
+                'status' => false,
+                'message' => $exception->validator->errors()->first(),
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Resource not found.',
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        if ($exception instanceof HttpException) {
+            return response()->json([
+                'status' => false,
+                'message' => $exception->getMessage(),
+            ], $exception->getStatusCode());
+        }
+
         return parent::render($request, $exception);
     }
 }
