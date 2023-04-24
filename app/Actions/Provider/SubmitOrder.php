@@ -33,7 +33,7 @@ class SubmitOrder
         } catch (\Throwable $th) {
             report($th); //log exception for monitoring.
 
-            return $this->jsonResponse(
+            return $this->formatJsonResponse(
                 'An error occurred while attempting to submit your order.',
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
@@ -41,10 +41,10 @@ class SubmitOrder
 
         //send the mail here
 
-        return $this->jsonResponse('Order submitted successfully.');
+        return $this->formatJsonResponse('Order submitted successfully.');
     }
 
-    private function jsonResponse(string $message, int $statusCode = JsonResponse::HTTP_OK): JsonResponse
+    private function formatJsonResponse(string $message, int $statusCode = JsonResponse::HTTP_OK): JsonResponse
     {
         $status = $statusCode >= 200 && $statusCode < 400;
 
