@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->json('items');
             $table->foreignId('hmo_id')->constrained();
-            $table->string('batch_id');
+            $table->string('batch_id')->index();
             $table->string('status')->default(Order::STATUS_PENDING);
             $table->string('provider');
             $table->date('encounter_date');
