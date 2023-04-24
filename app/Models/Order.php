@@ -13,6 +13,9 @@ class Order extends Model
 
     protected $guarded = ['id'];
 
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_COMPLETED = 'completed';
+
     public function hmo(): BelongsTo
     {
         return $this->belongsTo(Hmo::class);

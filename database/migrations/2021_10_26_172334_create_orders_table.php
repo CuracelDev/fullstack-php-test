@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->json('items');
             $table->foreignId('hmo_id')->constrained();
             $table->string('batch_id');
-            $table->string('status');
+            $table->string('status')->default(Order::STATUS_PENDING);
             $table->string('provider');
             $table->date('encounter_date');
             $table->timestamps();
