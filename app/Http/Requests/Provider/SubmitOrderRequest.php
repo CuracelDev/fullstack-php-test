@@ -57,7 +57,7 @@ class SubmitOrderRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'items.*.item.distinct' => 'One of the items has been entered twice. You can fix this by removing the duplicate item',
+            'items.*.item.distinct' => 'One of the items has been entered twice. You can fix this by removing the duplicate item.',
         ];
     }
 }
