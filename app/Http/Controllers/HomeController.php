@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $hmos = cache()->remember('hmos', now()->addHours(12), function () { //cache can always be invalidated when a new hmo is added
+        $hmos = cache()->remember('hmos', now()->addMinutes(30), function () { //cache can always be invalidated when a new hmo is added
             return Hmo::get()->toArray();
         });
 
