@@ -1,0 +1,42 @@
+<template>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="name">Item</label>
+            <input v-model="item" required class="form-control" type="text" name="name" placeholder="Name" id="name">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="price">Unit Price</label>
+            <input v-model="price" required class="form-control" type="number" step=".01" placeholder="Price" id="price">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="quantity">Qty</label>
+            <input v-model="quantity" required class="form-control" type="number" step="1" placeholder="Qty" id="quantity">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="subtotal">Subtotal</label>
+            <input required :value="subtotal" readonly class="form-control" placeholder="Subtotal" id="subtotal">
+        </div>
+        <div class="form-group col-md-1">
+            <label for="name">Act.</label>
+            <button class="form-control" @click="$emit('deleteItem', this.arrIndex)">-</button>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    props: ['singleItem', 'arrIndex'],
+    data() {
+        return {
+            item: this.singleItem.item,
+            price: this.singleItem.price,
+            quantity: this.singleItem.quantity
+        }
+    },
+    computed: {
+        subtotal() {
+            return this.price * this.quantity;
+        },
+    }
+}
+</script>
