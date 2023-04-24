@@ -179,7 +179,7 @@ class SubmitOrderTest extends TestCase
         $response->assertStatus(JsonResponse::HTTP_BAD_REQUEST)
             ->assertJsonFragment([
                 'status' => false,
-                'message' => 'One of the items has been entered twice. You can fix this by removing the duplicate item',
+                'message' => 'One of the items has been entered twice. You can fix this by removing the duplicate item.',
             ]);
 
         $this->assertDatabaseMissing('orders', [

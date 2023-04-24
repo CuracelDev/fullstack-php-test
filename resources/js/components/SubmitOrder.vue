@@ -14,7 +14,7 @@
                             </button>
                         </div>
                         <div class="alert alert-danger" role="alert" v-show="showErrorMessage">
-                            <strong>Error!</strong> {{ errorMessage }}.
+                            <strong>Error!</strong> {{ errorMessage }}
                         </div>
 
                         <form @submit.prevent="submitOrder">
