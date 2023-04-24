@@ -22,7 +22,7 @@
                             <input v-model="encounterDate" required class="form-control" type="date" id="encounterDate" :max="new Date().toLocaleDateString('en-CA')">
                         </div>
                         <hr>
-                        <SingleOrderItem v-for="(item, index) in items" :key="index" :singleItem="item" :arrIndex="index"></SingleOrderItem>
+                        <SingleOrderItem v-for="item in items" :key="item.id" :singleItem="item" @deleteItem="deleteItem"></SingleOrderItem>
                         <div class="form-row">
                             <div class="form-group col-md-1">
                                 <label for="name">Add</label>
@@ -55,7 +55,8 @@ export default {
             name: "",
             selectedHmo: "",
             encounterDate: "",
-            items: [{ item: null, price: null, quantity: null }],
+            items: [{ id: 1, item: null, price: null, quantity: null }],
+            itemCounter: 1,
             submitBtnLoading: false,
             showErrorMessage: false,
             showSuccessMessage: false
@@ -66,8 +67,15 @@ export default {
     },
     methods: {
         addItem() {
-            const newItem = { item: null, price: null, quantity: null };
+            const newItem = { id: ++this.itemCounter, item: null, price: null, quantity: null };
             this.items.push(newItem);
+        },
+        deleteItem(itemId) {
+            if (this.items.length == 1) {
+                return;
+            }
+
+            this.items = this.items.filter((item) => item.id !== itemId);
         },
         submitOrder() {
             this.submitBtnLoading = true;

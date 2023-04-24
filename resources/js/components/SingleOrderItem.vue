@@ -18,14 +18,14 @@
         </div>
         <div class="form-group col-md-1">
             <label for="name">Act.</label>
-            <button class="form-control" @click="$emit('deleteItem', this.arrIndex)">-</button>
+            <button class="form-control" @click="$emit('deleteItem', singleItem.id)">-</button>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    props: ['singleItem', 'arrIndex'],
+    props: ['singleItem'],
     data() {
         return {
             item: this.singleItem.item,
