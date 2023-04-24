@@ -18,7 +18,7 @@
         </div>
         <div class="form-group col-md-1">
             <label for="name">Act.</label>
-            <button class="form-control" @click="$emit('deleteItem', singleItem.id)">-</button>
+            <button class="form-control" type="button" @click="$emit('deleteItem', singleItem.id)">-</button>
         </div>
     </div>
 </template>
