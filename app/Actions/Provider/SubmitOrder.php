@@ -51,6 +51,6 @@ class SubmitOrder
         return response()->json([
             'status' => $status,
             'message' => $message,
-        ]);
+        ], $statusCode);
     }
 }
