@@ -27,7 +27,7 @@ class SubmitOrderRequest extends FormRequest
             'name' => ['required', 'string', 'min:2', 'max:20'],
             'hmo' => ['required', 'string', 'exists:hmos,code'],
             'encounter_date' => ['required', 'date', 'before_or_equal:today'],
-            'items' => ['required', 'array'],
+            'items' => ['required', 'array', 'max:20'],
             'items.*' => ['required', 'array'],
             'items.*.item' => ['required', 'string', 'min:2', 'max:50', 'distinct:ignore_case'],
             'items.*.price' => ['required', 'numeric', 'gt:0'],
@@ -57,6 +57,7 @@ class SubmitOrderRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'items.max' => 'A maximum of 20 items are allowed per order.',
             'items.*.item.distinct' => 'One of the items has been entered twice. You can fix this by removing the duplicate item.',
         ];
     }
