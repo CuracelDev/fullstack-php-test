@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hmo;
+
 class HomeController extends Controller
 {
     /**
@@ -11,6 +13,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('submit-order');
+        $hmos = cache()->remember('hmos', now()->addHours(12), function () { //cache can always be invalidated when a new hmo is added
+            return Hmo::get()->toArray();
+        });
+
+        return view('submit-order', ['hmos' => $hmos]);
     }
 }
