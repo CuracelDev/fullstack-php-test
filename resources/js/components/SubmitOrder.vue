@@ -22,7 +22,13 @@
                             <input v-model="encounterDate" required class="form-control" type="date" id="encounterDate" :max="new Date().toLocaleDateString('en-CA')">
                         </div>
                         <hr>
-                        <SingleOrderItem v-for="item in items" :key="item.id" :singleItem="item" @deleteItem="deleteItem"></SingleOrderItem>
+                        <SingleOrderItem
+                            v-for="item in items"
+                            :key="item.id"
+                            :singleItem="item"
+                            @deleteItem="deleteItem"
+                            @updateItem="updateItem"
+                        ></SingleOrderItem>
                         <div class="form-row">
                             <div class="form-group col-md-1">
                                 <label for="name">Add</label>
@@ -76,6 +82,11 @@ export default {
             }
 
             this.items = this.items.filter((item) => item.id !== itemId);
+        },
+        updateItem(itemId, updatedItem) {
+            this.items = this.items.map(item => {
+                return item.id === itemId ? updatedItem : item;
+            });
         },
         submitOrder() {
             this.submitBtnLoading = true;

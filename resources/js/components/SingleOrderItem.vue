@@ -33,6 +33,30 @@ export default {
             quantity: this.singleItem.quantity
         }
     },
+    watch: {
+        item: {
+            handler(newValue, oldValue) {
+                this.updateItemValues();
+            },
+        },
+        price: {
+            handler(newValue, oldValue) {
+                this.updateItemValues();
+            },
+        },
+        quantity: {
+            handler(newValue, oldValue) {
+                this.updateItemValues();
+            },
+        },
+    },
+    methods: {
+        updateItemValues() {
+            const updatedItem = Object.assign({}, this.singleItem, {item: this.item, price: this.price, quantity: this.quantity});
+
+            this.$emit('updateItem', this.singleItem.id, updatedItem)
+        },
+    },
     computed: {
         subtotal() {
             return this.price * this.quantity;
