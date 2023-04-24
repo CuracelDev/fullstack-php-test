@@ -3,9 +3,11 @@
 namespace App\Actions\Provider;
 
 use App\Http\Requests\Provider\SubmitOrderRequest;
+use App\Mail\Provider\OrderSubmitted;
 use App\Models\Hmo;
 use App\Models\Order;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Mail;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class SubmitOrder
@@ -29,7 +31,7 @@ class SubmitOrder
     public function asController(SubmitOrderRequest $request): JsonResponse
     {
         try {
-            $this->handle($request->validated());
+            $createdOrder = $this->handle($request->validated());
         } catch (\Throwable $th) {
             report($th); //log exception for monitoring.
 
@@ -40,6 +42,7 @@ class SubmitOrder
         }
 
         //send the mail here
+        Mail::to($createdOrder->hmo->email)->send(new OrderSubmitted($createdOrder));
 
         return $this->formatJsonResponse('Order submitted successfully.');
     }
