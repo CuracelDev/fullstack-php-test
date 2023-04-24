@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <submit-order></submit-order>
+        <submit-order :hmos="{{json_encode($hmos)}}"></submit-order>
     </div>
 </div>
 @endsection
