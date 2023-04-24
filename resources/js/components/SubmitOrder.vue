@@ -19,7 +19,7 @@
 
                         <form @submit.prevent="submitOrder">
                             <div class="form-group">
-                                <label class="mt-2" for="name">Name</label>
+                                <label class="mt-2" for="name">Name (Your short provider name)</label>
                                 <input v-model="name" required class="form-control" type="text" name="name" placeholder="Name" id="name">
                             </div>
                             <div class="form-group">
@@ -53,6 +53,7 @@
                                     <input readonly required class="form-control" :value="total" placeholder="Total" id="total">
                                 </div>
                             </div>
+                            <hr>
                             <div class="d-flex justify-content-center mt-3">
                                 <button type="submit" class="btn btn-dark col-md-4" :disabled="submitBtnLoading">Submit</button>
                             </div>
