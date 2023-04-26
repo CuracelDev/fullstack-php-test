@@ -32,4 +32,13 @@ class OrderRequest extends FormRequest
             'sent_date' => ['required', 'date'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'items.*.name.required' => 'Required!',
+            'items.*.quantity.required' => 'Required!',
+            'items.*.unit_price.required' => 'Price Required!'
+        ];
+    }
 }

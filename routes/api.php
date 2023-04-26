@@ -19,4 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('create-order', [OrderController::class, 'store']);
+Route::post('create-order', [OrderController::class, 'store'])->name('api.order.store');
