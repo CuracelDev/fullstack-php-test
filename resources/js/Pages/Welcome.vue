@@ -111,7 +111,7 @@
 <!--</style>-->
 
 <script setup>
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -121,6 +121,27 @@ import { Link } from '@inertiajs/vue3';
 import SubmitOrder from "@/components/SubmitOrder.vue"
 
 const showingNavigationDropdown = ref(false);
+
+const props = defineProps({
+    hasHMO: {
+        type: Boolean,
+    },
+    hasProvider: {
+        type: Boolean,
+    }
+})
+
+onMounted(() => {
+    console.log('hmo-pro', [
+        props.hasHMO,
+        props.hasProvider,
+    ])
+
+    if (!props.hasHMO || !props.hasProvider) {
+        const missingData = props.hasHMO ? "HMO" : "Provider"
+        alert(`Please Run The Application Seeders as ${missingData}`)
+    }
+})
 </script>
 
 <template>
@@ -285,7 +306,7 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Content -->
             <main>
-                <SubmitOrder />
+                <SubmitOrder has-h-m-o="pro" />
             </main>
         </div>
     </div>

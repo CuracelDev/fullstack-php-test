@@ -30,7 +30,7 @@
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Create Order</h2>
         </div>
-        <form action="#" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20">
+        <form action="#" @submit.prevent="" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20">
             <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-3">
                 <div>
                     <label for="hmo-code" class="block text-sm font-semibold leading-6 text-gray-900">HMO Code</label>
@@ -123,7 +123,7 @@
                 </div>
             </div>
             <div class="mt-10">
-                <button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit Order</button>
+                <button type="button" @click="submitOrderRequest"  class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit Order</button>
             </div>
         </form>
     </div>
@@ -132,15 +132,6 @@
 <script setup>
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 import {onMounted, reactive} from "vue";
-
-const props = defineProps({
-    hasHMO: {
-        type: Boolean,
-    },
-    hasProvider: {
-        type: Boolean,
-    }
-})
 
 const data = reactive((() => {
     return {
@@ -158,13 +149,6 @@ const data = reactive((() => {
     }
 })())
 
-onMounted(() => {
-    if (!props.hasHMO || !props.hasProvider) {
-        const missingData = props.hasHMO ? "HMO" : "Provider"
-        alert(`Please Run The Application Seeders as ${missingData}`)
-    }
-})
-
 const addItem = () => {
     data.items.push({
         name: '',
@@ -181,6 +165,13 @@ const removeItem = (index) => {
     if (data.items.length > 1) {
         data.items.splice(index, 1);
     }
+}
+
+const submitOrderRequest = async () => {
+    const request = await axios.post('/api/create-order', data);
+
+    console.log('request completed')
+    console.log('request body', request.json())
 }
 
 </script>
