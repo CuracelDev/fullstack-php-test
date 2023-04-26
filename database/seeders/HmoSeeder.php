@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Hmo;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -21,6 +22,10 @@ class HmoSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('hmos')->insert($this->hmos);
+//        Hmo::truncate();
+
+        Hmo::factory()
+            ->sequence(...$this->hmos)
+            ->create();
     }
 }

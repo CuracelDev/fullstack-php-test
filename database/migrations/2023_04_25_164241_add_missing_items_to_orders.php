@@ -19,11 +19,8 @@ return new class extends Migration
             $table->foreignIdFor(Hmo::class, 'hmo_id')->constrained();
             $table->foreignIdFor(Provider::class, 'provider_id')->constrained();
             $table->foreignIdFor(Batch::class, 'batch_id')->nullable()->constrained();
-            $table->enum('status', [
-                OrderStatus::PENDING->value,
-                OrderStatus::PROCESSING->value,
-                OrderStatus::COMPLETED->value,
-            ])->default(OrderStatus::PENDING->value);
+            $table->enum('status', OrderStatus::getValues())
+                ->default(OrderStatus::PENDING->value);
             $table->date('encounter_date');
             $table->date('sent_date');
         });

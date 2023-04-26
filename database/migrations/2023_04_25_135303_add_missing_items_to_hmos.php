@@ -14,10 +14,7 @@ return new class extends Migration
     {
         Schema::table('hmos', function (Blueprint $table) {
             $table->string('email');
-            $table->enum('batch_identified_by', [
-                    BatchCriteria::SUBMISSION_DATE->value,
-                    BatchCriteria::ENCOUNTER_DATE->value
-                ])
+            $table->enum('batch_identified_by', BatchCriteria::getValues())
                 ->default(BatchCriteria::ENCOUNTER_DATE->value);
         });
     }

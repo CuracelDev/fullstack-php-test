@@ -22,6 +22,8 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'hasProvider' => \App\Models\Provider::count() > 0,
+        'hasHMO' => \App\Models\Hmo::count() > 0,
     ]);
 });
 
