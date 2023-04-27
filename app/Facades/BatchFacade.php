@@ -2,7 +2,9 @@
 
 namespace App\Facades;
 
+use App\Enums\BatchCriteria;
 use App\Models\Batch;
+use App\Models\Order;
 use App\Services\BatchService;
 use Illuminate\Support\Facades\Facade;
 

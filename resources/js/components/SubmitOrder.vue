@@ -197,7 +197,7 @@ const errorMessage = (error, objectKey) => {
         return Object.values(error)[0]
     }
 
-    return false
+    return null;
 }
 
 const data = reactive((() => {
