@@ -74,26 +74,26 @@
                     <label class="block text-sm font-semibold leading-6 text-gray-900">Items</label>
                         <div v-for="(order, key) in data.items" :key="key" id="items" class="flex gap-4 items-center">
                             <div class="mt-2.5 sm:col-span-2">
-                                <label class="block text-sm font-semibold leading-6 text-gray-900">Item</label>
-                                <input type="text" placeholder="Order Name" v-model="order.name" autocomplete="organization" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                <label :for="`item-name-${key}`" class="block text-sm font-semibold leading-6 text-gray-900">Item</label>
+                                <input type="text" :id="`item-name-${key}`" placeholder="Order Name" v-model="order.name" autocomplete="organization" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
 
                                 <InputError class="mt-2" :message="errorMessage(errors[`items.${key}.name`], 'encounter_date')" />
                             </div>
                             <div class="sm:col-span-2 mt-2.5">
-                                <label class="block text-sm font-semibold leading-6 text-gray-900">Unit Price</label>
-                                <input type="number" placeholder="Unit Price" v-model="order.unit_price" autocomplete="organization" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                <label :for="`item-unit-price-${key}`" class="block text-sm font-semibold leading-6 text-gray-900">Unit Price</label>
+                                <input type="number" :id="`item-unit-price-${key}`" placeholder="Unit Price" v-model="order.unit_price" autocomplete="organization" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
 
                                 <InputError class="mt-2" :message="errorMessage(errors[`items.${key}.unit_price`], 'encounter_date')" />
                             </div>
                             <div class="sm:col-span-2 mt-2.5">
-                                <label class="block text-sm font-semibold leading-6 text-gray-900">Qty</label>
-                                <input type="number" placeholder="Quantity" v-model="order.quantity" autocomplete="organization" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                <label :for="`item-qty-${key}`" class="block text-sm font-semibold leading-6 text-gray-900">Qty</label>
+                                <input type="number" :id="`item-qty-${key}`" placeholder="Quantity" v-model="order.quantity" autocomplete="organization" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
 
                                 <InputError class="mt-2" :message="errorMessage(errors[`items.${key}.quantity`], 'encounter_date')" />
                             </div>
                             <div class="sm:col-span-2 mt-2.5">
-                                <label class="block text-sm font-semibold leading-6 text-gray-900">Sub Total</label>
-                                <input type="number" readonly placeholder="Sub Total" :value="calculateSubTotal(order.quantity,order.unit_price)" autocomplete="organization" class="block contrast-75 w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                <label :for="`item-sub-total-${key}`" class="block text-sm font-semibold leading-6 text-gray-900">Sub Total</label>
+                                <input type="number" :id="`item-sub-total-${key}`" readonly placeholder="Sub Total" :value="calculateSubTotal(order.quantity,order.unit_price)" autocomplete="organization" class="block contrast-75 w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                             </div>
                             <div type="button" @click="removeItem(key)" class="border px-3 py-0 rounded-lg sm:col-span-2 mt-6 font-bolder cursor-pointer">
                                 -
@@ -235,6 +235,8 @@ const removeItem = (index) => {
 }
 
 const submitOrderRequest = async () => {
+
+    Object.assign(errors, {})
 
     const request = await axios.post(route('api.order.store'), data)
         .catch(error => {

@@ -3,12 +3,13 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build && vite build --ssr && vite build && vite build --ssr --ssr",
-        "test": "jest"
+        "test": "vitest"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
         "@popperjs/core": "^2.11.7",
         "@tailwindcss/forms": "^0.5.3",
+        "@testing-library/vue": "^7.0.0",
         "@vitejs/plugin-vue": "^4.0.0",
         "@vue/babel-preset-jsx": "^1.4.0",
         "@vue/cli-plugin-unit-jest": "^5.0.8",
@@ -18,16 +19,19 @@
         "autoprefixer": "^10.4.12",
         "axios": "^1.1.2",
         "bootstrap": "^5.2.3",
+        "happy-dom": "^9.9.2",
         "jest": "^27.0.0",
         "laravel-vite-plugin": "^0.7.2",
         "postcss": "^8.4.18",
         "sass": "^1.56.1",
         "tailwindcss": "^3.2.1",
         "vite": "^4.0.0",
+        "vitest": "^0.30.1",
         "vue": "^3.2.41"
     },
     "dependencies": {
         "@headlessui/vue": "^1.7.13",
-        "@heroicons/vue": "^2.0.16"
+        "@heroicons/vue": "^2.0.16",
+        "@testing-library/user-event": "^14.4.3"
     }
 }
