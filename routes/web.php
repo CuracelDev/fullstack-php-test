@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HmoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,3 +18,5 @@ Route::get('/', function () {
     return view('submit-order');
 });
 
+Route::post('/hmos/batch-data', [HmoController::class, 'batchData']);
+Route::get('/hmos/batch-data', [HmoController::class, 'retrieveBatchData']);

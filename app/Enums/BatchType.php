@@ -2,8 +2,10 @@
 
 namespace App\Enums;
 
-enum BatchType: string
-{
-    case ENCOUNTER_DATE = 'ENCOUNTER_DATE';
-    case CREATION_DATE = 'CREATION_DATE';
-}
+use Spatie\Enum\Laravel\Enum;
+
+/**
+ * @method static self ENCOUNTER_DATE()
+ * @method static self CREATION_DATE()
+ */
+final class BatchType extends Enum {}
