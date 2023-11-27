@@ -5,6 +5,7 @@
  */
 
 require('./bootstrap');
+import VueSimpleAlert from "vue-simple-alert";
 
 window.Vue = require('vue');
 
@@ -20,6 +21,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('submit-order', require('./components/SubmitOrder.vue').default);
+Vue.use(VueSimpleAlert);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
