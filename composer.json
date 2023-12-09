@@ -14,7 +14,9 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^3.0",
-        "laravel/ui": "^2.1"
+        "laravel/ui": "^3.4",
+        "spatie/data-transfer-object": "2.0",
+        "spatie/enum": "^3.12"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
