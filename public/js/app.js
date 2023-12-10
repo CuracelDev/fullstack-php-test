@@ -4864,8 +4864,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.form.orderItems.splice(index, 1);
       }
     },
-    getHmos: function getHmos() {
+    submit: function submit() {
       var _this = this;
+      this.submitting = true;
+      this.error = {};
+      axios.post('/api/orders', this.order).then(function (response) {
+        _this.$fire({
+          title: "Curacel",
+          text: response.data.message,
+          type: "success",
+          timer: 3000
+        }).then(function (r) {});
+      })["catch"](function (error) {
+        _this.error = error.response.data;
+      })["finally"](function () {
+        _this.submitting = false;
+      });
+    },
+    getHmos: function getHmos() {
+      var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var response, data;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -4879,7 +4896,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return response.json();
             case 5:
               data = _context.sent;
-              _this.form.hmoOptions = data.result.data;
+              _this2.form.hmoOptions = data.result.data;
             case 7:
             case "end":
               return _context.stop();

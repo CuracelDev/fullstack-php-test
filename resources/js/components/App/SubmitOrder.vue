@@ -209,6 +209,26 @@ export default {
                 this.form.orderItems.splice(index, 1)
             }
         },
+        submit() {
+            this.submitting = true;
+            this.error = {};
+            axios.post('/api/orders', this.order)
+                .then(response => {
+
+                    this.$fire({
+                        title: "Curacel",
+                        text: response.data.message,
+                        type: "success",
+                        timer: 3000
+                    }).then(r => {
+
+                    });
+                }).catch(error => {
+                this.error = error.response.data;
+            }).finally(() => {
+                this.submitting = false;
+            })
+        },
 
         async getHmos() {
             const response = await fetch("./api/available-hmos");
