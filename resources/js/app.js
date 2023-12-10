@@ -32,6 +32,7 @@ Vue.component('x-select', require('./components/form-items/select.vue').default)
 //icons
 Vue.component('x-icons-orders', require('./components/icons/orders.vue').default);
 Vue.component('x-icons-delete', require('./components/icons/delete.vue').default);
+Vue.component('x-icons-submit', require('./components/icons/submit.vue').default);
 
 
 

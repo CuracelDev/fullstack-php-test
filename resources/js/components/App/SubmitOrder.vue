@@ -10,7 +10,7 @@
 
                     <div class="card-body">
 
-                        <div class="mt-5 p-5 shadow-sm">
+                        <div class="mt-5 p-5 shadow-sm relative ">
 
                             <div class=" py-2">
                                 <div class="h-14 border-0 rounded-sm bg-gray-300 p-3 my-5">
@@ -58,8 +58,7 @@
                             </div>
 
 
-
-                            <div class="py-2">
+                            <div class="py-2 mb-24">
                                 <div class="h-14 border-0 rounded-sm bg-gray-300 p-3 my-5">
                                     <h3 class="text-black">Orders ({{ form.orderItems.length }})</h3>
                                 </div>
@@ -113,6 +112,8 @@
                                         </x-price-input>
                                     </div>
 
+
+
                                     <div>
                                         <button
                                             @click="removeOrderItem(index)"
@@ -123,21 +124,42 @@
                                     </div>
 
                                 </div>
+
+                                <div class="absolute right-20 bottom-16 ">
+                                    <x-price-input
+                                        name="total"
+                                        readonly='readonly'
+                                        label="Total"
+                                        classVal="w-32"
+                                        :value="total"
+                                        @input="(newItem) => {total = newItem}"
+                                    ></x-price-input>
+                                </div>
+
+
                             </div>
 
 
 
+                                <div class="absolute left-8 bottom-2">
+                                    <button
+                                        class="bg-blue-800 text-white rounded-md text-sm   px-3 py-2"
+                                        @click="addMore()"
+                                    >
+                                        <x-icons-orders></x-icons-orders>
+                                        Add More
+                                    </button>
+                                </div>
 
-
-                            <div class="">
-                                <button
-                                    class="bg-blue-800 text-white rounded-md text-sm  my-2  px-3 py-2"
-                                    @click="addMore()"
-                                >
-                                    <x-icons-orders></x-icons-orders>
-                                    Add More
+                            <div class="absolute right-9 bottom-2 z-10">
+                                <button class="bg-blue-800 text-white w-56 rounded-md text-sm px-3 py-2">
+                                    <x-icons-submit></x-icons-submit>
+                                    Submit
                                 </button>
                             </div>
+
+
+
                         </div>
 
                     </div>
@@ -173,7 +195,7 @@ export default {
                 hmoOptions: ['HMOA', 'HMOB', 'HMOC'],
                 hmo: "HMOA",
                 encounterData: ""
-            }
+            },
         }
     },
     methods: {
@@ -200,11 +222,23 @@ export default {
         form: {
             handler: function () {
                 this.form.orderItems.forEach(orderItem => {
-                    orderItem.sub_total = orderItem.unit_price * orderItem.quantity
+                    orderItem.sub_total = orderItem.unit_price * orderItem.quantity;
                 });
+
             },
             deep: true
         },
+    },
+    computed: {
+        total: {
+            get() {
+                return this.form.orderItems.reduce((sum, orderItem) => sum + orderItem.sub_total, 0);
+            },
+            set(val) {
+                this.$emit('input', val);
+            }
+
+        }
     }
 }
 </script>

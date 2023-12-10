@@ -8,7 +8,7 @@ export default {
         'classValue': {type: String},
         'type': {type: String, default: "text"},
         'placeholder': {type: String},
-        'min': {type: Number, default: 0},
+        'min': {type:[Number, String] , default: 0},
     },
     computed: {
         inputVal: {
