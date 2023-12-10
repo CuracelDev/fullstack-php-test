@@ -35,6 +35,8 @@
                                         <x-select
                                             name="hmo"
                                             label="Select HMO"
+                                            valueKey="code"
+                                            labelKey="name"
                                             :value="form.hmo"
                                             :options="form.hmoOptions"
                                             @input="(newItem) => {form.hmo = newItem}"
@@ -172,14 +174,6 @@
 
 <script>
 export default {
-
-    mounted() {
-        console.log('Component mounted.')
-    },
-    created() {
-        axios.get('./api/hmo-options')
-            .then(response => this.hmoOptions = response.data);
-    },
     data() {
         return {
             form: {
@@ -192,8 +186,8 @@ export default {
                     }
                 ],
                 providerName: "",
-                hmoOptions: ['HMOA', 'HMOB', 'HMOC'],
-                hmo: "HMOA",
+                hmoOptions: null,
+                hmo: "HMO-A",
                 encounterData: ""
             },
         }
@@ -207,7 +201,7 @@ export default {
                 sub_total: 0,
             })
 
-            console.log(this.form.orderItems)
+            console.log( this.form.hmoOptions)
         },
 
         removeOrderItem(index) {
@@ -215,6 +209,12 @@ export default {
                 this.form.orderItems.splice(index, 1)
             }
         },
+
+        async getHmos() {
+            const response = await fetch("./api/available-hmos");
+            let data = await response.json();
+            this.form.hmoOptions = data.result.data;
+        }
 
     },
 
@@ -239,6 +239,10 @@ export default {
             }
 
         }
-    }
+    },
+    mounted() {
+        this.getHmos();
+        console.log(this.form.hmoOptions)
+    },
 }
 </script>

@@ -6,7 +6,9 @@ export default {
         'value': {type: [String, Number]},
         'label': {type: String},
         'classValue': {type: String},
-        'options': {type: Array}
+        'valueKey': {type: String},
+        'labelKey': {type: String},
+        'options': {type: [Array, Object]}
 
     },
     computed: {
@@ -34,8 +36,8 @@ export default {
             :class="classValue"
 
             >
-            <option v-for="(option, index) in options" :value="option">
-                {{option}}
+            <option v-for="(option, index) in options" :value="option[valueKey] ? option[valueKey] : option">
+                {{option[labelKey] ? option[labelKey] : option }}
             </option>
         </select>
     </div>

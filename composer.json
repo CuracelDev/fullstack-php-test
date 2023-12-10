@@ -15,6 +15,7 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^3.0",
         "laravel/ui": "^3.4",
+        "lorisleiva/laravel-actions": "^2.1",
         "spatie/data-transfer-object": "2.0",
         "spatie/enum": "^3.12"
     },
