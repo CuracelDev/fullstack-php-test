@@ -19,7 +19,19 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('example-component', require('./components/App/ExampleComponent.vue').default);
+Vue.component('submit-order', require('./components/App/SubmitOrder.vue').default);
+
+
+//form-components
+Vue.component('x-price-input', require('./components/form-items/price-input.vue').default);
+Vue.component('x-input', require('./components/form-items/input.vue').default);
+
+//icons
+Vue.component('x-icons-orders', require('./components/icons/orders.vue').default);
+Vue.component('x-icons-delete', require('./components/icons/delete.vue').default);
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
