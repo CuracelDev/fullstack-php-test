@@ -19,44 +19,46 @@ class SaveOrderItemsAction
 {
     use AsAction;
 
-    public function handle(SaveOrderItemsData $orderItemsData): void
+    public function handle(SaveOrderItemsData $savedOrderItemsData): void
     {
 
         $hmo = Hmo::query()
-            ->where('code', $orderItemsData->hmo)
+            ->where('code', $savedOrderItemsData->hmo)
             ->first();
 
         $hmoData = new HMOData($hmo->toArray());
 
-        DB::transaction(function () use ($orderItemsData, $hmoData) {
+        DB::transaction(function () use ($savedOrderItemsData, $hmoData) {
 
+            // Save Provider
            $provider = Provider::query()
                 ->firstOrCreate([
-                    'name' => $orderItemsData->providerName,
+                    'name' => $savedOrderItemsData->providerName,
                 ]);
 
+            // Save Order
             $order = Order::query()->create(
                 [
-                    'items' => $this->buildItemData($orderItemsData),
+                    'items' => BuildOrderItemDataAction::run($savedOrderItemsData->orderItems),
                     'provider_id' => $provider->id,
                     'hmo_id' => $hmoData->id,
-                    'total_price' => $this->totalPrice($orderItemsData->orderItems)
+                    'total_price' => GetTotalPriceAction::run($savedOrderItemsData->orderItems)
                 ]
             );
-
 
 
             $toBeProcessedAt = $this->processBatchAt(
                 $hmoData,
                 $order->created_at,
-                $orderItemsData->encounterDate
+                $savedOrderItemsData->encounterDate
             );
 
             $date = Carbon::parse($toBeProcessedAt);
 
+            // Save Batch
             Batch::query()
                 ->create([
-                    'identifier' => sprintf("%s %s %s",  $orderItemsData->providerName, $date->format('M') , $date->format('Y')),
+                    'identifier' => sprintf("%s %s %s",  $savedOrderItemsData->providerName, $date->format('M') , $date->format('Y')),
                     'order_id' => $order->id,
                     'hmo_id' => $hmoData->id,
                     'process_batch_at' => $toBeProcessedAt
@@ -74,33 +76,6 @@ class SaveOrderItemsAction
         return ApiResponseSuccess::make(
             'Order items submitted successfully'
         );
-    }
-
-    protected function buildItemData(SaveOrderItemsData $data): array
-    {
-        $items = [];
-
-
-        foreach ($data->orderItems as $orderItem) {
-            $items[] = [
-                'name' => $orderItem->name,
-                'quantity' => $orderItem->quantity,
-                'unit_price' => $orderItem->unit_price,
-                'sub_total' => $orderItem->quantity * $orderItem->unit_price
-            ];
-        }
-        return $items;
-    }
-
-    protected function totalPrice($orderItemsData)
-    {
-        $total = 0;
-
-        foreach ($orderItemsData as $orderItemsDatum) {
-            $total += $orderItemsDatum->quantity * $orderItemsDatum->unit_price;
-        }
-
-        return $total;
     }
 
     protected function processBatchAt(
