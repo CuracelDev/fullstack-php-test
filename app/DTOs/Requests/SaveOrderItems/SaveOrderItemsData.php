@@ -3,7 +3,6 @@
 namespace App\DTOs\Requests\SaveOrderItems;
 
 use Spatie\DataTransferObject\DataTransferObject;
-use App\DTOs\Requests\SaveOrderItems\OrderItemsData;
 class SaveOrderItemsData extends DataTransferObject
 {
     public $providerName;
@@ -14,6 +13,6 @@ class SaveOrderItemsData extends DataTransferObject
 
     public $toBeProcessedAt;
 
-    /** @var OrderItemsData */
+    /** @var \App\DTOs\Requests\SaveOrderItems\OrderItemsData[] */
     public  $orderItems;
 }

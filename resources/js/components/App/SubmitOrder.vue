@@ -48,10 +48,10 @@
                                     <div class="grow">
                                         <x-input
                                             type="date"
-                                            name="endcounter_date"
+                                            name="encounterDate"
                                             label="Encounter Date"
-                                            :value="form.providerName"
-                                            @input="(newItem) => {form.providerName = newItem}"
+                                            :value="form.encounterDate"
+                                            @input="(newItem) => {form.encounterDate = newItem}"
                                         >
                                         </x-input>
                                     </div>
@@ -154,7 +154,9 @@
                                 </div>
 
                             <div class="absolute right-9 bottom-2 z-10">
-                                <button class="bg-blue-800 text-white w-56 rounded-md text-sm px-3 py-2">
+                                <button class="bg-blue-800 text-white w-56 rounded-md text-sm px-3 py-2"
+                                        @click="submit()"
+                                >
                                     <x-icons-submit></x-icons-submit>
                                     Submit
                                 </button>
@@ -188,8 +190,9 @@ export default {
                 providerName: "",
                 hmoOptions: null,
                 hmo: "HMO-A",
-                encounterData: ""
+                encounterDate: ""
             },
+            error: false
         }
     },
     methods: {
@@ -212,17 +215,10 @@ export default {
         submit() {
             this.submitting = true;
             this.error = {};
-            axios.post('/api/orders', this.order)
+            axios.post("./api/order-items/submit", this.form)
                 .then(response => {
+                    console.log(response.data)
 
-                    this.$fire({
-                        title: "Curacel",
-                        text: response.data.message,
-                        type: "success",
-                        timer: 3000
-                    }).then(r => {
-
-                    });
                 }).catch(error => {
                 this.error = error.response.data;
             }).finally(() => {

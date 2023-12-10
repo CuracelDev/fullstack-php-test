@@ -25,36 +25,36 @@ class SaveOrderItemsAction
     public function handle(SaveOrderItemsData $orderItemsData): void
     {
 
-        $hmo = Hmo::query()->where('code', $orderItemsData->hmo)
+        $hmo = Hmo::query()
+            ->where('code', $orderItemsData->hmo)
             ->first();
 
         $hmoData = new HMOData($hmo->toArray());
 
         DB::transaction(function () use ($orderItemsData, $hmoData) {
 
-
+           $provider = Provider::query()
+                ->firstOrCreate([
+                    'name' => $orderItemsData->providerName,
+                ]);
 
             $order = Order::query()->create(
                 [
                     'items' => $this->buildItemData($orderItemsData),
-                    'provider_name' => $orderItemsData->providerName,
+                    'provider_id' => $provider->id,
                     'hmo_id' => $hmoData->id,
                     'total_price' => $this->totalPrice($orderItemsData->orderItems)
                 ]
             );
 
-            $orderData = new OrderData($order->toArray());
 
-            Provider::query()
-                ->firstOrCreate([
-                    'name' => $orderItemsData->providerName,
-                ]);
 
             $toBeProcessedAt = $this->processBatchAt(
                 $hmoData,
-                $orderData->created_at,
+                $order->created_at,
                 $orderItemsData->encounterDate
             );
+
             $date = Carbon::parse($toBeProcessedAt);
 
             Batch::query()
@@ -71,7 +71,7 @@ class SaveOrderItemsAction
     public function asController(SaveOrderItemRequest $request)
     {
         $this->handle(
-            new SaveOrderItemsData($request->all())
+            new SaveOrderItemsData($request->validated())
         );
 
         return ApiResponseSuccess::make(
@@ -83,17 +83,19 @@ class SaveOrderItemsAction
     {
         $items = [];
 
+
         foreach ($data->orderItems as $orderItem) {
-            $items = [
+            $items[] = [
                 'name' => $orderItem->name,
                 'quantity' => $orderItem->quantity,
                 'unit_price' => $orderItem->unit_price,
+                'sub_total' => $orderItem->quantity * $orderItem->unit_price
             ];
         }
         return $items;
     }
 
-    protected function totalPrice(OrderItemsData $orderItemsData)
+    protected function totalPrice($orderItemsData)
     {
         $total = 0;
 
@@ -111,7 +113,7 @@ class SaveOrderItemsAction
 
     ): string
     {
-        if ($HMOData->batchRequirement == 'sent_date') {
+        if ($HMOData->batch_requirement == 'sent_date') {
             return $sentDate;
         }
 

@@ -12,5 +12,9 @@ class HMOData extends DataTransferObject
 
     public $code;
 
-    public $batchRequirement;
+    public $batch_requirement;
+
+    public $created_at;
+
+    public $updated_at;
 }

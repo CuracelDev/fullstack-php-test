@@ -4845,8 +4845,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         providerName: "",
         hmoOptions: null,
         hmo: "HMO-A",
-        encounterData: ""
-      }
+        encounterDate: ""
+      },
+      error: false
     };
   },
   methods: {
@@ -4868,13 +4869,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
       this.submitting = true;
       this.error = {};
-      axios.post('/api/orders', this.order).then(function (response) {
-        _this.$fire({
-          title: "Curacel",
-          text: response.data.message,
-          type: "success",
-          timer: 3000
-        }).then(function (r) {});
+      axios.post("./api/order-items/submit", this.form).then(function (response) {
+        console.log(response.data);
       })["catch"](function (error) {
         _this.error = error.response.data;
       })["finally"](function () {
@@ -5238,13 +5234,13 @@ var render = function render() {
   }, [_c("x-input", {
     attrs: {
       type: "date",
-      name: "endcounter_date",
+      name: "encounterDate",
       label: "Encounter Date",
-      value: _vm.form.providerName
+      value: _vm.form.encounterDate
     },
     on: {
       input: function input(newItem) {
-        _vm.form.providerName = newItem;
+        _vm.form.encounterDate = newItem;
       }
     }
   })], 1)])]), _vm._v(" "), _c("div", {
@@ -5343,7 +5339,12 @@ var render = function render() {
   }, [_c("x-icons-orders"), _vm._v("\n                                    Add More\n                                ")], 1)]), _vm._v(" "), _c("div", {
     staticClass: "absolute right-9 bottom-2 z-10"
   }, [_c("button", {
-    staticClass: "bg-blue-800 text-white w-56 rounded-md text-sm px-3 py-2"
+    staticClass: "bg-blue-800 text-white w-56 rounded-md text-sm px-3 py-2",
+    on: {
+      click: function click($event) {
+        return _vm.submit();
+      }
+    }
   }, [_c("x-icons-submit"), _vm._v("\n                                Submit\n                            ")], 1)])])])])])])]);
 };
 var staticRenderFns = [function () {

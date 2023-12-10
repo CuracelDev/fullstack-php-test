@@ -11,4 +11,6 @@ class OrderItemsData extends DataTransferObject
     public $unit_price;
 
     public $quantity;
+
+    public $sub_total;
 }

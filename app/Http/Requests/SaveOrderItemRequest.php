@@ -15,7 +15,7 @@ class SaveOrderItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'provideName' => ['required', 'string', 'max:70'],
+            'providerName' => ['required', 'string', 'max:70'],
             'hmo' => ['required', 'string', 'exists:hmos,code'],
             'encounterDate' => ['required', 'date'],
             'orderItems' => ['required','array'],
