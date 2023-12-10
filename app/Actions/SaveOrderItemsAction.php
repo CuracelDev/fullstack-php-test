@@ -3,18 +3,15 @@
 namespace App\Actions;
 
 use App\DTOs\Models\HMOData;
-use App\DTOs\Models\OrderData;
-use App\DTOs\Requests\SaveOrderItems\OrderItemsData;
 use App\DTOs\Requests\SaveOrderItems\SaveOrderItemsData;
 use App\DTOs\Responses\ApiResponseSuccess;
-use App\Exceptions\InvalidHMOException;
+use App\Enums\BatchConditionEnum;
 use App\Http\Requests\SaveOrderItemRequest;
 use App\Models\Batch;
 use App\Models\Hmo;
 use App\Models\Order;
 use App\Models\Provider;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -59,7 +56,7 @@ class SaveOrderItemsAction
 
             Batch::query()
                 ->create([
-                    'identifier' => $orderItemsData->providerName . $date->format('m') . $date->format('y'),
+                    'identifier' => sprintf("%s %s %s",  $orderItemsData->providerName, $date->format('M') , $date->format('Y')),
                     'order_id' => $order->id,
                     'hmo_id' => $hmoData->id,
                     'process_batch_at' => $toBeProcessedAt
@@ -113,7 +110,7 @@ class SaveOrderItemsAction
 
     ): string
     {
-        if ($HMOData->batch_requirement == 'sent_date') {
+        if ($HMOData->batch_requirement == BatchConditionEnum::sent_date()->value) {
             return $sentDate;
         }
 
