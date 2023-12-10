@@ -4,17 +4,69 @@
     <div class=" ">
         <div class="flex justify-center items-center my-auto">
             <div class="w-2/3">
-                <div class="shadow-md bg-white">
-                    <span class=" text-lg ml-2 my-2  pb-5 font-medium">Submit Orders</span>
-                    <div class="card-header"></div>
+                <div class="bg-white">
+                    <span
+                        class=" text-lg ml-2 my-2  pb-5 font-medium">Submit Orders</span>
 
                     <div class="card-body">
-                        <div>
-                            <div class="mt-5 p-5">
+
+                        <div class="mt-5 p-5 shadow-sm">
+
+                            <div class=" py-2">
+                                <div class="h-14 border-0 rounded-sm bg-gray-300 p-3 my-5">
+                                    <h3 class="text-black">Details </h3>
+                                </div>
+
+                                <div class="flex flex-row space-x-1 my-3 mx-3">
+
+                                    <div class="grow">
+                                        <x-input
+                                            name="provider_name"
+                                            label="Provider Name"
+                                            :value="form.providerName"
+                                            @input="(newItem) => {form.providerName = newItem}"
+                                        >
+                                        </x-input>
+
+                                    </div>
+
+                                    <div class="grow">
+
+                                        <x-select
+                                            name="hmo"
+                                            label="Select HMO"
+                                            :value="form.hmo"
+                                            :options="form.hmoOptions"
+                                            @input="(newItem) => {form.hmo = newItem}"
+                                        >
+
+                                        </x-select>
+                                    </div>
+
+                                    <div class="grow">
+                                        <x-input
+                                            type="date"
+                                            name="endcounter_date"
+                                            label="Encounter Date"
+                                            :value="form.providerName"
+                                            @input="(newItem) => {form.providerName = newItem}"
+                                        >
+                                        </x-input>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="py-2">
+                                <div class="h-14 border-0 rounded-sm bg-gray-300 p-3 my-5">
+                                    <h3 class="text-black">Orders ({{ form.orderItems.length }})</h3>
+                                </div>
 
                                 <div
                                     v-for="(orderItem,index) in form.orderItems" :key="index"
-                                    class="flex flex-row space-x-1 my-3">
+                                    class="flex flex-row space-x-1 my-3 mx-3 ">
 
                                     <div class="grow">
                                         <x-input
@@ -71,19 +123,23 @@
                                     </div>
 
                                 </div>
+                            </div>
 
 
-                                <div class="">
-                                    <button
-                                        class="bg-blue-800 text-white rounded-md text-sm  my-2  px-3 py-2"
-                                        @click="addMore()"
-                                    >
-                                        <x-icons-orders></x-icons-orders>
-                                        Add More
-                                    </button>
-                                </div>
+
+
+
+                            <div class="">
+                                <button
+                                    class="bg-blue-800 text-white rounded-md text-sm  my-2  px-3 py-2"
+                                    @click="addMore()"
+                                >
+                                    <x-icons-orders></x-icons-orders>
+                                    Add More
+                                </button>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -98,6 +154,10 @@ export default {
     mounted() {
         console.log('Component mounted.')
     },
+    created() {
+        axios.get('./api/hmo-options')
+            .then(response => this.hmoOptions = response.data);
+    },
     data() {
         return {
             form: {
@@ -108,7 +168,11 @@ export default {
                         quantity: 0,
                         sub_total: 0,
                     }
-                ]
+                ],
+                providerName: "",
+                hmoOptions: ['HMOA', 'HMOB', 'HMOC'],
+                hmo: "HMOA",
+                encounterData: ""
             }
         }
     },
@@ -125,18 +189,20 @@ export default {
         },
 
         removeOrderItem(index) {
-            this.form.orderItems.splice(index, 1)
+            if (this.form.orderItems.length > 1) {
+                this.form.orderItems.splice(index, 1)
+            }
         },
 
     },
 
     watch: {
         form: {
-          handler: function () {
-              this.form.orderItems.forEach(orderItem => {
-                  orderItem.sub_total =  orderItem.unit_price * orderItem.quantity
-              });
-          },
+            handler: function () {
+                this.form.orderItems.forEach(orderItem => {
+                    orderItem.sub_total = orderItem.unit_price * orderItem.quantity
+                });
+            },
             deep: true
         },
     }

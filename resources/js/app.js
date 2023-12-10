@@ -26,6 +26,8 @@ Vue.component('submit-order', require('./components/App/SubmitOrder.vue').defaul
 //form-components
 Vue.component('x-price-input', require('./components/form-items/price-input.vue').default);
 Vue.component('x-input', require('./components/form-items/input.vue').default);
+Vue.component('x-select', require('./components/form-items/select.vue').default);
+
 
 //icons
 Vue.component('x-icons-orders', require('./components/icons/orders.vue').default);

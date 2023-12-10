@@ -35,7 +35,7 @@ export default {
                 :name="name"
                 :readonly="readonly"
                 :class="classValue"
-                class=" w-full rounded-md border-0 py-1.5 pl-7 text-gray-900 ring-1
+                class=" w-full rounded-md border-0 py-2.5 pl-7 text-gray-900 ring-1
                     ring-inset ring-blue-300 placeholder:text-gray-400  focus:ring-inset
                     focus:ring-blue-200 sm:text-sm sm:leading-6"
                 placeholder="0.00">
