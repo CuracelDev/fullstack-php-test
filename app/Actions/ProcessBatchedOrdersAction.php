@@ -33,7 +33,8 @@ class ProcessBatchedOrdersAction
                 Mail::to($batch->order->provider)
                     ->send(
                         new OrderStatusMail(
-                            "Order Status for  {$batch->order->id}"
+                            "Order Status for  {$batch->order->id}",
+                            "Your order has been processed successfully"
                         )
                     );
             });

@@ -64,7 +64,10 @@ class ProcessOrderAction
             dispatch(function () use ($provider, $order) {
                 Mail::to($provider)
                     ->send(
-                        new OrderStatusMail("Order status for {$order->id}")
+                        new OrderStatusMail(
+                            "Order status for {$order->id}",
+                            "Your Order has been put to batch"
+                        )
                     );
 
             });

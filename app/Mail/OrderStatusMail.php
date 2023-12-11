@@ -13,14 +13,17 @@ class OrderStatusMail extends Mailable
 
     protected $title;
 
+    protected $description;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($title)
+    public function __construct($title, $description)
     {
         $this->title = $title;
+        $this->description = $description;
     }
 
     /**
@@ -30,7 +33,7 @@ class OrderStatusMail extends Mailable
      */
     public function build(): OrderStatusMail
     {
-        return $this->markdown('mails.order-status')
+        return $this->markdown('mails.order-status', ['description' => $this->description])
             ->subject($this->title);
     }
 }

@@ -38,15 +38,18 @@ class ProcessBatchOrders extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         Batch::query()
-            ->with(['hmo'])
+            ->with(['hmo', 'order'])
+            ->where('status', BatchStatusEnum::PENDING()->value)
             ->chunkById(100, function ($batches) {
             foreach ($batches as $batch) {
                ProcessBatchedOrdersAction::run($batch);
             }
         });
+
+        $this->info('Batch processed successfully');
         return 0;
     }
 }
