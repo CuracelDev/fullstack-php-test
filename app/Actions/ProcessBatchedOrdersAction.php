@@ -21,26 +21,24 @@ class ProcessBatchedOrdersAction
             $batch->update(['status' => BatchStatusEnum::PROCESSED()->value]);
             $batch->order->update(['status' => OrderStatusEnum::PROCESSED()->value]);
 
-            dispatch(function () use ($batch){
-                Mail::to($batch->hmo->email)
-                    ->send(
-                        new BatchStatusMail(
-                            "Batch Status for {$batch->identifier}",
-                            $batch
-                        )
-                    );
+        });
 
-                Mail::to($batch->order->provider)
-                    ->send(
-                        new OrderStatusMail(
-                            "Order Status for  {$batch->order->id}",
-                            "Your order has been processed successfully"
-                        )
-                    );
-            });
+        dispatch(function () use ($batch){
+            Mail::to($batch->hmo->email)
+                ->send(
+                    new BatchStatusMail(
+                        "Batch Status for {$batch->identifier}",
+                        $batch
+                    )
+                );
 
-
-
+            Mail::to($batch->order->provider)
+                ->send(
+                    new OrderStatusMail(
+                        "Order Status for  {$batch->order->id}",
+                        "Your order has been processed successfully"
+                    )
+                );
         });
 
     }
