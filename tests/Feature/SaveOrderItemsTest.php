@@ -5,6 +5,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
+    \Illuminate\Support\Facades\Mail::fake();
     $this->hmo = \App\Models\Hmo::factory()->create();
 });
 

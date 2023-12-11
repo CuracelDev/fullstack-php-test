@@ -6,6 +6,7 @@ uses(RefreshDatabase::class);
 
 beforeEach(function () {
    $this->hmo = \App\Models\Hmo::factory()->create();
+    \Illuminate\Support\Facades\Mail::fake();
 });
 
 test('it stores process_batch_at as the encounter_date ', function (){
@@ -52,7 +53,6 @@ test('it sent a mail to the respective hmo ', function () {
 
     $saveOrderItemsData = new \App\DTOs\Requests\SaveOrderItems\SaveOrderItemsData(testData());
 
-    \Illuminate\Support\Facades\Mail::fake();
 
     \App\Actions\ProcessOrderAction::run($saveOrderItemsData, $this->hmo);
 
