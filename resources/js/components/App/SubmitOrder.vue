@@ -162,6 +162,7 @@
                                     :disabled="submitting"
                                     :class="submitting ? 'bg-blue-100' : 'bg-blue-800 cursor-pointer'"
                                     class=" text-white w-56 rounded-md text-sm px-3 py-2"
+                                    id="submit-button"
                                         @click="submit()"
                                 >
                                     <x-icons-submit></x-icons-submit>
@@ -185,6 +186,7 @@
 <script>
 
 export default {
+    name: 'SubmitOrder',
     data() {
         return {
             form: {
