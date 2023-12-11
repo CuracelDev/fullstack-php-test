@@ -2,14 +2,16 @@
 
 namespace App\DTOs\Responses;
 
+use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\JsonResponse;
 use Spatie\DataTransferObject\DataTransferObject;
 
-class ApiResponseFailure extends DataTransferObject
+class ApiResponseFailure extends DataTransferObject implements Responsable
 {
 
-    protected $message;
-    protected $statusCode;
+    public $message;
+
+    public $statusCode;
 
     public static function make(string $message, int $statusCode = 400): self
     {

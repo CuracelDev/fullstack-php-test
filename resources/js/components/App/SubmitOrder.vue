@@ -174,10 +174,13 @@
             </div>
 
         </div>
+
+        <notifications position="bottom right"/>
     </div>
 </template>
 
 <script>
+
 export default {
     data() {
         return {
@@ -217,18 +220,44 @@ export default {
         },
         submit() {
             this.submitting = true;
-            this.error = {};
-            axios.post("./api/order-items/submit", this.form)
+            const headers = {
+                'Content-Type': 'application/json'
+            }
+
+            axios.post("./api/order-items/submit", this.form, {
+                headers: headers
+            })
                 .then(response => {
-                    console.log(response.data)
+                    this.$notify({
+                        title: "Success",
+                        text:  response.data.message,
+                        type: 'success',
+                    })
 
                 }).catch(error => {
                 if (error.response.status === 422) {
                     this.errors = error.response.data.errors;
-                    console.log(this.errors)
+
                 }
 
+                if (error.response.status === 429) {
+                    this.$notify({
+                        title: "Error",
+                        text:  error.response.data.message,
+                        type: 'error',
+                    })
+                }else{
+                    this.$notify({
+                        title: "Error",
+                        text: "An Error occurred",
+                        type: 'error',
+                    })
+                }
+
+
+
             }).finally(() => {
+
                 this.submitting = false;
             })
         },

@@ -24,4 +24,5 @@ Route::get('available-hmos', FetchAvailableHMOsAction::class)
     ->name('available-hmos');
 
 Route::post('/order-items/submit', SaveOrderItemsAction::class)
+    ->middleware(['throttle:4,1'])
     ->name('order-items.submit');

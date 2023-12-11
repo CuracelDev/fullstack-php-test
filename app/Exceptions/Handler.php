@@ -2,7 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\DTOs\Responses\ApiResponseFailure;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -29,7 +34,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable  $exception
+     * @param \Throwable $exception
      * @return void
      *
      * @throws \Exception
@@ -42,14 +47,29 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \Throwable $e
+     * @return Response
      *
      * @throws \Throwable
      */
-    public function render($request, Throwable $exception)
+    public function render($request, Throwable $e)
     {
-        return parent::render($request, $exception);
+        if ($e instanceof ThrottleRequestsException) {
+            if ($request->wantsJson()) {
+                return ApiResponseFailure::make(
+                    "Please wait a minute before retrying",
+                    429
+                )->toResponse($request);
+            }
+        }
+        if ($e instanceof \RuntimeException) {
+            if ($request->wantsJson()) {
+                return ApiResponseFailure::make(
+                    $e->getMessage(),
+                    $e->getCode())->toResponse($request);
+            }
+        }
+        return parent::render($request, $e);
     }
 }
