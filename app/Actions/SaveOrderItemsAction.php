@@ -32,52 +32,7 @@ class SaveOrderItemsAction
 
         $hmoData = new HMOData($hmo->toArray());
 
-        DB::transaction(function () use ($savedOrderItemsData, $hmoData) {
-
-            // Save Provider
-           $provider = Provider::query()
-                ->firstOrCreate([
-                    'name' => $savedOrderItemsData->providerName,
-                ]);
-
-            // Save Order
-            $order = Order::query()->create(
-                [
-                    'items' => BuildOrderItemDataAction::run($savedOrderItemsData->orderItems),
-                    'provider_id' => $provider->id,
-                    'hmo_id' => $hmoData->id,
-                    'total_price' => GetTotalPriceAction::run($savedOrderItemsData->orderItems),
-                    'status' => OrderStatusEnum::PENDING()->value
-                ]
-            );
-
-
-            $toBeProcessedAt = $this->processBatchAt(
-                $hmoData,
-                $order->created_at,
-                $savedOrderItemsData->encounterDate
-            );
-
-            $date = Carbon::parse($toBeProcessedAt);
-
-            // Save Batch
-            Batch::query()
-                ->create([
-                    'identifier' => sprintf("%s %s %s",  $savedOrderItemsData->providerName, $date->format('M') , $date->format('Y')),
-                    'order_id' => $order->id,
-                    'hmo_id' => $hmoData->id,
-                    'process_batch_at' => $toBeProcessedAt,
-                    'status' => BatchStatusEnum::PENDING()->value
-                ]);
-
-            //send email to the provider notifying them of the sent order.
-            Mail::to($provider->email)
-                ->send(
-                    new OrderStatusMail("Order status for {$order->id}")
-                );
-
-        });
-
+        ProcessOrderAction::run($savedOrderItemsData, $hmoData);
 
 
     }
@@ -93,20 +48,6 @@ class SaveOrderItemsAction
         );
     }
 
-    protected function processBatchAt(
-        HMOData $HMOData,
-        string  $sentDate,
-        string  $encounterDate
 
-    ): string
-    {
-        if ($HMOData->batch_requirement == BatchRequirementEnum::SENT_DATE()->value) {
-            return $sentDate;
-        }
-
-        return $encounterDate;
-
-
-    }
 
 }

@@ -4847,7 +4847,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         hmo: "HMO-A",
         encounterDate: ""
       },
-      errors: {}
+      errors: {},
+      submitting: false
     };
   },
   methods: {
@@ -4889,7 +4890,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             text: error.response.data.message,
             type: 'error'
           });
-        } else {
+        }
+        if (error.response.status === 500) {
           _this.$notify({
             title: "Error",
             text: "An Error occurred",
@@ -5375,7 +5377,11 @@ var render = function render() {
   }, [_c("x-icons-orders"), _vm._v("\n                                Add More\n                            ")], 1)]), _vm._v(" "), _c("div", {
     staticClass: "absolute right-9 bottom-2 z-10"
   }, [_c("button", {
-    staticClass: "bg-blue-800 text-white w-56 rounded-md text-sm px-3 py-2",
+    staticClass: "text-white w-56 rounded-md text-sm px-3 py-2",
+    "class": _vm.submitting ? "bg-blue-100" : "bg-blue-800 cursor-pointer",
+    attrs: {
+      disabled: _vm.submitting
+    },
     on: {
       click: function click($event) {
         return _vm.submit();

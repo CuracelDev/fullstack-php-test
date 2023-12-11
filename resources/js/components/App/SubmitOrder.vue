@@ -158,7 +158,10 @@
                             </div>
 
                             <div class="absolute right-9 bottom-2 z-10">
-                                <button class="bg-blue-800 text-white w-56 rounded-md text-sm px-3 py-2"
+                                <button
+                                    :disabled="submitting"
+                                    :class="submitting ? 'bg-blue-100' : 'bg-blue-800 cursor-pointer'"
+                                    class=" text-white w-56 rounded-md text-sm px-3 py-2"
                                         @click="submit()"
                                 >
                                     <x-icons-submit></x-icons-submit>
@@ -198,7 +201,9 @@ export default {
                 hmo: "HMO-A",
                 encounterDate: ""
             },
-            errors: {}
+            errors: {},
+            submitting: false
+
         }
     },
     methods: {
@@ -246,7 +251,9 @@ export default {
                         text:  error.response.data.message,
                         type: 'error',
                     })
-                }else{
+                }
+
+                if(error.response.status === 500){
                     this.$notify({
                         title: "Error",
                         text: "An Error occurred",
