@@ -225,6 +225,7 @@ export default {
         },
         submit() {
             this.submitting = true;
+            this.errors = {};
             const headers = {
                 'Content-Type': 'application/json'
             }

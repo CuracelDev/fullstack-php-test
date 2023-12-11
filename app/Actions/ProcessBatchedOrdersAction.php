@@ -28,7 +28,7 @@ class ProcessBatchedOrdersAction
                 ->send(
                     new BatchStatusMail(
                         "Batch Status for {$batch->identifier}",
-                        $batch
+                        "Your Batch of orders for {$batch->identifier} has been processed"
                     )
                 );
 

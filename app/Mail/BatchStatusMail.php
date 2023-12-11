@@ -11,7 +11,7 @@ class BatchStatusMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $batch;
+    protected $description;
 
     protected $title;
 
@@ -20,9 +20,10 @@ class BatchStatusMail extends Mailable
      *
      * @return void
      */
-    public function __construct($title, $batch)
+    public function __construct($title, $description)
     {
-        $this->batch = $batch;
+        $this->description = $description;
+        $this->title = $title;
     }
 
     /**
@@ -32,7 +33,7 @@ class BatchStatusMail extends Mailable
      */
     public function build(): BatchStatusMail
     {
-        return $this->markdown('mails.batch-status', ['batchName' => $this->batch->identifier])
+        return $this->markdown('mails.batch-status', ['description' => $this->description])
             ->subject($this->title);
     }
 }

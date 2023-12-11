@@ -30,9 +30,7 @@ class SaveOrderItemsAction
             ->where('code', $savedOrderItemsData->hmo)
             ->first();
 
-        $hmoData = new HMOData($hmo->toArray());
-
-        ProcessOrderAction::run($savedOrderItemsData, $hmoData);
+        ProcessOrderAction::run($savedOrderItemsData, $hmo);
 
 
     }

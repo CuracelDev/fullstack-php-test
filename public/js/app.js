@@ -4869,6 +4869,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     submit: function submit() {
       var _this = this;
       this.submitting = true;
+      this.errors = {};
       var headers = {
         'Content-Type': 'application/json'
       };
