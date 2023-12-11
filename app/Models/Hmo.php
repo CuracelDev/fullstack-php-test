@@ -9,6 +9,7 @@ class Hmo extends Model
     protected $fillable = [
         'name',
         'code',
-        'batch_requirement'
+        'batch_requirement',
+        'email'
     ];
 }

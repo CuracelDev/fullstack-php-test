@@ -5,14 +5,18 @@ namespace App\Actions;
 use App\DTOs\Models\HMOData;
 use App\DTOs\Requests\SaveOrderItems\SaveOrderItemsData;
 use App\DTOs\Responses\ApiResponseSuccess;
-use App\Enums\BatchConditionEnum;
+use App\Enums\BatchRequirementEnum;
+use App\Enums\BatchStatusEnum;
+use App\Enums\OrderStatusEnum;
 use App\Http\Requests\SaveOrderItemRequest;
+use App\Mail\OrderStatusMail;
 use App\Models\Batch;
 use App\Models\Hmo;
 use App\Models\Order;
 use App\Models\Provider;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class SaveOrderItemsAction
@@ -42,7 +46,8 @@ class SaveOrderItemsAction
                     'items' => BuildOrderItemDataAction::run($savedOrderItemsData->orderItems),
                     'provider_id' => $provider->id,
                     'hmo_id' => $hmoData->id,
-                    'total_price' => GetTotalPriceAction::run($savedOrderItemsData->orderItems)
+                    'total_price' => GetTotalPriceAction::run($savedOrderItemsData->orderItems),
+                    'status' => OrderStatusEnum::PENDING()->value
                 ]
             );
 
@@ -61,9 +66,19 @@ class SaveOrderItemsAction
                     'identifier' => sprintf("%s %s %s",  $savedOrderItemsData->providerName, $date->format('M') , $date->format('Y')),
                     'order_id' => $order->id,
                     'hmo_id' => $hmoData->id,
-                    'process_batch_at' => $toBeProcessedAt
+                    'process_batch_at' => $toBeProcessedAt,
+                    'status' => BatchStatusEnum::PENDING()->value
                 ]);
+
+            //send email to the provider notifying them of the sent order.
+            Mail::to($provider->email)
+                ->send(
+                    new OrderStatusMail("Order status for {$order->id}")
+                );
+
         });
+
+
 
     }
 
@@ -85,7 +100,7 @@ class SaveOrderItemsAction
 
     ): string
     {
-        if ($HMOData->batch_requirement == BatchConditionEnum::sent_date()->value) {
+        if ($HMOData->batch_requirement == BatchRequirementEnum::SENT_DATE()->value) {
             return $sentDate;
         }
 

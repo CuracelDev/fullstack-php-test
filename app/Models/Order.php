@@ -13,6 +13,7 @@ class Order extends Model
         'items',
         'provider_id',
         'hmo_id',
-        'total_price'
+        'total_price',
+        'status'
     ];
 }

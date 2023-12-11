@@ -12,7 +12,8 @@ class Provider extends Model
 
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
+        'email'
     ];
 
     protected static function boot(): void
@@ -21,6 +22,7 @@ class Provider extends Model
 
         static::creating(function ($provider) {
             $provider->slug = Str::slug($provider->name);
+            $provider->email = $provider->slug . '@gmail.com';
         });
 
         static::updating(function ($provider) {

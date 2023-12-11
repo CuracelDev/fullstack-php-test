@@ -14,7 +14,8 @@ class Batch extends Model
         'identifier',
         'order_id',
         'hmo_id',
-        'process_batch_at'
+        'process_batch_at',
+        'status'
     ];
 
     public function order(): BelongsTo

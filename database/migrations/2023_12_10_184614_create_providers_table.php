@@ -17,6 +17,7 @@ class CreateProvidersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->index();
+            $table->string('email')->index();
             $table->timestamps();
         });
     }
