@@ -4847,7 +4847,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         hmo: "HMO-A",
         encounterDate: ""
       },
-      error: false
+      errors: {}
     };
   },
   methods: {
@@ -4872,7 +4872,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       axios.post("./api/order-items/submit", this.form).then(function (response) {
         console.log(response.data);
       })["catch"](function (error) {
-        _this.error = error.response.data;
+        if (error.response.status === 422) {
+          _this.errors = error.response.data.errors;
+          console.log(_this.errors);
+        }
       })["finally"](function () {
         _this.submitting = false;
       });
@@ -4967,6 +4970,9 @@ __webpack_require__.r(__webpack_exports__);
     'min': {
       type: [Number, String],
       "default": 0
+    },
+    'errors': {
+      type: [Array]
     }
   },
   computed: {
@@ -5011,6 +5017,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     'readonly': {
       type: String
+    },
+    'errors': {
+      type: [Array]
     }
   },
   computed: {
@@ -5180,6 +5189,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
+  var _vm$errors, _vm$errors2, _vm$errors3;
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
@@ -5204,9 +5214,10 @@ var render = function render() {
     staticClass: "grow"
   }, [_c("x-input", {
     attrs: {
-      name: "provider_name",
+      name: "providerName",
       label: "Provider Name",
-      value: _vm.form.providerName
+      value: _vm.form.providerName,
+      errors: (_vm$errors = _vm.errors) === null || _vm$errors === void 0 ? void 0 : _vm$errors.providerName
     },
     on: {
       input: function input(newItem) {
@@ -5222,7 +5233,8 @@ var render = function render() {
       valueKey: "code",
       labelKey: "name",
       value: _vm.form.hmo,
-      options: _vm.form.hmoOptions
+      options: _vm.form.hmoOptions,
+      errors: (_vm$errors2 = _vm.errors) === null || _vm$errors2 === void 0 ? void 0 : _vm$errors2.hmo
     },
     on: {
       input: function input(newItem) {
@@ -5236,7 +5248,8 @@ var render = function render() {
       type: "date",
       name: "encounterDate",
       label: "Encounter Date",
-      value: _vm.form.encounterDate
+      value: _vm.form.encounterDate,
+      errors: (_vm$errors3 = _vm.errors) === null || _vm$errors3 === void 0 ? void 0 : _vm$errors3.encounterDate
     },
     on: {
       input: function input(newItem) {
@@ -5257,9 +5270,10 @@ var render = function render() {
       staticClass: "grow"
     }, [_c("x-input", {
       attrs: {
-        name: "order_item_name",
+        name: "name",
         label: "Order Item",
-        value: orderItem.name
+        value: orderItem.name,
+        errors: _vm.errors["orderItems." + index + ".name"]
       },
       on: {
         input: function input(newItem) {
@@ -5270,7 +5284,8 @@ var render = function render() {
       attrs: {
         name: "unit_price",
         label: "Unit Price",
-        value: orderItem.unit_price
+        value: orderItem.unit_price,
+        errors: _vm.errors["orderItems." + index + ".unit_price"]
       },
       on: {
         input: function input(newItem) {
@@ -5285,7 +5300,8 @@ var render = function render() {
         label: "Quantity",
         classValue: "w-24",
         placeholder: "9",
-        value: orderItem.quantity
+        value: orderItem.quantity,
+        errors: _vm.errors["orderItems." + index + ".quantity"]
       },
       on: {
         input: function input(newItem) {
@@ -5336,7 +5352,7 @@ var render = function render() {
         return _vm.addMore();
       }
     }
-  }, [_c("x-icons-orders"), _vm._v("\n                                    Add More\n                                ")], 1)]), _vm._v(" "), _c("div", {
+  }, [_c("x-icons-orders"), _vm._v("\n                                Add More\n                            ")], 1)]), _vm._v(" "), _c("div", {
     staticClass: "absolute right-9 bottom-2 z-10"
   }, [_c("button", {
     staticClass: "bg-blue-800 text-white w-56 rounded-md text-sm px-3 py-2",
@@ -5464,7 +5480,9 @@ var render = function render() {
         _vm.inputVal = $event.target.value;
       }
     }
-  })]);
+  }), _vm._v(" "), _vm.errors ? _c("span", {
+    staticClass: "block text-red-600 text-xs w-32"
+  }, [_vm._v(_vm._s(_vm.errors[0]))]) : _vm._e()]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -5518,7 +5536,9 @@ var render = function render() {
         _vm.inputVal = $event.target.value;
       }
     }
-  })])]);
+  })]), _vm._v(" "), _vm.errors ? _c("span", {
+    staticClass: "text-red-600 text-xs w-32"
+  }, [_vm._v(_vm._s(_vm.errors[0]))]) : _vm._e()]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

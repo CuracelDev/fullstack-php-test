@@ -21,9 +21,10 @@
 
                                     <div class="grow">
                                         <x-input
-                                            name="provider_name"
+                                            name="providerName"
                                             label="Provider Name"
                                             :value="form.providerName"
+                                            :errors="errors?.providerName"
                                             @input="(newItem) => {form.providerName = newItem}"
                                         >
                                         </x-input>
@@ -39,6 +40,7 @@
                                             labelKey="name"
                                             :value="form.hmo"
                                             :options="form.hmoOptions"
+                                            :errors="errors?.hmo"
                                             @input="(newItem) => {form.hmo = newItem}"
                                         >
 
@@ -51,6 +53,7 @@
                                             name="encounterDate"
                                             label="Encounter Date"
                                             :value="form.encounterDate"
+                                            :errors="errors?.encounterDate"
                                             @input="(newItem) => {form.encounterDate = newItem}"
                                         >
                                         </x-input>
@@ -71,9 +74,10 @@
 
                                     <div class="grow">
                                         <x-input
-                                            name="order_item_name"
+                                            name="name"
                                             label="Order Item"
                                             :value="orderItem.name"
+                                            :errors="errors['orderItems.' + index + '.name']"
                                             @input="(newItem) => {orderItem.name = newItem}"
                                         >
 
@@ -85,6 +89,7 @@
                                             name="unit_price"
                                             label="Unit Price"
                                             :value="orderItem.unit_price"
+                                            :errors="errors['orderItems.' + index + '.unit_price']"
                                             @input="(newItem) => {orderItem.unit_price = newItem}"
                                         >
                                         </x-price-input>
@@ -99,6 +104,7 @@
                                             classValue="w-24"
                                             placeholder="9"
                                             :value="orderItem.quantity"
+                                            :errors="errors['orderItems.' + index + '.quantity']"
                                             @input="(newItem) => {orderItem.quantity = newItem}"
                                         ></x-input>
                                     </div>
@@ -113,7 +119,6 @@
                                         >
                                         </x-price-input>
                                     </div>
-
 
 
                                     <div>
@@ -142,16 +147,15 @@
                             </div>
 
 
-
-                                <div class="absolute left-8 bottom-2">
-                                    <button
-                                        class="bg-blue-800 text-white rounded-md text-sm   px-3 py-2"
-                                        @click="addMore()"
-                                    >
-                                        <x-icons-orders></x-icons-orders>
-                                        Add More
-                                    </button>
-                                </div>
+                            <div class="absolute left-8 bottom-2">
+                                <button
+                                    class="bg-blue-800 text-white rounded-md text-sm   px-3 py-2"
+                                    @click="addMore()"
+                                >
+                                    <x-icons-orders></x-icons-orders>
+                                    Add More
+                                </button>
+                            </div>
 
                             <div class="absolute right-9 bottom-2 z-10">
                                 <button class="bg-blue-800 text-white w-56 rounded-md text-sm px-3 py-2"
@@ -161,7 +165,6 @@
                                     Submit
                                 </button>
                             </div>
-
 
 
                         </div>
@@ -192,7 +195,7 @@ export default {
                 hmo: "HMO-A",
                 encounterDate: ""
             },
-            error: false
+            errors: {}
         }
     },
     methods: {
@@ -204,7 +207,7 @@ export default {
                 sub_total: 0,
             })
 
-            console.log( this.form.hmoOptions)
+            console.log(this.form.hmoOptions)
         },
 
         removeOrderItem(index) {
@@ -220,7 +223,11 @@ export default {
                     console.log(response.data)
 
                 }).catch(error => {
-                this.error = error.response.data;
+                if (error.response.status === 422) {
+                    this.errors = error.response.data.errors;
+                    console.log(this.errors)
+                }
+
             }).finally(() => {
                 this.submitting = false;
             })

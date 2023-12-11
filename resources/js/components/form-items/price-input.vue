@@ -6,7 +6,8 @@ export default {
         'value': {type: [String, Number]},
         'label': {type: String},
         'classValue': {type: String},
-        'readonly': {type: String}
+        'readonly': {type: String},
+        'errors': {type: [Array]},
     },
     computed: {
         inputVal: {
@@ -39,6 +40,8 @@ export default {
                     ring-inset ring-blue-300 placeholder:text-gray-400  focus:ring-inset
                     focus:ring-blue-200 sm:text-sm sm:leading-6"
                 placeholder="0.00">
+
         </div>
+        <span class=" text-red-600 text-xs w-32" v-if="errors">{{ errors[0] }}</span>
     </div>
 </template>

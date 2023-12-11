@@ -9,6 +9,7 @@ export default {
         'type': {type: String, default: "text"},
         'placeholder': {type: String},
         'min': {type:[Number, String] , default: 0},
+        'errors': {type: [Array]},
     },
     computed: {
         inputVal: {
@@ -36,6 +37,8 @@ export default {
             :class="classValue"
             :min="min"
             :placeholder="placeholder">
+
+        <span class="block text-red-600 text-xs w-32" v-if="errors">{{ errors[0] }}</span>
     </div>
 
 </template>
