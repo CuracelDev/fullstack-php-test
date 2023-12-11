@@ -25,6 +25,15 @@ class SaveOrderItemRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+          'orderItems.*.name.required' => 'The Order Item field is required',
+          'orderItems.*.unit_price.required' => 'The Unit Price field is required',
+          'orderItems.*.quantity.required' => 'The quantity field is required',
+        ];
+    }
+
     public function authorize(): bool
     {
         return true;
