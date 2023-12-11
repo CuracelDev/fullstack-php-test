@@ -20,7 +20,7 @@ class ProcessOrderAction
 {
     use AsAction;
 
-    public function handle(SaveOrderItemsData  $savedOrderItemsData, HMOData $hmoData )
+    public function handle(SaveOrderItemsData $savedOrderItemsData, HMOData $hmoData)
     {
         DB::transaction(function () use ($savedOrderItemsData, $hmoData) {
 
@@ -53,7 +53,7 @@ class ProcessOrderAction
             // Save Batch
             Batch::query()
                 ->create([
-                    'identifier' => sprintf("%s %s %s",  $savedOrderItemsData->providerName, $date->format('M') , $date->format('Y')),
+                    'identifier' => sprintf("%s %s %s", $savedOrderItemsData->providerName, $date->format('M'), $date->format('Y')),
                     'order_id' => $order->id,
                     'hmo_id' => $hmoData->id,
                     'process_batch_at' => $toBeProcessedAt,
@@ -61,10 +61,13 @@ class ProcessOrderAction
                 ]);
 
             //send email to the provider notifying them of the sent order.
-            Mail::to($provider->email)
-                ->send(
-                    new OrderStatusMail("Order status for {$order->id}")
-                );
+            dispatch(function () use ($provider, $order) {
+                Mail::to($provider)
+                    ->send(
+                        new OrderStatusMail("Order status for {$order->id}")
+                    );
+
+            });
 
         });
 

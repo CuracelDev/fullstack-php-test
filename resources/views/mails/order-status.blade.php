@@ -1,5 +1,5 @@
 @component('mail::message')
-    # Your Order is been successfully processed
+    # Your Order has been put to batch
 
     Thanks,
     {{ config('app.name') }}
