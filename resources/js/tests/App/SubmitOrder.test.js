@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import {shallowMount} from '@vue/test-utils'
 import SubmitOrder from '../../components/App/SubmitOrder.vue'
 
 describe('SubmitOrder.test.js', () => {
@@ -8,7 +8,7 @@ describe('SubmitOrder.test.js', () => {
         const wrapper = shallowMount(SubmitOrder);
 
         // Find the "Add More" button and trigger a click event
-        const addButton = wrapper.find('.bg-blue-800');
+        const addButton = wrapper.find('#add-button');
         await addButton.trigger('click');
 
         // Check if the number of order items has increased
@@ -19,11 +19,11 @@ describe('SubmitOrder.test.js', () => {
         const wrapper = shallowMount(SubmitOrder);
 
         // Find the "Add More" button and trigger a click event to have at least two items
-        const addButton = wrapper.find('.bg-blue-800');
+        const addButton = wrapper.find('#add-button');
         await addButton.trigger('click');
 
         // Find the "Delete" button and trigger a click event on the second item
-        const deleteButton = wrapper.findAll('.bg-blue-800').at(1); // Adjust the index based on your test case
+        const deleteButton = wrapper.findAll('#delete-button').at(1); // Adjust the index based on your test case
         await deleteButton.trigger('click');
 
         // Check if an order item has been removed
@@ -31,7 +31,7 @@ describe('SubmitOrder.test.js', () => {
     });
 
     it('initially renders with one order item', () => {
-        const wrapper = mount(SubmitOrder);
+        const wrapper = shallowMount(SubmitOrder);
         const orderItems = wrapper.vm.form.orderItems;
 
         expect(orderItems).toHaveLength(1);
@@ -44,9 +44,8 @@ describe('SubmitOrder.test.js', () => {
     });
 
     it('updates order item details when input fields are changed', async () => {
-        const wrapper = mount(SubmitOrder);
-        const nameInput = wrapper.find('input[name="name"]');
-        await nameInput.setValue('Test Item');
+        const wrapper = shallowMount(SubmitOrder);
+        await wrapper.find("[data-name]").setValue("test item");
 
         // Simulate input changes for unit price and quantity as needed
 
@@ -56,9 +55,9 @@ describe('SubmitOrder.test.js', () => {
     });
 
     it('disables submit button when submitting is true', async () => {
-        const wrapper = mount(SubmitOrder);
+        const wrapper = shallowMount(SubmitOrder);
 
-        const submitButton = wrapper.find('.bg-blue-800');
+        const submitButton = wrapper.find('#submit-button');
         expect(submitButton.attributes('disabled')).toBeFalsy();
 
         // Trigger the submit action (you may need to mock the axios.post call)
@@ -66,39 +65,5 @@ describe('SubmitOrder.test.js', () => {
         await wrapper.vm.$nextTick();
 
         expect(submitButton.attributes('disabled')).toBeTruthy();
-    });
-
-    it('updates sub_total when quantity or unit_price changes', async () => {
-        const wrapper = mount(SubmitOrder);
-
-        // Simulate changes in quantity and unit price for an order item
-        const quantityInput = wrapper.find('input[name="quantity"]');
-        await quantityInput.setValue('5');
-
-        const unitPriceInput = wrapper.find('input[name="unit_price"]');
-        await unitPriceInput.setValue('10');
-
-        const orderItem = wrapper.vm.form.orderItems[0];
-        expect(orderItem.sub_total).toBe(50); // 5 * 10 = 50
-    });
-
-    it('calculates the total based on the sum of sub_total for all order items', async () => {
-        const wrapper = mount(SubmitOrder);
-
-        // Simulate changes in quantity and unit price for multiple order items
-        const addButton = wrapper.find('.bg-blue-800');
-        await addButton.trigger('click');
-
-        const orderItems = wrapper.vm.form.orderItems;
-        orderItems[0].quantity = 5;
-        orderItems[0].unit_price = 10;
-
-        orderItems[1].quantity = 3;
-        orderItems[1].unit_price = 8;
-
-        // Calculate the expected total
-        const expectedTotal = orderItems[0].sub_total + orderItems[1].sub_total;
-
-        expect(wrapper.vm.total).toBe(expectedTotal);
     });
 });

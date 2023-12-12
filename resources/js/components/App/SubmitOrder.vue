@@ -75,6 +75,7 @@
                                     <div class="grow">
                                         <x-input
                                             name="name"
+                                            data-name
                                             label="Order Item"
                                             :value="orderItem.name"
                                             :errors="errors['orderItems.' + index + '.name']"
@@ -124,6 +125,7 @@
                                     <div>
                                         <button
                                             @click="removeOrderItem(index)"
+                                            id="delete-button"
                                             class="bg-blue-800 text-white rounded-md text-sm mt-5 px-3 py-2"
                                         >
                                             <x-icons-delete></x-icons-delete>
@@ -150,6 +152,7 @@
                             <div class="absolute left-8 bottom-2">
                                 <button
                                     class="bg-blue-800 text-white rounded-md text-sm   px-3 py-2"
+                                    id="add-button"
                                     @click="addMore()"
                                 >
                                     <x-icons-orders></x-icons-orders>
@@ -184,6 +187,8 @@
 </template>
 
 <script>
+
+import axios from 'axios';
 
 export default {
     name: 'SubmitOrder',
@@ -232,7 +237,7 @@ export default {
                 'Content-Type': 'application/json'
             }
 
-            axios.post("./api/order-items/submit", this.form, {
+            axios.post("https://curacel-app.test/api/order-items/submit", this.form, {
                 headers: headers
             })
                 .then(response => {
@@ -273,7 +278,7 @@ export default {
         },
 
         async getHmos() {
-            const response = await fetch("./api/available-hmos");
+            const response = await fetch(  'https://curacel-app.test/api/available-hmos');
             let data = await response.json();
             this.form.hmoOptions = data.result.data;
         }
