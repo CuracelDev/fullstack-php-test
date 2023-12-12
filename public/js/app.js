@@ -5000,10 +5000,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     'errors': {
       type: [Array]
-    },
-    'id': {
-      type: String,
-      "default": ''
     }
   },
   computed: {
@@ -5456,7 +5452,6 @@ var render = function render() {
     attrs: {
       name: _vm.name,
       min: _vm.min,
-      id: _vm.id,
       placeholder: _vm.placeholder,
       type: "checkbox"
     },
@@ -5493,7 +5488,6 @@ var render = function render() {
     attrs: {
       name: _vm.name,
       min: _vm.min,
-      id: _vm.id,
       placeholder: _vm.placeholder,
       type: "radio"
     },
@@ -5517,7 +5511,6 @@ var render = function render() {
     attrs: {
       name: _vm.name,
       min: _vm.min,
-      id: _vm.id,
       placeholder: _vm.placeholder,
       type: _vm.type
     },

@@ -10,7 +10,6 @@ export default {
         'placeholder': {type: String},
         'min': {type:[Number, String] , default: 0},
         'errors': {type: [Array]},
-        'id' : {type: String, default: ''}
     },
     computed: {
         inputVal: {
@@ -37,7 +36,6 @@ export default {
                     focus:ring-blue-200 sm:text-sm sm:leading-6"
             :class="classValue"
             :min="min"
-            :id="id"
             :placeholder="placeholder">
 
         <span class="block text-red-600 text-xs w-32" v-if="errors">{{ errors[0] }}</span>
