@@ -15,6 +15,10 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('provider_id');
+            $table->foreignId('hmo_id');
+            $table->string('status')->index();
+            $table->decimal('total_price', 12);
             $table->json('items');
             $table->timestamps();
         });
