@@ -26,7 +26,6 @@ class SubmitOrder
         ]);
 
         OrderSubmitted::dispatch($order);
-
     }
 
     public function asController(SubmitOrderRequest $request)

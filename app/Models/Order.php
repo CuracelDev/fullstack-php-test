@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,7 @@ class Order extends Model
         'hmo_id',
         'order_amount',
         'encounter_date',
+        'batch_id'
     ];
 
     /**
@@ -31,4 +33,12 @@ class Order extends Model
         'items' => 'array',
         'encounter_date' => 'datetime'
     ];
+
+    /**
+     * Get the HMO that the order is submitted to.
+     */
+    public function hmo(): BelongsTo
+    {
+        return $this->belongsTo(Hmo::class);
+    }
 }
