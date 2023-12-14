@@ -32,4 +32,12 @@ class Hmo extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    /**
+     * The batches the hmo has to process
+     */
+    public function batches(): HasMany
+    {
+        return $this->hasMany(Batch::class);
+    }
 }
