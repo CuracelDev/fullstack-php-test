@@ -146,7 +146,7 @@ class SubmitOrderTest extends TestCase
         $response->assertJsonValidationErrors(['provider_name', 'encounter_date', 'items.0.unit_price', 'items.1.quantity']);
         $this->assertDatabaseMissing('orders', [
             'provider_name' => '',
-            'encounter_date' => 111,
+            'encounter_date' => 111
         ]);
         Event::assertNotDispatched(OrderSubmitted::class);
     }
