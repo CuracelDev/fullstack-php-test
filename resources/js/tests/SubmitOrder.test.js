@@ -20,7 +20,7 @@ describe('SubmitOrder.vue Test', () => {
 
   it('makes api call to fetch hmos on mount', async () => {
 
-    const wrapper = shallowMount(SubmitOrder);
+    shallowMount(SubmitOrder);
 
     const responseGet = {
       "data": [

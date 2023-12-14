@@ -3,25 +3,25 @@
         <notifications/>
 
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">Submit An Order</div>
 
                     <div class="card-body">
                         
                         <form @submit.prevent="submit">
-                            <div class="form-group">
+                            <div class="form-group col-md-6 ml--15">
                                 <label for="providerName">Provider Name</label>
                                 <input v-model="providerName" type="text" class="form-control" id="providerName" placeholder="Provider Name" required>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-md-4 ml--15">
                                 <label for="hmo">HMO Code</label>
                                 <select v-model="hmoCode" name="hmoCode" id="hmoCode" class="custom-select" required >
                                     <option disabled selected>Choose...</option>
                                     <option v-for="(hmo, index) in hmoCodes" :key="index" :value="hmo">{{ hmo }}</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-md-4 ml--15">
                                 <label for="date">Encounter Date</label>
                                 <input v-model="date" type="date" class="form-control" id="date" name="date" required>
                             </div>
@@ -43,9 +43,9 @@
                                     <label v-if="index==0" for="subTotal">Sub Total</label>
                                     <input :id="'subTotal' + index" :value="order.sub_total" type="text" class="form-control" readonly>
                                 </div>
-                                <div class="col-md-2 mb-3">
-                                    <label v-if="index==0" for="subTotal">#</label>
-                                    <button :id="'remove' + index" class="btn btn-secondary" @click="removeItem(index)"> - </button>
+                                <div class="col-md-2">
+                                    <label v-if="index==0" for="remove" style="margin-top: 45px; margin-left: -4px;"></label>
+                                    <button :id="'remove' + index" class="btn btn-danger" @click="removeItem(index)"> - </button>
                                 </div>
                             </div>
 
@@ -54,7 +54,7 @@
                                     <button class="btn btn-primary" id="add" @click="addItem()"> + </button>
                                 </div>
                                 <div class="col-md-2 mb-3 offset-md-7">
-                                    <div class="d-flex align-items-center row">
+                                    <div class="d-flex align-items-center">
                                         <label >Total</label>
                                         <input id="total" :value="total" type="text" class="form-control ml-3" readonly>
                                     </div>
@@ -71,14 +71,16 @@
     </div>
 </template>
 
+<style>
+    .ml--15 {
+        margin-left: -15px !important;
+    }
+</style>
+
 <script>
     import axios from 'axios';
-    import Notifications from 'vue-notification'
 
     export default {
-        components: {
-            notifications: Notifications
-        },
         data() {
          return {
             hmoCodes: [],
@@ -150,7 +152,7 @@
 
                         this.hmoCode = "";
                         this.providerName = "";
-                        this.selectedDate.time = "";
+                        this.date = "";
                         this.orders = [
                             {
                                 name: "",
