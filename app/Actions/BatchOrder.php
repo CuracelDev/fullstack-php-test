@@ -7,13 +7,10 @@ use App\Mail\OrderBatchEmail;
 use App\Models\Batch;
 use App\Models\Order;
 use Illuminate\Support\Facades\Mail;
-use Lorisleiva\Actions\Concerns\AsAction;
 
-class BatchOrder
+class BatchOrder extends BaseAction
 {
-    use AsAction;
-
-    public function handle(Order $order)
+    public function handle(Order $order): void
     {
         $batchName = GenerateBatchIdentifier::run($order);
 

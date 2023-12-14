@@ -6,13 +6,10 @@ use App\Events\OrderSubmitted;
 use App\Http\Requests\SubmitOrderRequest;
 use App\Models\Hmo;
 use Carbon\Carbon;
-use Lorisleiva\Actions\Concerns\AsAction;
 
-class SubmitOrder 
+class SubmitOrder extends BaseAction
 {
-    use AsAction;
-
-    public function handle(string $hmoCode, string $providerName, string $encounterDate, array $items)
+    public function handle(string $hmoCode, string $providerName, string $encounterDate, array $items): void
     {
         $result = ProcessItems::run($items);
 

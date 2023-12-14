@@ -5,12 +5,9 @@ namespace App\Actions;
 use App\Models\Hmo;
 use App\Models\Order;
 use Carbon\Carbon;
-use Lorisleiva\Actions\Concerns\AsAction;
 
-class GenerateBatchIdentifier
+class GenerateBatchIdentifier extends BaseAction
 {
-    use AsAction;
-
     public function handle(Order $order): string
     {
         $batchDate = '';

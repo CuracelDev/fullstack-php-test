@@ -2,12 +2,8 @@
 
 namespace App\Actions;
 
-use Lorisleiva\Actions\Concerns\AsAction;
-
-class ProcessItems
+class ProcessItems extends BaseAction
 {
-    use AsAction;
-
     public function handle(array $items): array
     {
        $total = 0;
