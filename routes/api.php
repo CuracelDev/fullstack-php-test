@@ -22,5 +22,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/hmos', GetHmoCodes::class);
-Route::get('/hmo/{hmo}/batches', GetBatches::class);
+Route::get('/hmos/{hmo}/batches', GetBatches::class);
 Route::post('/submit-order', SubmitOrder::class);
