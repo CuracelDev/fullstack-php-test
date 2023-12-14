@@ -23,29 +23,29 @@
                             </div>
                             <div class="form-group">
                                 <label for="date">Encounter Date</label>
-                                <date-picker :date="selectedDate" :option="option"></date-picker>
+                                <input v-model="date" type="date" class="form-control" id="date" name="date" required>
                             </div>
 
                             <div v-for="(order, index) in orders" :key="index" class="form-row">
                                 <div class="col-md-4 mb-3">
                                     <label v-if="index==0" for="item">Item</label>
-                                    <input :value="order.name" @input="(event) => {order.name = event.target.value}" type="text" class="form-control" id="item"  required>
+                                    <input :id="'item' + index" :value="order.name" @input="(event) => {order.name = event.target.value}" type="text" class="form-control" required>
                                 </div>
                                 <div class="col-md-2 mb-3">
                                     <label v-if="index==0" for="unitPrice">Unit Price</label>
-                                    <input :value="order.unit_price" @input="(event) => {if ( event.target.value > 0 )order.unit_price = event.target.value}" type="number" min="1" class="form-control" id="unitPrice" required>
+                                    <input :id="'unitPrice' + index" :value="order.unit_price" @input="(event) => {if ( event.target.value > 0 )order.unit_price = event.target.value}" type="number" min="1" class="form-control" required>
                                 </div>
                                 <div class="col-md-2 mb-3">
                                     <label v-if="index==0" for="quantity">Qty</label>
-                                    <input :value="order.quantity" @input="(event) => {if ( event.target.value > 0 ) order.quantity = event.target.value}" type="number" min="1" class="form-control" id="quantity" required>
+                                    <input :id="'quantity' + index" :value="order.quantity" @input="(event) => {if ( event.target.value > 0 ) order.quantity = event.target.value}" type="number" min="1" class="form-control" required>
                                 </div>
                                 <div class="col-md-2 mb-3">
                                     <label v-if="index==0" for="subTotal">Sub Total</label>
-                                    <input :value="order.sub_total" type="text" class="form-control" id="subTotal" readonly>
+                                    <input :id="'subTotal' + index" :value="order.sub_total" type="text" class="form-control" readonly>
                                 </div>
                                 <div class="col-md-2 mb-3">
                                     <label v-if="index==0" for="subTotal">#</label>
-                                    <button class="btn btn-secondary" id="remove" @click="removeItem(index)"> - </button>
+                                    <button :id="'remove' + index" class="btn btn-secondary" @click="removeItem(index)"> - </button>
                                 </div>
                             </div>
 
@@ -56,7 +56,7 @@
                                 <div class="col-md-2 mb-3 offset-md-7">
                                     <div class="d-flex align-items-center row">
                                         <label >Total</label>
-                                        <input :value="total" type="text" class="form-control ml-3" id="total" readonly>
+                                        <input id="total" :value="total" type="text" class="form-control ml-3" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -72,45 +72,17 @@
 </template>
 
 <script>
-    import DatePicker from 'vue-datepicker';
+    import axios from 'axios';
+    import Notifications from 'vue-notification'
 
     export default {
         components: {
-            DatePicker,
+            notifications: Notifications
         },
         data() {
          return {
             hmoCodes: [],
-            selectedDate: {
-                time: ''
-            },
-            option: {
-                type: 'day',
-                week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-                month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                format: 'YYYY-MM-DD',
-                placeholder: 'Encouter Date',
-                inputStyle: {
-                    'display': 'inline-block',
-                    'padding': '6px',
-                    'line-height': '22px',
-                    'font-size': '16px',
-                    'border': '2px solid #fff',
-                    'box-shadow': '0 1px 3px 0 rgba(0, 0, 0, 0.2)',
-                    'border-radius': '2px',
-                    'color': '#5F5F5F'
-                },
-                color: {
-                header: '#ccc',
-                headerText: '#f00'
-                },
-                buttons: {
-                ok: 'Ok',
-                cancel: 'Cancel'
-                },
-                overlayOpacity: 0.5, // 0.5 as default
-                dismissible: true // as true as default
-            },
+            date: "",
             providerName: "",
             hmoCode: "",
             orders: [
@@ -129,12 +101,43 @@
         },
         methods: {
             submit() {
+                if(this.hmoCode.trim().length < 2){
+                    this.notifyError("HMO Code required");
+                    return;
+                }
+
+                if(this.providerName.trim().length < 2){
+                    this.notifyError("Provider Name required");
+                    return;
+                }
+
+                if(!this.date){
+                    this.notifyError("Encouter date required");
+                    return;
+                }
+
+                if (this.orders.length < 1){
+                    this.notifyError("Order details must be filled");
+                    return;
+                }
+
+                this.orders.forEach(element => {
+                    if (
+                        element.name.trim().length < 1 || 
+                        element.unit_price < 1 ||
+                        element.quantity < 1
+                    ){
+                        this.notifyError("Order details must be filled");
+                        return;
+                    }
+                });
+
                 this.submitted = true;
 
                 const data = {
                     "hmo_code" : this.hmoCode,
                     "provider_name" : this.providerName,
-                    "encounter_date" : this.selectedDate.time,
+                    "encounter_date" : this.date,
                     "items": this.orders
                 }
 
@@ -143,11 +146,7 @@
                     'Content-Type': 'application/json'
                 }})
                     .then(response => {
-                        this.$notify({
-                            title: "Success",
-                            text:  response.data.message,
-                            type: 'success',
-                        });
+                        this.notifySuccess(response.data.message);
 
                         this.hmoCode = "";
                         this.providerName = "";
@@ -161,19 +160,14 @@
                             }
                         ];
                     }).catch(error => {
-
-                        this.$notify({
-                            title: "Error",
-                            text: error.response.data.message ?? "An Error occurred",
-                            type: 'error',
-                        });
+                        this.notifyError(error.response.data.message ?? "An Error occurred");
                 }).finally(() => {
                     this.submitted = false;
                 });
             },
             addItem() {
                 this.orders.push({
-                    item: "",
+                    name: "",
                     unit_price: 0,
                     quantity: 0,
                     sub_total: 0,
@@ -194,6 +188,20 @@
                 }).catch((error) => {
                     console.log('error fetching hmos code', error)
                 })
+            },
+            notifyError(text){
+              this.$notify({
+                title: "Error",
+                text: text ?? "",
+                type: 'error',
+              });
+            },
+            notifySuccess(text){
+              this.$notify({
+                title: "Success",
+                text:  text ?? "",
+                type: 'success',
+              });
             }
         },
         computed: {
