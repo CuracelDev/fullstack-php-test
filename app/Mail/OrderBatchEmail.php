@@ -21,8 +21,8 @@ class OrderBatchEmail extends Mailable
      */
     public function __construct(string $introduction, string $message)
     {
-        $this->message = $message;
         $this->introduction = $introduction;
+        $this->message = $message;
     }
 
     /**
