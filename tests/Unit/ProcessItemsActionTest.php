@@ -7,9 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ProcessItemsActionTest extends TestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     public function test_that_items_processed_returns_correct_output(): void
     {
         $result = ProcessItems::run([[
@@ -44,9 +42,7 @@ class ProcessItemsActionTest extends TestCase
         ], $result);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_that_empty_items_processed_returns_correct_output(): void
     {
         $result = ProcessItems::run([]);

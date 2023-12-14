@@ -39,7 +39,7 @@ class OrderFactory extends Factory
                 ]
             ],
             'hmo_id' => Hmo::inRandomOrder()->first()->id,
-            'order_amount' => $this->faker->randomNumber(8, false),
+            'order_amount' => $this->faker->randomFloat(2),
             'encounter_date' => $this->faker->date('d-m-Y'),
             'batch_id' => null
         ];

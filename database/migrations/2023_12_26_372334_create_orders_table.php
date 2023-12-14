@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->json('items');
             $table->foreignId('hmo_id')->constrained();
             $table->foreignId('batch_id')->nullable()->constrained();
-            $table->string('order_amount');
+            $table->float('order_amount', 15, 2);
             $table->timestamp('encounter_date');
             $table->timestamps();
         });

@@ -16,9 +16,7 @@ class BatchOrderTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_that_batch_exists_or_was_created_for_the_order(): void
     {
         Mail::fake();
@@ -37,9 +35,7 @@ class BatchOrderTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_that_batch_id_was_assigned_to_the_order(): void
     {
         Mail::fake();
@@ -56,9 +52,7 @@ class BatchOrderTest extends TestCase
         $this->assertNotNull($order->batch_id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_that_mail_was_sent_to_hmo_after_batch_order(): void
     {
         Mail::fake();

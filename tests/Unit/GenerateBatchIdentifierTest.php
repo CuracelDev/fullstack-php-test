@@ -13,9 +13,7 @@ class GenerateBatchIdentifierTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_order_processed_returns_correct_identifier_with_encounter_date_criteria(): void
     {
         $order = Order::factory()->create(['hmo_id' => Hmo::firstWhere('batch_criteria', Hmo::BATCH_CRITERIA_ENCOUNTER_DATE)->id]);
@@ -26,9 +24,7 @@ class GenerateBatchIdentifierTest extends TestCase
         $this->assertEquals("$order->provider_name " . Carbon::parse($order->encounter_date)->format('M Y'), $result);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_order_processed_returns_correct_identifier_with_order_date_criteria(): void
     {
         $order = Order::factory()->create(['hmo_id' => Hmo::firstWhere('batch_criteria', Hmo::BATCH_CRITERIA_ORDER_DATE)->id]);
