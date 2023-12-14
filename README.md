@@ -1,4 +1,6 @@
+## Sample Image
 
+<img width="1262" alt="Screenshot 2023-12-14 at 8 56 54 PM" src="https://github.com/ilejohn-official/fullstack-php-test/assets/72869170/9c565e49-22b6-4ab4-a5e8-f3351c156834">
 
 
 ## Setup
