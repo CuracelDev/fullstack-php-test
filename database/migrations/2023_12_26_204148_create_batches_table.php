@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHmosTable extends Migration
+class CreateBatchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateHmosTable extends Migration
      */
     public function up()
     {
-        Schema::create('hmos', function (Blueprint $table) {
+        Schema::create('batches', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('code')->unique();
-            $table->string('batch_criteria')->default('encounter_date');
+            $table->foreignId('hmo_id')->constrained();
             $table->timestamps();
+
+            $table->unique(['name', 'hmo_id']);
         });
     }
 
@@ -30,6 +30,6 @@ class CreateHmosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hmos');
+        Schema::dropIfExists('batches');
     }
 }

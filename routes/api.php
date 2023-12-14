@@ -1,5 +1,8 @@
 <?php
 
+use App\Actions\GetBatches;
+use App\Actions\GetHmoCodes;
+use App\Actions\SubmitOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/hmos', GetHmoCodes::class);
+Route::get('/hmos/{hmo}/batches', GetBatches::class);
+Route::post('/submit-order', SubmitOrder::class);
