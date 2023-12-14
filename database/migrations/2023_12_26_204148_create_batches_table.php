@@ -15,9 +15,11 @@ class CreateBatchesTable extends Migration
     {
         Schema::create('batches', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->foreignId('hmo_id')->constrained();
             $table->timestamps();
+
+            $table->unique(['name', 'hmo_id']);
         });
     }
 
