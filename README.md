@@ -32,7 +32,7 @@ npm run test (frontend)
 ```
 
 ## Sample Image
-<img src="./public/screenshot.png">
+<img src="./public/curacel-hmo-order-system.png">
 
 
 
