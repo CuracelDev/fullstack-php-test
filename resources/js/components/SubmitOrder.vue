@@ -190,7 +190,7 @@
                     errorExist = true;
                 }
                 if (this.order.items.length < 1){
-                    this.error.push("Order items must be filled");
+                    this.error.push("Order items required");
                     errorExist = true;
                 }
 

@@ -173,7 +173,7 @@ class SubmitOrderTest extends TestCase
      * @return void
      */
     public function testGenerateBatchIdentifierByOrderDate()
-    {;
+    {
         $orderDateHmo = Hmo::where('batch_criteria', Hmo::BATCH_CRITERIA_ORDER_DATE)->first();
 
         $orderData = $this->getOrderData(['hmo_code' =>  $orderDateHmo->code]);
@@ -192,6 +192,34 @@ class SubmitOrderTest extends TestCase
             'encounter_date' => $orderData['encounter_date'],
             'items' => json_encode($orderData['items']),
             'batch_identifier' => $expectedBatchIdentifier
+        ]);
+    }
+
+     /**
+     * test that amount calculated is accurate
+     *
+     * @test
+     * @return void
+     */
+    public function testCalculatedAmount()
+    {
+        $orderData = $this->getOrderData();
+        $response = $this->postJson('/api/orders', $orderData);
+
+        $response->assertStatus(200);
+
+        $order = Order::where('provider_name', $orderData['provider_name'])->where('encounter_date', $orderData['encounter_date'])
+            ->where('items', json_encode($orderData['items']))->first();
+
+        $expectedAmount = round($orderData['items'][0]['unit_price'] * $orderData['items'][0]['quantity'], 2);
+
+        $this->assertEquals($order->amount, $expectedAmount);
+
+        $this->assertDatabaseHas('orders', [
+            'provider_name' => $orderData['provider_name'],
+            'encounter_date' => $orderData['encounter_date'],
+            'items' => json_encode($orderData['items']),
+            'amount' => $expectedAmount
         ]);
     }
 
