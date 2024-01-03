@@ -1,5 +1,7 @@
 <?php
 
+use App\Actions\Hmo\GetAllHmo;
+use App\Actions\Order\SubmitOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('orders')->name('orders.')->group(function () {
+    Route::post('/', [SubmitOrder::class, 'asController'])->name('submit');
+});
+
+Route::prefix('hmos')->name('hmos.')->group(function () {
+    Route::get('/', [GetAllHmo::class, 'asController'])->name('get');
 });
