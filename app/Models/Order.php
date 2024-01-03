@@ -52,28 +52,6 @@ class Order extends Model
         return "{$this->provider_name} {$batchDate}";
     }
 
-    /**
-     * Generate batch identifier for order
-     *
-     * @param Order $order
-     * @return string
-     */
-    public function generateBatchIdentifiers(Order $order): string
-    {
-        if($order->batch_identifier){
-            return $order->batch_identifier;
-        }
-
-        if ($order->hmo->batch_criteria === Hmo::BATCH_CRITERIA_ORDER_DATE) {    
-            $batchDate = $order->created_at;
-        } else {
-            $batchDate = $order->encounter_date;
-        }
-
-        $batchDate = Carbon::parse($batchDate)->format('M Y');
-
-        return "{$order->provider_name} {$batchDate}";
-    }
 
     /**
      * Calculate total amount for order

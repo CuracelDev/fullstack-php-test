@@ -6,9 +6,6 @@
                     <div class="card-header"><h3>Order Form</h3></div>
 
                     <div  class="alert alert-danger" role="alert" v-show="showErrorMessage">
-                        <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><b>&times;</b></span>
-                        </button> -->
                         <div v-for="(er, key) in error">
                             <span class="error-label">{{ error[key] }}</span>
                         </div>
@@ -23,10 +20,6 @@
                     </div>
                     
 
-                    <!-- <div class="alert alert-danger" role="alert" v-show="showErrorMessage">
-                        <strong>Error!</strong> {{ errorMessage }}
-                    </div> -->
-
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-1"></div>
@@ -37,10 +30,8 @@
                             <div class="col-sm">
                                 HMO Code
                                 <select v-model="order.hmo_code" class="custom-select" >
-                                    <!-- <option disabled selected>Choose...</option> -->
                                     <option v-for="(hmo, index) in hmos" :key="index" :value="hmo.code">{{ hmo.code }}</option>
                                 </select>
-                                <!-- <input type="text" v-model="order.hmo_code" class="form-control"> -->
                             </div>
                             <div class="col-sm">
                                 Encounter Date
