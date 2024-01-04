@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\Hmo;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class HmoSeeder extends Seeder
 {
     private $hmos = [
-        ['name'=>'HMO A', 'code'=> 'HMO-A'],
-        ['name'=>'HMO B', 'code'=> 'HMO-B'],
-        ['name'=>'HMO C', 'code'=> 'HMO-C'],
-        ['name'=>'HMO D', 'code'=> 'HMO-D'],
+        ['name'=>'HMO A', 'code'=> 'HMO-A', 'email'=> 'hmo-a@example.com'],
+        ['name'=>'HMO B', 'code'=> 'HMO-B', 'email'=> 'hmo-b@example.com'],
+        ['name'=>'HMO C', 'code'=> 'HMO-C', 'email'=> 'hmo-c@example.com'],
+        ['name'=>'HMO D', 'code'=> 'HMO-D', 'email'=> 'hmo-d@example.com'],
     ];
 
     /**
@@ -21,6 +21,8 @@ class HmoSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('hmos')->insert($this->hmos);
+        collect($this->hmos)->each(function($hmo) {
+            Hmo::updateOrCreate($hmo);
+        });
     }
 }
