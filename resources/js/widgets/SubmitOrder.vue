@@ -28,6 +28,7 @@
                             :item="item"
                             :name="`items.${i}`"
                             :errors="errors"
+                            class="order-item-input"
                         >
                             <template #action>
                                 <app-button v-if="form.items.length > 1" class="btn btn-sm btn-danger" @click="removeItem(i)">
@@ -36,7 +37,7 @@
                             </template>
                         </order-item>
                         <div class="d-flex justify-content-between align-items-center">
-                            <app-button class="btn-primary btn-sm" @click="addItem">
+                            <app-button class="btn-primary btn-sm add-item" @click="addItem">
                                 +
                             </app-button>
                             <div class="d-flex flex-wrap justify-content-end">
