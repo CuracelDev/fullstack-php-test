@@ -28,7 +28,7 @@
         data() {
             return {
                 form: {
-                    hmo_code: null,
+                    name: null,
                     price: 0,
                     quantity: 0
                 }
