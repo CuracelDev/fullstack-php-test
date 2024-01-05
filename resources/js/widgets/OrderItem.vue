@@ -47,7 +47,7 @@
             item: {
                 immediate: true,
                 handler(item) {
-                    this.form = item;
+                    if(item) this.form = item;
                 }
             },
             form: {
