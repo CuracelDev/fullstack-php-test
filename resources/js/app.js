@@ -19,7 +19,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('submit-order', require('./components/SubmitOrder.vue').default);
+Vue.component('submit-order', require('./widgets/SubmitOrder.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

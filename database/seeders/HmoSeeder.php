@@ -2,18 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Constants\FulfilmentType;
+use App\Models\Hmo;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class HmoSeeder extends Seeder
 {
-    private $hmos = [
-        ['name'=>'HMO A', 'code'=> 'HMO-A'],
-        ['name'=>'HMO B', 'code'=> 'HMO-B'],
-        ['name'=>'HMO C', 'code'=> 'HMO-C'],
-        ['name'=>'HMO D', 'code'=> 'HMO-D'],
-    ];
-
     /**
      * Run the database seeds.
      *
@@ -21,6 +16,17 @@ class HmoSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('hmos')->insert($this->hmos);
+        Hmo::factory()
+            ->count(4)
+            ->state(new Sequence(
+                ['fulfil_by' => FulfilmentType::ENCOUNTER],
+                ['fulfil_by' => FulfilmentType::ORDER],
+            ))
+            ->sequence(
+                ['name'=>'HMO A', 'code'=> 'HMO-A'],
+                ['name'=>'HMO B', 'code'=> 'HMO-B'],
+                ['name'=>'HMO C', 'code'=> 'HMO-C'],
+                ['name'=>'HMO D', 'code'=> 'HMO-D'],
+            )->create();
     }
 }

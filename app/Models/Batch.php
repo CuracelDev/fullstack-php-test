@@ -4,17 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 
-class Hmo extends Model
+class Batch extends Model
 {
-    use Notifiable, HasFactory;
+    use HasFactory;
 
     protected $fillable = [
-        "code", "name", "email"
+        "name", "to_be_processed_on"
     ];
 
-    public function orders() {
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Order::class);
     }
+
 }
