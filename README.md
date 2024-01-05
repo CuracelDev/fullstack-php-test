@@ -17,8 +17,9 @@ Don't forget to run `npm run dev` after modifying the vue component.
 
 ## Setup With Docker
 
-To ensure all the necessary tools needed for the development are available and to maintain environment consistency, 
-the application can be developed with [Docker](https://docker.com/).
+Alternatively to the regular setup above, the application can be run a more controlled environment using [Docker](https://docker.com/).
+This is to ensure all the necessary tools needed for the development are available and to maintain environment consistency.
+If you are not interested in running it in docker you can [skip to post setup section](#post-setup) 
 
 #### Add [Laradock](http://laradock.io/) as submodule
 
@@ -124,7 +125,7 @@ Actions such as batching orders, processing orders and sending notifications are
 to pick and complete those actions.
 
 ```
-php artisan queue:work redis --queue=notifications,batchers,order
+php artisan queue:work redis --queue=notifications,batchers,orders
 ```
 
 
