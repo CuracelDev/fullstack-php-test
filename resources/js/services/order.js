@@ -10,12 +10,16 @@ class OrderService extends Api {
             if(res.status === 422) {
                 return Promise.reject(JSON.parse(res.data))
             }
-            return Promise.resolve(res)
+            return Promise.resolve(JSON.parse(res.data))
         }, err => Promise.reject(err))
     }
 
     createOrder(data) {
         return this.post("order", data);
+    }
+
+    getHmos() {
+        return this.get("hmos");
     }
 
 }
