@@ -24,7 +24,7 @@ class CreateOrder
         return $order->refresh();
     }
 
-    public function asController(Request $request)
+    public function asController(Request $request): Order
     {
         return $this->handle((new CreateOrderDto())->fromRequest($request));
     }

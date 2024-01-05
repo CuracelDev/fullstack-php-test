@@ -34,7 +34,7 @@ class ProcessOrder
         return $order->refresh();
     }
 
-    public function asController(Request $request, $orderId)
+    public function asController(Request $request, $orderId): Order
     {
         $order = Order::where([["id", $orderId], ["status", Status::QUEUED]])->firstOrFail();
         return $this->handle($order);

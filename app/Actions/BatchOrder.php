@@ -50,10 +50,10 @@ class BatchOrder
         ][$order->hmo->fulfil_by];
     }
 
-    public function asController(Request $request, $orderId)
+    public function asController(Request $request, $orderId): Order
     {
         $order = Order::where([["id", $orderId], ["status", Status::PENDING]])->firstOrFail();
-        $this->handle($order);
+        return $this->handle($order);
     }
 
     public function jsonResponse($result, Request $request): \Illuminate\Http\JsonResponse
