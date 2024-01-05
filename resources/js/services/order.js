@@ -1,7 +1,7 @@
 import Api from "./api";
 class OrderService extends Api {
     constructor() {
-        super("http://localhost");
+        super();
         this.setRequestInterceptor(req => {
             req.data = JSON.stringify(req.data);
             return req;
