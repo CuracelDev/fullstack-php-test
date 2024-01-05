@@ -2,21 +2,24 @@
 
 namespace Tests\Feature;
 
+use App\Actions\BatchOrder;
+use App\Actions\NotifyCreatedOrder;
 use App\Constants\Status;
 use App\Models\Hmo;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class CreateOrderTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-    public function test_order_can_be_created_via_api() {
+    public function test_order_is_created_via_api() {
         $hmo = Hmo::factory()->create();
-        $testData = [
+        $requestData = [
             'hmo_code' => $hmo->code,
-            'provider_name' => $this->faker->company(),
+            'provider_name' => $this->faker->company,
             'encounter_date' => $this->faker->date(),
             'items' => [
                 [
@@ -26,12 +29,11 @@ class CreateOrderTest extends TestCase
                 ]
             ]
         ];
-        $response = $this->json('POST', route('order.create'), $testData);
+        $response = $this->json('POST', route('order.create'), $requestData);
         $response
             ->assertCreated()
             ->assertJsonPath("data.hmo_id", $hmo->getKey())
-            ->assertJsonPath("data.provider_name", $testData['provider_name'])
+            ->assertJsonPath("data.provider_name", $requestData['provider_name'])
             ->assertJsonPath("data.status", Status::PENDING);
     }
-
 }
