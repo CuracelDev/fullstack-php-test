@@ -18,7 +18,7 @@ describe('Submit order widget', function () {
     })
 
     it('should have hmo code, provider name and encounter date inputs', function () {
-        expect(wrapper.find('select[name="hmo_code"').exists()).toBe(true)
+        expect(wrapper.find('input[name="hmo_code"').exists()).toBe(true)
         expect(wrapper.find('input[name="provider_name"]').exists()).toBe(true)
         expect(wrapper.find('input[name="encounter_date"]').exists()).toBe(true)
     });

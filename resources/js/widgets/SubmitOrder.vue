@@ -12,7 +12,7 @@
                         </app-alert>
                         <div class="row">
                             <div class="col-5">
-                                <hmo-select label="Receiving HMO" name="hmo_code" :errors="errors" v-model="form.hmo_code" />
+                                <app-input label="Receiving HMO" name="hmo_code" :errors="errors" v-model="form.hmo_code" />
                             </div>
                             <div class="col-4">
                                 <app-input label="Provider Name" name="provider_name" :errors="errors" v-model="form.provider_name" />
