@@ -6,6 +6,7 @@ use App\Batchers\BatchByOrder;
 use App\Batchers\Batcher;
 use App\Constants\FulfilmentType;
 use App\Constants\Status;
+use App\Http\Resources\OrderResource;
 use App\Models\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
@@ -56,9 +57,9 @@ class BatchOrder
         return $this->handle($order);
     }
 
-    public function jsonResponse($result, Request $request): \Illuminate\Http\JsonResponse
+    public function jsonResponse(Order $order, Request $request): OrderResource
     {
-        return response()->json(["status" => true]);
+        return new OrderResource($order);
     }
 
     public static function routes(Router $router)
