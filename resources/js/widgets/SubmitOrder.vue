@@ -12,7 +12,7 @@
                         </app-alert>
                         <div class="row">
                             <div class="col-5">
-                                <app-input label="Receiving HMO code" name="hmo_code"  :errors="errors" v-model="form.hmo_code" />
+                                <hmo-select label="Receiving HMO" name="hmo_code" :errors="errors" v-model="form.hmo_code" />
                             </div>
                             <div class="col-4">
                                 <app-input label="Provider Name" name="provider_name" :errors="errors" v-model="form.provider_name" />
@@ -63,8 +63,9 @@
     import AppButton from "../components/AppButton.vue";
     import orderService from "../services/order";
     import AppAlert from "../components/AppAlert.vue";
+    import HmoSelect from "./HmoSelect.vue";
     export default {
-        components: {AppAlert, AppButton, OrderItem, AppInput},
+        components: {HmoSelect, AppAlert, AppButton, OrderItem, AppInput},
         data() {
             return {
                 alert: null,
