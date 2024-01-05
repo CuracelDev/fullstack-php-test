@@ -21,7 +21,7 @@ class CreateOrder
             BatchOrder::makeJob($order),
         ])->dispatch($order);
 
-        return $order;
+        return $order->refresh();
     }
 
     public function asController(Request $request)
@@ -50,6 +50,6 @@ class CreateOrder
 
     public static function routes(Router $router)
     {
-        $router->post('/order', static::class);
+        $router->post('/order', static::class)->name("order.create");
     }
 }

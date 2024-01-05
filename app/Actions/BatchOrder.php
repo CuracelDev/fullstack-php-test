@@ -37,12 +37,9 @@ class BatchOrder
                 "to_be_processed_on" => $batcher->processOn()->format("Y-m-d")
             ],
         );
-        $order->update([
-            "batch_id" => $batch->id,
-            "status" => Status::QUEUED
-        ]);
+        $order->update([ "batch_id" => $batch->id, "status" => Status::QUEUED ]);
         ProcessOrder::dispatch($order)->delay($batcher->processDelay());
-        return $order;
+        return $order->refresh();
     }
 
     public function defaultBatcher(Order $order): Batcher
@@ -66,7 +63,7 @@ class BatchOrder
 
     public static function routes(Router $router)
     {
-        $router->post('/order/{order}/batch', static::class);
+        $router->post('/order/{order}/batch', static::class)->name("order.batch");
     }
 
 }

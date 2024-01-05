@@ -31,7 +31,7 @@ class ProcessOrder
         $order->items()->update(["status" => Status::SUCCESS]);
 
         NotifyProcessedOrder::dispatch($order);
-        return $order;
+        return $order->refresh();
     }
 
     public function asController(Request $request, $orderId)
@@ -47,7 +47,7 @@ class ProcessOrder
 
     public static function routes(Router $router)
     {
-        $router->get('/order/{order}/process', static::class);
+        $router->get('/order/{order}/process', static::class)->name("order.process");
     }
 
 }
