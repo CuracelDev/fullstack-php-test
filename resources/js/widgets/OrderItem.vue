@@ -44,6 +44,12 @@
             }
         },
         watch: {
+            item: {
+                immediate: true,
+                handler(item) {
+                    this.form = item;
+                }
+            },
             form: {
                 immediate: true,
                 handler(form) {
