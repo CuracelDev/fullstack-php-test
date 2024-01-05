@@ -12,13 +12,13 @@
                         </app-alert>
                         <div class="row">
                             <div class="col-5">
-                                <app-input label="Receiving HMO" name="hmo_code" :errors="errors" v-model="form.hmo_code" />
+                                <app-input label="Receiving HMO" name="hmo_code" :errors="errors" v-model="form.hmo_code" help-text="e.g. HMO-A, HMO-B, HMO-C HMO-D" />
                             </div>
                             <div class="col-4">
-                                <app-input label="Provider Name" name="provider_name" :errors="errors" v-model="form.provider_name" />
+                                <app-input label="Provider Name" name="provider_name" :errors="errors" v-model="form.provider_name" help-text="Name of provider" />
                             </div>
                             <div class="col-3">
-                                <app-input label="Encounter date" name="encounter_date" type="date" :errors="errors" v-model="form.encounter_date" />
+                                <app-input label="Encounter date" name="encounter_date" type="date" :errors="errors" v-model="form.encounter_date" help-text="Order encounter date" />
                             </div>
                         </div>
                         <order-item
