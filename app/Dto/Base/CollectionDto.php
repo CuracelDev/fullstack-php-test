@@ -6,7 +6,7 @@ abstract class CollectionDto extends Dto
 {
     private ?array $items;
     public function __construct(?array $items) {
-        $this->fromArray($items);
+        $this->items = $items;
     }
     abstract protected function item(array $item): Dto;
     public function fromArray($arr = []): CollectionDto
