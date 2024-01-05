@@ -6,7 +6,9 @@
             <div class="small text-muted" v-if="helpText">{{helpText}}</div>
             <!-- Input group -->
             <div :class="`input-group input-group-merge ${$attrs.inline ? 'col': ''}`">
-                <input class="form-control" v-bind="$attrs" @input="$emit('input', $event.target.value)">
+                <slot>
+                    <input class="form-control" v-bind="$attrs" @input="$emit('input', $event.target.value)">
+                </slot>
             </div>
             <div v-if="errorString" class="text-danger" :class="`${$attrs.inline ? 'col-12': ''}`">
                 {{ errorString }}
