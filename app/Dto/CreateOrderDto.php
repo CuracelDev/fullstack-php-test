@@ -22,7 +22,7 @@ class CreateOrderDto extends ScalarDto
     public function fromRequest(Request $request): CreateOrderDto
     {
         $this->order = (new OrderDto())->fromRequest($request);
-        $this->items = (new OrderItemsDto($request->get('items')));
+        $this->items = ((new OrderItemsDto())->fromArray($request->get('items')));
         return $this;
     }
 
