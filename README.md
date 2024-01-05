@@ -125,7 +125,7 @@ Actions such as batching orders, processing orders and sending notifications are
 to pick and complete those actions.
 
 ```
-php artisan queue:work redis --queue=notifications,batchers,orders
+php artisan queue:work --queue=notifications,batchers,orders
 ```
 
 
