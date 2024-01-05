@@ -15,7 +15,7 @@ abstract class Batcher implements IBatcher {
     }
     public function batchName(): string
     {
-        return Str::slug("{$this->order->provider_name} {$this->fulfillOn()->format('M Y')}");
+        return "{$this->order->provider_name} {$this->fulfillOn()->format('M Y')}";
     }
     public function processOn(): Carbon
     {
