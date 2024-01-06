@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Actions\CreateOrderAction;
+use App\Actions\HmoIndexAction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('orders')->name('order.')->group(static function () {
+    Route::post('/', [CreateOrderAction::class, 'asController'])->name('create');
 });
+
+Route::prefix('hmos')->name('hmo.')->group((static function () {
+    Route::get('/', [HmoIndexAction::class, 'asController'])->name('index');
+}));

@@ -16,7 +16,10 @@ class CreateHmosTable extends Migration
         Schema::create('hmos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('code')->unique();
+            $table->string('email')->unique();
+            $table->boolean('is_batched')->default(true);
             $table->timestamps();
         });
     }
