@@ -300,8 +300,8 @@ export default {
     async submitForm() {
       if (this.validateForm()) {
         try {
-          const response = await axios.post(
-            "http://127.0.0.1:8001/api/orders",
+          const response = await axios.post(process.env.MIX_API_URL+
+            "/orders",
             {
               provider_name: this.providerName,
               hmo_code: this.hmoCode,
@@ -346,8 +346,9 @@ export default {
     },
 
     async getHMOCodes() {
-      try {
-        const response = await fetch("http://127.0.0.1:8001/api/hmos");
+        try
+      {
+        const response = await fetch(process.env.MIX_API_URL +"/hmos");
         const data = await response.json();
         if (data.status) {
           this.hmoCodes = data.data.map((hmo) => ({

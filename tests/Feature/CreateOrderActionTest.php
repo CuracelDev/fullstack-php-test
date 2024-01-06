@@ -13,7 +13,7 @@ use Tests\TestCase;
 
 class CreateOrderActionTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker;
 
     /**
      * Set up the test case.

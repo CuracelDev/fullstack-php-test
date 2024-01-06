@@ -13,4 +13,5 @@ yarn-error.log
 .idea/
 ..phpunit.result.cache
 .DS_Store
+.env.testing    
 ```

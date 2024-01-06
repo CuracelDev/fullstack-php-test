@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class HmoIndexActionTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker;
 
     /**
      * Set up the test case.

@@ -2010,7 +2010,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               }
               _context.prev = 1;
               _context.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("http://127.0.0.1:8001/api/orders", {
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("http://localhost:8000/api" + "/orders", {
                 provider_name: _this2.providerName,
                 hmo_code: _this2.hmoCode,
                 encounter_date: _this2.encounterDate,
@@ -2065,7 +2065,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               _context2.prev = 0;
               _context2.next = 3;
-              return fetch("http://127.0.0.1:8001/api/hmos");
+              return fetch("http://localhost:8000/api" + "/hmos");
             case 3:
               response = _context2.sent;
               _context2.next = 6;
@@ -51358,8 +51358,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/kater/Elysian/Laravel/production/fullstack-php-test/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/kater/Elysian/Laravel/production/fullstack-php-test/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/kater/Elysian/Laravel/fullstack-php-test/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/kater/Elysian/Laravel/fullstack-php-test/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

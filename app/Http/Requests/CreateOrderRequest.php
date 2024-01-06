@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Date;
 
 class CreateOrderRequest extends FormRequest
 {
@@ -26,7 +27,7 @@ class CreateOrderRequest extends FormRequest
         return [
             'provider_name' => ['string', 'required', 'max:255', 'min:3'],
             'hmo_code' => ['string', 'required', 'exists:hmos,code'],
-            'encounter_date' => ['date', 'required', 'date_format:Y-m-d', 'before_or_equal:today'],
+            'encounter_date' => ['date', 'required', 'date_format:Y-m-d', 'before_or_equal:' . Date::now()->format('Y-m-d')],
             'items' => ['array', 'required'],
             'items.*.item' => ['required', 'string', 'min:2', 'max:50', 'distinct:ignore_case'],
             'items.*.price' => ['required', 'numeric', 'gt:0'],
