@@ -26,7 +26,7 @@ class CreateOrderRequest extends FormRequest
     {
         return [
             'provider_name' => ['string', 'required', 'max:255', 'min:3'],
-            'hmo_code' => ['string', 'required', 'exists:hmos,code'],
+            'hmo_code' => ['string', 'required', 'max:255'],
             'encounter_date' => ['date', 'required', 'date_format:Y-m-d', 'before_or_equal:' . Date::now()->format('Y-m-d')],
             'items' => ['array', 'required'],
             'items.*.item' => ['required', 'string', 'min:2', 'max:50', 'distinct:ignore_case'],

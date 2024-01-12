@@ -78,7 +78,7 @@ class CreateOrderActionTest extends TestCase
 
         $this->assertDatabaseHas('hmos', [
             'id' => $hmo->id,
-            'is_batched' => true,
+            'batch_by_encounter_date' => true,
         ]);
 
         $this->assertDatabaseHas('orders', [
@@ -120,16 +120,16 @@ class CreateOrderActionTest extends TestCase
 
         $response = $this->postJson('/api/orders', $createOrderPayload);
 
-        $response->assertStatus(422)
+        $response->assertStatus(404)
             ->assertJsonStructure([
                 'status',
                 'message',
+                'error_type',
                 'code',
-                'errors' => [
-                    'hmo_code',
-                ],
             ]);
     }
+
+
 
     /**
      * Test case for creating an order with an invalid encounter date.
@@ -142,10 +142,8 @@ class CreateOrderActionTest extends TestCase
      */
     public function test_create_order_with_invalid_encounter_date()
     {
-        // Retrieve the first HMO record from the database
         $hmo = Hmo::select('id', 'code')->first();
 
-        // Prepare the payload for creating an order
         $createOrderPayload = [
             'provider_name' => $this->faker->name,
             'hmo_code' => $hmo->code,

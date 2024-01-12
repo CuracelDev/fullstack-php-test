@@ -3,13 +3,17 @@
 namespace App\Actions;
 
 use App\Models\Hmo;
-use App\Models\Order;
 use Illuminate\Http\JsonResponse;
+use Lorisleiva\Actions\Concerns\AsAction;
 
-class HmoIndexAction
+class GetAllHmoAction
 {
+    use AsAction;
+
     public function handle()
     {
+        logger()->info('Retrieving all HMOs');
+
         return Hmo::select('id', 'code')->get();
     }
 
@@ -20,7 +24,7 @@ class HmoIndexAction
         return response()->json([
             'status' => true,
             'message' => 'HMOs successfully retrieved',
-            'code' => Order::HMO_RETRIEVED,
+            'code' => Hmo::HMO_RETRIEVED,
             'data' => $hmos,
         ], JsonResponse::HTTP_OK);
     }

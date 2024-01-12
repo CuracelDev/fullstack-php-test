@@ -19,7 +19,7 @@ class CreateHmosTable extends Migration
             $table->string('slug')->unique();
             $table->string('code')->unique();
             $table->string('email')->unique();
-            $table->boolean('is_batched')->default(true);
+            $table->boolean('batch_by_encounter_date')->default(true);
             $table->timestamps();
         });
     }

@@ -28,11 +28,6 @@ class Order extends Model
     public const CREATED_STATUS = 'ORDER_CREATED';
 
     /**
-     * The success status of an order.
-     */
-    public const HMO_RETRIEVED = 'HMO_RETRIEVED';
-
-    /**
      * The attributes that are not mass assignable.
      *
      * @var array

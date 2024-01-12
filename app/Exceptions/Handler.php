@@ -125,7 +125,11 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof Exception) {
-            logger()->error('General exception occurred' . $exception->getMessage());
+            logger()->error('General exception occurred' . $exception->getMessage(), [
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTraceAsString()
+            ]);
 
             return response()->json([
                 'status' => false,

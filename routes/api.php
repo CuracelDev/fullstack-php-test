@@ -1,7 +1,7 @@
 <?php
 
 use App\Actions\CreateOrderAction;
-use App\Actions\HmoIndexAction;
+use App\Actions\GetAllHmoAction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +20,5 @@ Route::prefix('orders')->name('order.')->group(static function () {
 });
 
 Route::prefix('hmos')->name('hmo.')->group((static function () {
-    Route::get('/', [HmoIndexAction::class, 'asController'])->name('index');
+    Route::get('/', [GetAllHmoAction::class, 'asController'])->name('index');
 }));

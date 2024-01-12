@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 
 class Hmo extends Model
 {
+    public const HMO_RETRIEVED = 'HMO_RETRIEVED';
+
     /**
      * The attributes that are not mass assignable.
      *
@@ -25,7 +27,7 @@ class Hmo extends Model
      * @var array
      */
     protected $casts = [
-        'is_batched' => 'boolean',
+        'batch_by_encounter_date' => 'boolean',
     ];
 
     /**

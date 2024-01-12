@@ -19,14 +19,8 @@ class CreateOrderAction
     {
         try {
             $hmo = Hmo::where('code', $orderPayload['hmo_code'])
-                ->select('id', 'code', 'email', 'name')
-                ->first();
-
-            if (!$hmo) {
-                logger('HMO not found: ' . $orderPayload['hmo_code']);
-
-                throw new Exception('HMO not found');
-            }
+                ->select('id', 'code', 'name', 'email')
+                ->firstOrFail();
 
             logger()->info('Creating order for HMO: ' . $hmo->code);
 
@@ -39,7 +33,7 @@ class CreateOrderAction
         } catch (Exception $e) {
             logger('Error creating order: ' . $e->getMessage());
 
-            throw new Exception('Error creating order');
+            throw $e;
         }
     }
 

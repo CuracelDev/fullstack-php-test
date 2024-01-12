@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class HmoIndexActionTest extends TestCase
+class GetAllHmoActionTest extends TestCase
 {
     use WithFaker;
 
