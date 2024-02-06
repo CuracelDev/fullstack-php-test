@@ -9,6 +9,10 @@ Same way you would install a typical laravel application.
 
     npm install
 
+    cp .env.example .env
+
+    php artisan key:generate
+
     php artisan serve
 
 The UI is displayed on the root page
