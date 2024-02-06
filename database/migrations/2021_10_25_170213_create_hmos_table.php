@@ -17,6 +17,8 @@ class CreateHmosTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->unique();
+            $table->string('email')->unique();
+            $table->string('batch_type')->index();
             $table->timestamps();
         });
     }
