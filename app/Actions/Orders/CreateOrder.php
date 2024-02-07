@@ -31,10 +31,12 @@ class CreateOrder
 
     public function asController(Request $request): JsonResponse
     {
-        $this->handle(
+        $order = $this->handle(
             Hmo::firstWhere('code', $request->input('hmo')),
             $request->all()
         );
+
+        SendOrderMail::dispatchAfterResponse($order);
 
         return response()->json(['message' => 'Order Created'], Response::HTTP_CREATED);
     }
