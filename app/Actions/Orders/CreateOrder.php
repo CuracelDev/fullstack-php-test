@@ -23,9 +23,9 @@ class CreateOrder
             'provider' => 'required|string|max:50',
             'items' => 'required|array|min:1',
             'items.*.name' => 'required|string',
-            'items.*.price' => 'required|numeric',
+            'items.*.price' => 'required|numeric|gt:0',
             'items.*.qty' => 'required|integer|min:1',
-            'encountered_at' => 'required|date',
+            'encountered_at' => 'required|date|before_or_equal:now',
         ];
     }
 
