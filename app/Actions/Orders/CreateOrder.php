@@ -29,6 +29,17 @@ class CreateOrder
         ];
     }
 
+    public function getValidationAttributes(): array
+    {
+        return [
+            'hmo' => 'hmo\'s code',
+            'items.*.name' => 'name',
+            'items.*.price' => 'price',
+            'items.*.qty' => 'quantity',
+            'encountered_at' => 'encounter date',
+        ];
+    }
+
     public function asController(Request $request): JsonResponse
     {
         $order = $this->handle(
