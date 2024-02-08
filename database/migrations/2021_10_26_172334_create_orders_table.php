@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Hmo;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,10 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Hmo::class)->constrained();
+            $table->string('batch_id')->index();
             $table->json('items');
+            $table->timestamp('encountered_at');
             $table->timestamps();
         });
     }
