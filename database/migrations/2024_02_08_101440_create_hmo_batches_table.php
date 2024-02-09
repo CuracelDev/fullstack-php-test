@@ -1,10 +1,11 @@
 <?php
 
+use App\Models\Hmo;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHmosTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +14,15 @@ class CreateHmosTable extends Migration
      */
     public function up()
     {
-        Schema::create('hmos', function (Blueprint $table) {
+        Schema::create('hmo_batches', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Hmo::class)->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->string('code')->unique();
-            $table->string('email', 150)->unique();
-            $table->string('batch_preference', 20)
-                ->default('encounter_date')
-                ->comment('batch type can be either created date or encounter date');
+            $table->integer('cancelled_at')->nullable();
+            $table->integer('finished_at')->nullable();
             $table->timestamps();
+
+            $table->index(['cancelled_at', 'finished_at']);
         });
     }
 
@@ -32,6 +33,6 @@ class CreateHmosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hmos');
+        Schema::dropIfExists('hmo_batches');
     }
-}
+};

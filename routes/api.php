@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Actions\Hmo\GetHmos;
+use App\Actions\Order\CreateOrder;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('orders')->name('orders.')->group(static function () {
+    Route::post('', [CreateOrder::class, 'asController'])->name('create');
 });
+
+Route::prefix('hmos')->name('hmos.')->group((static function () {
+    Route::get('', [GetHmos::class, 'asController'])->name('all');
+}));
