@@ -6,7 +6,7 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+import Vue from 'vue'
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,6 +20,13 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('submit-order', require('./components/SubmitOrder.vue').default);
+
+import VueToastr2 from 'vue-toastr-2'
+import 'vue-toastr-2/dist/vue-toastr-2.min.css'
+
+window.toastr = require('toastr')
+
+Vue.use(VueToastr2)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
