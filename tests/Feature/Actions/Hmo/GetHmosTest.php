@@ -8,6 +8,16 @@ use Tests\TestCase;
 
 class GetHmosTest extends TestCase
 {
+    public function testInvalidRoute()
+    {
+        $this->getJson('/hmo')
+        ->assertNotFound()
+        ->assertJson([
+            'success' => false,
+            'message' => 'The requested URL is invalid'
+        ]);
+    }
+
     public function testGetAllHmos()
     {
         $this->getJson(route('hmos.all'))

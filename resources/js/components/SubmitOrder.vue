@@ -4,8 +4,9 @@
             <div class="col-md-10 m-auto">
                 <div class="card">
                     <div class="card-header">
-                        <h1 class="card-title">Order Form</h1>
+                        <h1 class="card-title">Order</h1>
                     </div>
+
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
@@ -126,7 +127,7 @@
                                         class="form-group"
                                         :class="{ 'has-error': errors[`items[${index}].quantity`] }"
                                     >
-                                        <label>Qty</label>
+                                        <label>Quantity</label>
                                         <input
                                             v-model="item.quantity"
                                             type="number"
