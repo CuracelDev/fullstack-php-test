@@ -4,10 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+import './bootstrap'
 
-window.Vue = require('vue');
-
+import Vue from "vue";
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -19,6 +18,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('order-dashboard', require('./components/OrderDashboard.vue').default);
 Vue.component('submit-order', require('./components/SubmitOrder.vue').default);
 
 /**

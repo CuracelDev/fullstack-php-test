@@ -15,6 +15,7 @@ class CreateHmosTable extends Migration
     {
         Schema::create('hmos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->string('name');
             $table->string('code')->unique();
             $table->timestamps();

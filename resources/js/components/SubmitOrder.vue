@@ -6,8 +6,9 @@
                     <div class="card-header">Submit An Order</div>
 
                     <div class="card-body">
-                        Order details here
+                        Counter : {{ counter }}
                     </div>
+                    <button class="btn btn-primary" @click="increment">increment</button>
                 </div>
             </div>
         </div>
@@ -15,9 +16,21 @@
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Component mounted.')
+import { http } from '../utils/http';
+
+export default {
+    data() {
+        return {
+            counter: 0
         }
+    },
+    methods: {
+        async getUser() {
+            await http.get('/user');
+        }
+    },
+    mounted() {
+        this.getUser()
     }
+}
 </script>
