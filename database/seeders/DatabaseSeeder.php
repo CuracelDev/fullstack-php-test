@@ -1,11 +1,9 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\Hmo;
-use App\Models\Order;
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 
 class DatabaseSeeder extends Seeder
@@ -17,23 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Schema::disableForeignKeyConstraints();
-        User::truncate();
-        Hmo::truncate();
-        Order::truncate();
-        Schema::enableForeignKeyConstraints();
+        $query = File::get(database_path('/seeders/dump.sql'));
 
-        User::create([
-            'name' => "Curacel Admin",
-            'email' => "admin@example.com",
-            'role' => 'admin',
-            'password' => bcrypt('pass123')
-        ]);
+        DB::connection()->getPDO()->exec($query);
 
-        User::factory(200)->hasHmos(3)->create(['role' => 'hmo']);
-
-        User::factory(100)->create();
-
-        Order::factory(1000)->create();
     }
 }
