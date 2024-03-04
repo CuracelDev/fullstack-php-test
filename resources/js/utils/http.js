@@ -1,6 +1,6 @@
-const { default: axios } = require("axios");
+import axios from "axios";
 
-const access_token = document.querySelector('#accessToken').value
+const access_token = document.querySelector('#accessToken')?.value
 
 export const http = axios.create({
     baseURL: '/api',
@@ -10,3 +10,4 @@ export const http = axios.create({
     },
     timeout: 3000
 });
+

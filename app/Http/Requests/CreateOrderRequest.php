@@ -26,7 +26,11 @@ class CreateOrderRequest extends FormRequest
         return [
             'hmo_id' => 'required|exists:hmos,id',
             'items' => 'required|array',
+            'items.*.name' => 'required|string',
+            'items.*.unit_price' => 'required|numeric',
+            'items.*.quantity' => 'required|numeric',
             'encounter_date' => 'required|date',
+            'total' => 'required|numeric'
         ];
     }
 }

@@ -5,6 +5,7 @@
  */
 
 import './bootstrap'
+import Select2 from 'v-select2-component';
 
 import Vue from "vue";
 /**
@@ -17,7 +18,7 @@ import Vue from "vue";
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
+Vue.component('Select2', Select2);
 Vue.component('order-dashboard', require('./components/OrderDashboard.vue').default);
 Vue.component('submit-order', require('./components/SubmitOrder.vue').default);
 

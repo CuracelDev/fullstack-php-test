@@ -6,7 +6,7 @@
 	<div class="card-body">
 		<h3 class="card-title text-center">{{ __('Curacel Login') }}</h3>
 		<div class="card-text">
-			<form method="POST" action="{{ route('login') }}">
+			<form method="POST" action="{{ route('register') }}">
                 @csrf
 
 				<div class="form-group">
@@ -44,7 +44,7 @@
 
 				<div class="form-group">
 					<label for="exampleInputPassword1">{{ __('Password') }}</label>
-					<input type="password" class="form-control form-control-sm @error('password') is-invalid @enderror" id="exampleInputPassword1" required autocomplete="current-password">
+					<input type="password" name="password" class="form-control form-control-sm @error('password') is-invalid @enderror" id="exampleInputPassword1" required autocomplete="current-password">
                     @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -54,7 +54,7 @@
 
                 <div class="form-group">
 					<label for="exampleInputPassword1">{{ __('Confirm Password') }}</label>
-					<input type="password" class="form-control form-control-sm @error('password') is-invalid @enderror" id="exampleInputPassword1" required autocomplete="current-password">
+					<input type="password" name="password_confirmation" class="form-control form-control-sm @error('password') is-invalid @enderror" id="exampleInputPassword1" required autocomplete="current-password">
                     @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

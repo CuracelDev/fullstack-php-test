@@ -15,7 +15,7 @@ class CreateOrderEndPointTest extends TestCase
 {
     use RefreshDatabase;
 
-    private User $user;
+    private $user;
 
     protected function setUp(): void
     {

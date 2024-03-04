@@ -54,7 +54,7 @@
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.unit_price }}</td>
                                     <td>{{ item.quantity }}</td>
-                                    <td>{{ item.sub_totak }}</td>
+                                    <td>{{ item.sub_total }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -116,9 +116,6 @@ export default {
 
             this.getOrders();
         }
-    },
-    mounted() {
-        // this.getOrders()
     }
 }
 </script>
