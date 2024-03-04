@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Order\CreateNewOrder;
+use App\Actions\Order\GetOrderList;
 use App\Http\Requests\CreateOrderRequest;
 use App\Http\Requests\FilterOrderRequest;
 use App\Http\Resources\OrderApiResource;
 use App\Models\Order;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Collection;
 
 class OrderController extends Controller
 {
@@ -17,13 +18,10 @@ class OrderController extends Controller
      * @param  FilterOrderRequest  $request
      * @return JsonResponse
      */
-    public function index(FilterOrderRequest $request): JsonResponse
+    public function index(FilterOrderRequest $request, GetOrderList $getOrderList): JsonResponse
     {
-        $orders = Order::with('hmo')->filterBy($request->validated())->get();
-
-        $formattedResults = $this->formatOrders($orders);
-
-        return response()->json($formattedResults, 200);
+        $orders = $getOrderList->handle($request->validated());
+        return response()->json($orders, 200);
     }
 
     /**
@@ -32,9 +30,9 @@ class OrderController extends Controller
      * @param  CreateOrderRequest  $request
      * @return JsonResponse
      */
-    public function store(CreateOrderRequest $request): JsonResponse
+    public function store(CreateOrderRequest $request, CreateNewOrder $createNewOrder): JsonResponse
     {
-        $order = auth()->user()->orders()->create($request->validated());
+        $order = $createNewOrder->handle($request->validated());
 
         return response()->json([
             'message' => 'Order created successfully!',
@@ -68,18 +66,4 @@ class OrderController extends Controller
         return response()->json(['message' => 'Order deleted successfully!'], 200);
     }
 
-    /**
-     * Format the orders for API response.
-     *
-     * @param  Collection  $orders
-     * @return Collection
-     */
-    private function formatOrders(Collection $orders): Collection
-    {
-        return $orders->groupBy('user_month_year')->map(function ($groupedOrders) {
-            return $groupedOrders->map(function ($order) {
-                return new OrderApiResource($order);
-            });
-        });
-    }
 }

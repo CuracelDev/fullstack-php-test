@@ -15,7 +15,8 @@
         "laravel/framework": "^8.0",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^3.0",
-        "laravel/ui": "^2.1"
+        "laravel/ui": "^2.1",
+        "lorisleiva/laravel-actions": "^2.1"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

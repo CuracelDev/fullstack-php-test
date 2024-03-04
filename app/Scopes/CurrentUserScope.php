@@ -5,7 +5,6 @@ namespace App\Scopes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
-use Illuminate\Support\Facades\Auth;
 
 class CurrentUserScope implements Scope
 {
@@ -13,15 +12,14 @@ class CurrentUserScope implements Scope
     {
 
         if (auth()->check()) {
-            $user = auth()->user();
 
-            $builder->when($user->isHmo(), function ($query) use ($user) {
+            $builder->when(user()->isHmo(), function ($query) {
                 $query->whereHas('hmo', function ($sub) {
                     $sub->whereUserId(auth()->id());
                 });
             });
 
-            $builder->when($user->isProvider(), function ($query) {
+            $builder->when(user()->isProvider(), function ($query) {
                 $query->whereUserId(auth()->id());
             });
         }

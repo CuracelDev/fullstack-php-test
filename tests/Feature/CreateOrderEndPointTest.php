@@ -60,7 +60,7 @@ class CreateOrderEndPointTest extends TestCase
                 'message',
                 'order' => [
                     'id',
-                    'items'
+                    'order_items'
                 ]
             ]);
 

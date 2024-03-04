@@ -15,6 +15,7 @@ class OrderApiResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'hmo' => $this->hmo->name,
             'provider' => $this->user_name,
             'order_items' => $this->items,
