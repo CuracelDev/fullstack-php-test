@@ -15,7 +15,12 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('hmo_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->json('items');
+            $table->decimal('total')->default(0.00);
+            $table->boolean('is_processed')->default(false);
+            $table->timestamp('encounter_date');
             $table->timestamps();
         });
     }
