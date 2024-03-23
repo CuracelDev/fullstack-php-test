@@ -36,5 +36,25 @@ if (! function_exists('errorResponse')) {
     }
 }
 
+if (! function_exists('generateReference')) {
+    /**
+     * return a reference
+     */
+    function generateReference($length = 8)
+    {
+        // Generate a random string using alphanumeric characters
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        return $randomString;
+    }
+}
+
+
+
 
 
