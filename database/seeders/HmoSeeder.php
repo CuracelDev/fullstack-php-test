@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Services\BatchService;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class HmoSeeder extends Seeder
@@ -21,6 +23,15 @@ class HmoSeeder extends Seeder
      */
     public function run()
     {
+        $batchingRules = BatchService::getBatchingRules();
+
+        foreach ($this->hmos as &$hmo) {
+            $randomIndex = array_rand($batchingRules);
+            $randomRule = $batchingRules[$randomIndex];
+            $hmo['batching_rule'] = $randomRule;
+        }
+
+
         DB::table('hmos')->insert($this->hmos);
     }
 }

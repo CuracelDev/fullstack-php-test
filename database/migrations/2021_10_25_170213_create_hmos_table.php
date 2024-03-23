@@ -17,6 +17,7 @@ class CreateHmosTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->unique();
+            $table->enum('batching_rule', ['encounter_month', 'month_filed']);
             $table->timestamps();
         });
     }
