@@ -1,7 +1,7 @@
 @component('mail::message')
     # Hello,
 
-    An order with reference <b>{{$order->reference}}</b> has been made by {{ $order->provider_name }}. Please find below the details of the order.
+    An order with reference {{$order->reference}} has been made by {{ $order->provider_name }}. Please find below the details of the order.
 
     @component('mail::table')
         | Item Name | Unit Price | Quantity | Total Price |
@@ -12,6 +12,6 @@
         | **Total** | | | ${{ $order->total_amount }} |
     @endcomponent
 
-    Thanks,<br>
+    Thanks,
     {{ config('app.name') }}
 @endcomponent
