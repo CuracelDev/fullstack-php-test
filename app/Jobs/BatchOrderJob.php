@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Exceptions\ClientErrorException;
 use App\Models\Hmo;
 use App\Models\Order;
 use App\Services\BatchService;
@@ -35,8 +36,9 @@ class BatchOrderJob implements ShouldQueue
      * Execute the job.
      *
      * @return void
+     * @throws ClientErrorException
      */
-    public function handle(BatchService $batchService)
+    public function handle(BatchService $batchService): void
     {
         $batchService->batchOrder($this->order, $this->hmo);
     }

@@ -18,7 +18,7 @@ class OrderService
      * Process provider order
      * @throws ClientErrorException
      */
-    public function submitOrder(array $orderDetails)
+    public function submitOrder(array $orderDetails): void
     {
         $hmo = Hmo::whereCode($orderDetails['hmo_code'])->first();
 
