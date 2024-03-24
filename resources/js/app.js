@@ -8,6 +8,12 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import Toast from "vue-toastification";
+
+import "vue-toastification/dist/index.css";
+
+Vue.use(Toast, {timeout: 1500});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
