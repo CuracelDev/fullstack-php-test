@@ -27,7 +27,7 @@ class BatchService
 
             $batchIdentifier = $this->computeBatchIdentifier($order, $hmo);
 
-            $batch = Batch::where('identifier', $batchIdentifier)->first();
+            $batch = Batch::whereIdentifier($batchIdentifier)->whereHmoId($hmo->id)->first();
 
             if ($batch) {
                 $batch->increment('total_amount', $order->total_amount);
