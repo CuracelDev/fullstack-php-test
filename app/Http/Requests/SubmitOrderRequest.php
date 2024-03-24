@@ -26,7 +26,7 @@ class SubmitOrderRequest extends FormRequest
         return [
             'hmo_code' => ['required', 'string', 'exists:hmos,code'],
             'provider_name' => ['required','string'],
-            'encounter_date' => ['required', 'date'],
+            'encounter_date' => ['required', 'date','before_or_equal:now'],
             'items' => ['required','array'],
             'items.*.item' => ['required','string'],
             'items.*.unit_price' => ['required','numeric'],
@@ -41,6 +41,7 @@ class SubmitOrderRequest extends FormRequest
             'hmo_code.exists' => 'Invalid HMO Code',
             'provider_name.required' => 'Enter your company name',
             'encounter_date.required' => 'Enter encounter date',
+            'encounter_date.before_or_equal' => 'Encounter date cannot be in the future',
             'items.*.item.required' => 'Please enter  name for all items',
             'items.*.unit_price.required' => 'Please enter  unit price for all items',
             'items.*.quantity.required' => 'Please enter  quantity for all items',
