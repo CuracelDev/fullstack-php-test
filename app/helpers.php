@@ -36,19 +36,34 @@ if (! function_exists('errorResponse')) {
     }
 }
 
-if (! function_exists('generateReference')) {
+if (!function_exists('generateReference')) {
     /**
-     * return a reference
+     * Generate a reference string without database check
+     *
+     * @param int $length Length of the reference string
+     * @return string
      */
-    function generateReference($length = 8)
+    function generateReference($length = 12): string
     {
-        // Generate a random string using alphanumeric characters
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        // Define characters pool for the reference string
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        // Initialize random string
         $randomString = '';
 
+        // Generate random bytes securely
+        $bytes = random_bytes($length);
+
+        // Generate random string from bytes
         for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+            // Convert byte to index
+            $index = ord($bytes[$i]) % strlen($characters);
+            // Append character to random string
+            $randomString .= $characters[$index];
         }
+
+        // Convert random string to uppercase
+        $randomString = strtoupper($randomString);
 
         return $randomString;
     }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\ClientErrorException;
+use App\Jobs\BatchOrderJob;
 use App\Models\Hmo;
 use App\Models\Order;
 use App\Notifications\NewOrderNotification;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class ProviderOrderService
+class OrderService
 {
 
     /**
@@ -36,6 +37,8 @@ class ProviderOrderService
             ]);
 
             $hmo->notify(new NewOrderNotification($order));
+
+            BatchOrderJob::dispatch($order,$hmo);
 
             DB::commit();
             return;

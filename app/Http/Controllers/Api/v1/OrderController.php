@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Provider;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Exceptions\ClientErrorException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Provider\SubmitOrderRequest;
-use App\Services\ProviderOrderService;
+use App\Http\Requests\SubmitOrderRequest;
+use App\Services\OrderService;
 use Illuminate\Http\JsonResponse;
 
 
 class OrderController extends Controller
 {
 
-    private  $providerOrderService;
+    private  $orderService;
 
-    public function __construct(ProviderOrderService $orderService)
+    public function __construct(OrderService $orderService)
     {
-        $this->providerOrderService = $orderService;
+        $this->orderService = $orderService;
     }
 
     /**
@@ -25,7 +25,7 @@ class OrderController extends Controller
      */
     public function store(SubmitOrderRequest  $request):JsonResponse
     {
-        $this->providerOrderService->submitOrder($request->validated());
+        $this->orderService->submitOrder($request->validated());
 
         return successResponse();
     }
