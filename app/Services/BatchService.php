@@ -60,7 +60,7 @@ class BatchService
      * Compute batch identifier for incoming order
      * @throws ClientErrorException
      */
-    private function computeBatchIdentifier($order, $hmo):string
+    public function computeBatchIdentifier($order, $hmo):string
     {
         return match ($hmo->batching_rule) {
             'encounter_month' => $order->provider_name . " ". date('M Y', strtotime($order->encounter_date)),

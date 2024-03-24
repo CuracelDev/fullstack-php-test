@@ -54,7 +54,7 @@ class OrderService
     /**
      * Prepare order items by calculating total price for each item in order
      */
-    private function prePareOrderItems($orderItems): array
+    public function prePareOrderItems($orderItems): array
     {
         return  collect($orderItems)->map(function ($item) {
             return [
