@@ -98,6 +98,7 @@ $ npm install && npm run dev
 
 
 You should be able to visit your app at your laravel app base url e.g http://localhost:8000 or http://fullstack-php-test.test/ (Provided you use Laravel Valet).
+Free free to use any of the Hmo codes of the seeded HMOs HMO-A,HMO-B,HMO-C or HMO-D for creating orders.
 
 ### PHPUNIT
 To run general test, use command
