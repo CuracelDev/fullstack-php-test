@@ -69,6 +69,13 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 ```
 
+Lastly, Ensure to set your base api url configuration in the `.env` for frontend usage. There will be issues if this is not set correctly.
+Depending on if you use valet or artisan serve, it can be http://fullstack-php-test.test/api/v1 or http://localhost:800/api/v1
+
+```
+MIX_API_URL=http://fullstack-php-test.test/api/v1
+```
+
 
 ### LARAVEL INSTALLATION
 Install the dependencies and start the server and run app setup command. 
