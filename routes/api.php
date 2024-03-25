@@ -1,6 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\V1\LookupController;
+use App\Http\Controllers\Api\V1\User\SearchUsernameController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+foreach (File::allFiles(__DIR__ . '/v1') as $route_file) {
+    require $route_file->getPathname();
+}
+

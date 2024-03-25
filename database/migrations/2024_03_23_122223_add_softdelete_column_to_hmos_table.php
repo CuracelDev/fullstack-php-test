@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHmosTable extends Migration
+class AddSoftdeleteColumnToHmosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateHmosTable extends Migration
      */
     public function up()
     {
-        Schema::create('hmos', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('code')->unique();
-            $table->enum('batching_rule', ['encounter_month', 'month_filed']);
-            $table->timestamps();
+        Schema::table('hmos', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +25,8 @@ class CreateHmosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hmos');
+        Schema::table('hmos', function (Blueprint $table) {
+            $table->dropColumn('deleted_at');
+        });
     }
 }

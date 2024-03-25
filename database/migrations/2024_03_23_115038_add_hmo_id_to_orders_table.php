@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHmosTable extends Migration
+class AddHmoIdToOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateHmosTable extends Migration
      */
     public function up()
     {
-        Schema::create('hmos', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('code')->unique();
-            $table->enum('batching_rule', ['encounter_month', 'month_filed']);
-            $table->timestamps();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->foreignId('hmo_id')->constrained();
         });
     }
 
@@ -29,6 +25,9 @@ class CreateHmosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hmos');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign(['hmo_id']);
+            $table->dropColumn('hmo_id');
+        });
     }
 }
